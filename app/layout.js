@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "@/styles";
@@ -11,7 +11,7 @@ export default function RootLayout({ children }) {
           <GlobalStyle />
           {children}
         </ThemeProvider>
-        </body>
+      </body>
     </html>
-  )
+  );
 }
