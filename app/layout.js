@@ -1,18 +1,15 @@
 "use client";
-
-import { ThemeProvider } from "styled-components";
-import { GlobalStyle } from "@/styles";
 import MainLayout from "@/components/Layout";
+import React from "react";
 
-export default function RootLayout({ children, headerText }) {
+
+export default function RootLayout({ children } ) {
   return (
     <html lang="en">
+      <head></head>
       <body>
-        <MainLayout>
-        <ThemeProvider theme={{}}>
-          <GlobalStyle />
+        <MainLayout>          
           {children}
-        </ThemeProvider>
         </MainLayout>
       </body>
     </html>
