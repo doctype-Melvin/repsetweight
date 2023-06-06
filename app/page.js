@@ -2,7 +2,7 @@ import './homepage.css'
 
 export default function Home() {
   return (
-    <section>
+    <section className='page__container'>
     <p>Hello World!</p>
     </section>
   );
