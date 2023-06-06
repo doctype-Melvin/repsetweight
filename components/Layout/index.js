@@ -1,22 +1,18 @@
-import styled from "styled-components"
+"use client"
+
 import Header from "../Header"
 import Navigation from "../Navigation"
+import './style.css'
 
-const LayoutContainer = styled.section`
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-`
 
 
 
 export default function MainLayout({ children }) {
     return (
-        <LayoutContainer>
+        <section className="layout">
             <Header />
             { children }
             <Navigation />
-        </LayoutContainer>
+        </section>
     )
 }
