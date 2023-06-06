@@ -1,6 +1,6 @@
 .tile__body {
     background-color: var(--dark-turqiose);
-    width: 95%;
+    width: 90%;
     border-radius: 3px;
 }
 
@@ -9,6 +9,7 @@
     text-align: center;
     margin: 0;
     padding: .5rem 0;
+    font-size: 1.3rem;
 }
 
 .tile__content {
@@ -17,4 +18,5 @@
     color: var(--dark-background);
     margin: 0;
     text-align: justify;
+    font-size: 1.2rem;
 }

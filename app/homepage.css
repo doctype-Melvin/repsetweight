@@ -3,7 +3,7 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(auto-fill, 1fr);
     justify-items: center;
-    gap: 1rem;
+    row-gap: 1rem;
     padding-top: 1rem;
     padding-bottom: calc(20px + var(--navbar-height))
 }
