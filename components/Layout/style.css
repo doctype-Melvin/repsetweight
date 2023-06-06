@@ -4,3 +4,7 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
+.page__content {
+    flex-grow: 1;
+}

@@ -1,4 +1,4 @@
-"use client"
+import './homepage.css'
 
 export default function Home() {
   return (

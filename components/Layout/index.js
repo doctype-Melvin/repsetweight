@@ -6,7 +6,7 @@ export default function MainLayout({ children }) {
     return (
         <section className="layout">
             <Header />
-            { children }
+            <main className="page__content">{ children }</main>
             <Navigation />
         </section>
     )
