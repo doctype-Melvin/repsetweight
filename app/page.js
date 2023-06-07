@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { styled } from 'styled-components';
-import Form from '@/components/Form';
+import { styled } from "styled-components";
+import Form from "@/components/Form";
 
 export default function Home() {
   return (
@@ -13,10 +13,10 @@ export default function Home() {
 
 const PageContainer = styled.section`
   display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(auto-fill, 1fr);
-    justify-items: center;
-    row-gap: 1rem;
-    padding-top: 1rem;
-    padding-bottom: calc(20px + var(--navbar-height))
-`
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(auto-fill, 1fr);
+  justify-items: center;
+  row-gap: 1rem;
+  padding-top: 1rem;
+  padding-bottom: calc(20px + var(--navbar-height));
+`;

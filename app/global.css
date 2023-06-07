@@ -1,28 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
 
 :root {
-    --navbar-height: 3rem;
-    --dark-background: #2e2d30;
-    --light-purple: #DB0C9B;
-    --dark-purple: #8F1568;
-    --yellow: #DBBF21;
-    --turquoise: #21D6DB;
-    --dark-turquoise: #008B8F;
-    --white: #fff;
+  --navbar-height: 3rem;
+  --dark-background: #2e2d30;
+  --light-purple: #db0c9b;
+  --dark-purple: #8f1568;
+  --yellow: #dbbf21;
+  --turquoise: #21d6db;
+  --dark-turquoise: #008b8f;
+  --white: #fff;
 }
 
-*, *:before, *:after {
-    box-sizing: border-box;
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
 }
 
-html, body {
-    min-height: 100vh;
-    width: 100vw;
-    padding: 0;
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    background-color: var(--dark-background);
-    color: var(--white);
+html,
+body {
+  min-height: 100vh;
+  width: 100vw;
+  padding: 0;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  background-color: var(--dark-background);
+  color: var(--white);
 }
-
-
