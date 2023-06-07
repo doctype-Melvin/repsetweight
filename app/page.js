@@ -1,14 +1,22 @@
 "use client"
 
-import './homepage.css'
+import { styled } from 'styled-components';
 import Form from '@/components/Form';
 
 export default function Home() {
-
   return (
-    <section className='page__container'>
-      <Form />
-    </section>
+    <PageContainer>
+      <div>Hello World!</div>
+    </PageContainer>
   );
 }
 
+const PageContainer = styled.section`
+  display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(auto-fill, 1fr);
+    justify-items: center;
+    row-gap: 1rem;
+    padding-top: 1rem;
+    padding-bottom: calc(20px + var(--navbar-height))
+`

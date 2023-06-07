@@ -1,15 +1,18 @@
-"use client";
+"use client"
 import MainLayout from "@/components/Layout";
 import React from "react";
+import StyledComponentsRegistry from "./registry";
 import './global.css'
 
 export default function RootLayout({ children } ) {
   return (
     <html lang="en">
       <body>
-        <MainLayout>          
+        <StyledComponentsRegistry>
+          <MainLayout>
           {children}
-        </MainLayout>
+          </MainLayout>    
+        </StyledComponentsRegistry>
       </body>
     </html>
   );

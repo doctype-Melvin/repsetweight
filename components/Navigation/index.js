@@ -1,9 +1,20 @@
-import './style.css'
+import { styled } from "styled-components"
 
 export default function Navigation(){
     return (
-        <nav className='navbar'>
+        <NavigationContainer>
         Links Go Here
-        </nav>
+        </NavigationContainer>
     )
 }
+
+const NavigationContainer = styled.nav`
+    background-color: var(--light-purple);
+    height: var(--navbar-height);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+`

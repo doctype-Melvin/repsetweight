@@ -1,13 +1,24 @@
 import Header from "../Header"
 import Navigation from "../Navigation"
-import './style.css'
+import { styled } from "styled-components"
 
 export default function MainLayout({ children }) {
     return (
-        <section className="layout">
+        <LayoutContainer>
             <Header />
-            <main className="page__content">{ children }</main>
+            <MainContainer>{ children }</MainContainer>
             <Navigation />
-        </section>
+        </LayoutContainer>
     )
 }
+
+const LayoutContainer = styled.section`
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+`
+
+const MainContainer = styled.main`
+     flex-grow: 1;
+`
