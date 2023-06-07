@@ -1,0 +1,22 @@
+.tile__body {
+    background-color: var(--dark-turqiose);
+    width: 90%;
+    border-radius: 3px;
+}
+
+.tile__title {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding: .5rem 0;
+    font-size: 1.3rem;
+}
+
+.tile__content {
+    padding: .5rem;
+    background-color: var(--white);
+    color: var(--dark-background);
+    margin: 0;
+    text-align: justify;
+    font-size: 1.2rem;
+}
