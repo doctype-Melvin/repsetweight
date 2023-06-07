@@ -1,6 +1,6 @@
 "use client"
 
-import "./style.css"
+import { styled } from "styled-components";
 
 export default function Form() {
 
@@ -14,24 +14,24 @@ export default function Form() {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="form">
-            <fieldset className="field__set">
+        <StyledForm onSubmit={handleSubmit}>
+            <StyledFieldset >
                 <legend>
-                <label htmlFor="templateName" className="label">Template Name</label>
+                <StyledLabel htmlFor="templateName" >Template Name</StyledLabel>
                 </legend>
-                <input type="text" name="templateName" id="templateName" min={1} max={30} />
-            </fieldset>
-            <fieldset className="field__set">
+                <StyledInput type="text" name="templateName" id="templateName" min={1} max={30} />
+            </StyledFieldset>
+            <StyledFieldset >
                 <legend>
-                <label htmlFor="days" className="label">Days</label>
+                <StyledLabel htmlFor="days" >Days</StyledLabel>
                 </legend>
-                <input type="number" name="days" id="days" min={1} max={7} />
-            </fieldset>
-            <fieldset className="field__set">
+                <StyledInput type="number" name="days" id="days" min={1} max={7} />
+            </StyledFieldset>
+            <StyledFieldset >
                 <legend>
-                <label htmlFor="focus" name="focus" className="label">Focus</label>
+                <StyledLabel htmlFor="focus" name="focus" >Focus</StyledLabel>
                 </legend>
-                <select name="focus">
+                <StyledSelect name="focus">
                     <option value="strength">Strength</option>
                     <option value="hypertrophy">Hypertrophy</option>
                     <option value="mobility">Mobility</option>
@@ -39,9 +39,51 @@ export default function Form() {
                     <option value="endurance">Endurance</option>
                     <option value="athleticism">General Athleticism</option>
                     <option value="none">None</option>
-                </select>
-            </fieldset>
-                <button className="submit__button" type="submit">OK</button>
-        </form>
+                </StyledSelect>
+            </StyledFieldset>
+                <StyledSubmitButton type="submit">OK</StyledSubmitButton>
+        </StyledForm>
     )
 }
+
+const StyledForm = styled.form`
+    background-color: var(--dark-purple);
+    padding: 1rem;
+    border-radius: 3px;
+    display: grid;
+    gap: 1rem;
+    width: 100%;
+`
+
+const StyledFieldset = styled.fieldset`
+border: 1px solid var(--white);
+    border-radius: 5px;
+`
+
+const StyledLabel = styled.label`
+    color: var(--white)
+`
+
+const StyledInput = styled.input`
+     border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    padding: .25rem 0 .25rem .5rem;
+`
+
+const StyledSelect = styled.select`
+    width: 100%;
+    padding: .5rem;
+    background-color: var(--white);
+    border: none;
+    border-radius: 5px;
+`
+
+const StyledSubmitButton = styled.button`
+    width: 25%;
+    margin: 0 auto;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--yellow);
+    padding: .5rem 1rem;
+`
