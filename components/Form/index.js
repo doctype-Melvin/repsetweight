@@ -27,12 +27,6 @@ export default function Form() {
           max={30}
         />
       </StyledFieldset>
-      {/* <StyledFieldset>
-        <legend>
-          <StyledLabel htmlFor="days">Days</StyledLabel>
-        </legend>
-        <StyledInput type="number" name="days" id="days" min={1} max={7} />
-      </StyledFieldset> */}
       <StyledFieldset>
         <legend>
           <StyledLabel htmlFor="focus" name="focus">
