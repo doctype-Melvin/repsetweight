@@ -1,6 +1,7 @@
 "use client";
 
 import { styled } from "styled-components";
+import { ConfirmationButton as SubmitButton } from "../Buttons";
 
 export default function Form() {
   const handleSubmit = (event) => {
@@ -26,12 +27,12 @@ export default function Form() {
           max={30}
         />
       </StyledFieldset>
-      <StyledFieldset>
+      {/* <StyledFieldset>
         <legend>
           <StyledLabel htmlFor="days">Days</StyledLabel>
         </legend>
         <StyledInput type="number" name="days" id="days" min={1} max={7} />
-      </StyledFieldset>
+      </StyledFieldset> */}
       <StyledFieldset>
         <legend>
           <StyledLabel htmlFor="focus" name="focus">
@@ -45,10 +46,10 @@ export default function Form() {
           <option value="conditioning">Conditioning</option>
           <option value="endurance">Endurance</option>
           <option value="athleticism">General Athleticism</option>
-          <option value="none">None</option>
+          <option value="none">Other</option>
         </StyledSelect>
       </StyledFieldset>
-      <StyledSubmitButton type="submit">OK</StyledSubmitButton>
+      <SubmitButton type="submit">OK</SubmitButton>
     </StyledForm>
   );
 }
@@ -86,11 +87,4 @@ const StyledSelect = styled.select`
   border-radius: 5px;
 `;
 
-const StyledSubmitButton = styled.button`
-  width: 25%;
-  margin: 0 auto;
-  border: none;
-  border-radius: 5px;
-  background-color: var(--yellow);
-  padding: 0.5rem 1rem;
-`;
+
