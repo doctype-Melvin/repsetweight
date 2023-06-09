@@ -11,6 +11,6 @@ const exerciseSchema = new Schema({
     category: String,
 })
 
-const Exercise = mongoose.models.Exercise || mongoose.model("Plan", exerciseSchema)
+const Exercise = mongoose.models.Exercise || mongoose.model("Exercise", exerciseSchema)
 
 export default Exercise;
