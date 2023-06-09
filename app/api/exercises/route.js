@@ -9,6 +9,6 @@ export async function GET() {
         return NextResponse.json(exercises)
     } catch (error) {
         console.log(error.message);
-        return NextResponse.status(500).json({ message: "Internal Server Error" });
+        return NextResponse.status(500).json({ message: "What is going on?" });
     }
 }

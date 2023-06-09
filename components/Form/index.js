@@ -2,7 +2,7 @@
 
 import { styled } from "styled-components";
 import { ConfirmationButton as SubmitButton } from "../Buttons";
-import { GETrequest } from "@/utils/httpRequests";
+
 
 export default function Form() {
   const handleSubmit = (event) => {
@@ -12,7 +12,7 @@ export default function Form() {
     const templateData = Object.fromEntries(formData);
 
     console.log(templateData);
-    GETrequest("/api/exercises", templateData)
+    
   };
 
   return (

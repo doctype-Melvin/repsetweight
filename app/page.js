@@ -2,11 +2,26 @@
 
 import { styled } from "styled-components";
 import Form from "@/components/Form";
+import ExerciseForm from "@/components/ExerciseForm";
+import { useState, useEffect } from "react";
 
 export default function Home() {
+
+  const [ exercises, setExercises ] = useState('');
+
+  // Fetch exercises data from DB
+  useEffect(() => {
+      fetch('/api/exercises')
+      .then(res => res.json())
+      .then(data => setExercises(data));
+    }, []);
+
+    if (!exercises) return <div>Loading...</div>
+
   return (
     <PageContainer>
-      <Form />
+      {/* <Form /> */}
+      <ExerciseForm exercises={exercises}/>
     </PageContainer>
   );
 }
