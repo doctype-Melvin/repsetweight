@@ -4,6 +4,7 @@ import { styled } from "styled-components";
 import Form from "@/components/Form";
 import ExerciseForm from "@/components/ExerciseForm";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function Home() {
   const [exercises, setExercises] = useState("");
@@ -19,8 +20,7 @@ export default function Home() {
 
   return (
     <PageContainer>
-      {/* <Form /> */}
-      <ExerciseForm exercises={exercises} />
+      <Link href="/createTemplate"> Create New Template </Link>
     </PageContainer>
   );
 }

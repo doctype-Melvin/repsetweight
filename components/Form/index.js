@@ -3,14 +3,17 @@
 import { styled } from "styled-components";
 import { ConfirmationButton as SubmitButton } from "../Buttons";
 
-export default function Form() {
+
+export default function Form({ setNewTemplate }) {
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.target);
     const templateData = Object.fromEntries(formData);
 
+    setNewTemplate(true);
     console.log(templateData);
+    
   };
 
   return (
