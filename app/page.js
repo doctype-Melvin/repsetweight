@@ -6,22 +6,21 @@ import ExerciseForm from "@/components/ExerciseForm";
 import { useState, useEffect } from "react";
 
 export default function Home() {
-
-  const [ exercises, setExercises ] = useState('');
+  const [exercises, setExercises] = useState("");
 
   // Fetch exercises data from DB
   useEffect(() => {
-      fetch('/api/exercises')
-      .then(res => res.json())
-      .then(data => setExercises(data));
-    }, []);
+    fetch("/api/exercises")
+      .then((res) => res.json())
+      .then((data) => setExercises(data));
+  }, []);
 
-    if (!exercises) return <div>Loading...</div>
+  if (!exercises) return <div>Loading...</div>;
 
   return (
     <PageContainer>
       {/* <Form /> */}
-      <ExerciseForm exercises={exercises}/>
+      <ExerciseForm exercises={exercises} />
     </PageContainer>
   );
 }

@@ -3,7 +3,6 @@
 import { styled } from "styled-components";
 import { ConfirmationButton as SubmitButton } from "../Buttons";
 
-
 export default function Form() {
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -12,7 +11,6 @@ export default function Form() {
     const templateData = Object.fromEntries(formData);
 
     console.log(templateData);
-    
   };
 
   return (
@@ -82,5 +80,3 @@ const StyledSelect = styled.select`
   border: none;
   border-radius: 5px;
 `;
-
-
