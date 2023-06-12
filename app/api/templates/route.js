@@ -10,6 +10,7 @@ export async function POST(request) {
         name: requestData.templateName,
         focus: requestData.focus,
     });
+    console.log(`Created new template with name ${newTemplate.name}`)
     return NextResponse.json(newTemplate);
  } catch (error) {
         console.log(error);

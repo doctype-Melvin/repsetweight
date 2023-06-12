@@ -2,7 +2,7 @@
 
 import { styled } from "styled-components";
 import { ConfirmationButton as SubmitButton } from "../Buttons";
-
+import { sendPostTemplate } from "@/utils/helpers";
 
 export default function Form({ setNewTemplate }) {
   const handleSubmit = (event) => {
@@ -13,6 +13,7 @@ export default function Form({ setNewTemplate }) {
 
     setNewTemplate(true);
     console.log(templateData);
+    sendPostTemplate(templateData);
     
   };
 
