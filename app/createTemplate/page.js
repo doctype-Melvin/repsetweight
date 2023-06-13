@@ -1,30 +1,27 @@
-"use client"
+"use client";
 
-import Form from "@/components/Form"
-import Link from "next/link"
-import { styled } from "styled-components"
-import { useState } from "react"
+import Form from "@/components/Form";
+import Link from "next/link";
+import { styled } from "styled-components";
 
 export default function CreateTemplate() {
-
-    const [ newTemplate, setNewTemplate ] = useState(false);
-
-    return (
-        <PageContainer>
-            <StyledLink href="/"> &lt; Back </StyledLink>
-            <Form setNewTemplate={setNewTemplate} />
-        </PageContainer>
-    )
+  
+  return (
+    <PageContainer>
+      <BackLink href="/"> &lt; Back </BackLink>
+        <Form />
+    </PageContainer>
+  );
 }
 
 const PageContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 
-const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: #fff;
-    padding: .5rem 0;
-    `
+export const BackLink = styled(Link)`
+  text-decoration: none;
+  color: #fff;
+  padding: 0.5rem 0;
+`;

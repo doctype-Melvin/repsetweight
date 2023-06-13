@@ -3,17 +3,19 @@
 import { styled } from "styled-components";
 import { ConfirmationButton as SubmitButton } from "../Buttons";
 import { sendPostTemplate } from "@/utils/helpers";
+import { useRouter } from "next/navigation";
 
-export default function Form({ setNewTemplate }) {
-  const handleSubmit = (event) => {
+export default function Form() {
+  const router = useRouter();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.target);
     const templateData = Object.fromEntries(formData);
 
-    setNewTemplate(true);
-    console.log(templateData);
-    sendPostTemplate(templateData);
+    const id  = await sendPostTemplate(templateData);
+    router.push(`/createTemplate/${id}`);
     
   };
 

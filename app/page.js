@@ -1,8 +1,6 @@
 "use client";
 
 import { styled } from "styled-components";
-import Form from "@/components/Form";
-import ExerciseForm from "@/components/ExerciseForm";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -20,7 +18,8 @@ export default function Home() {
 
   return (
     <PageContainer>
-      <Link href="/createTemplate"> Create New Template </Link>
+      <StyledLink href="/createTemplate"> Create New Template </StyledLink>
+      <StyledLink href="/allTemplates"> View All Templates </StyledLink>
     </PageContainer>
   );
 }
@@ -33,4 +32,12 @@ const PageContainer = styled.section`
   row-gap: 1rem;
   padding-top: 1rem;
   padding-bottom: calc(20px + var(--navbar-height));
+`;
+
+const StyledLink = styled(Link)`
+  color: #fff;
+  text-decoration: none;
+  &:visited {
+    color: var(--turquoise);
+  }
 `;
