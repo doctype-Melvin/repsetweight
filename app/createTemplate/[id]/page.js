@@ -1,6 +1,7 @@
 import { BackLink } from "../page"
 import Template from "@/database/models/Templates"
 import CustomButton from "@/components/Buttons"
+import TemplateHeader from "@/components/TemplateHeader"
 
 export default async function NewTemplate({ params }) {
   const { id } = params
@@ -12,9 +13,9 @@ export default async function NewTemplate({ params }) {
     return (
         <div>
             <BackLink href="/"> &lt; Back </BackLink>
-            <h1>{template.name}</h1>
-            <p>{template.focus}</p>
+            <TemplateHeader name={template.name} focus={template.focus} />
             <CustomButton textContent="Add Day" action="subtract" />
         </div>
     )
 }
+
