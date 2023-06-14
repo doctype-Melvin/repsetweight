@@ -2,7 +2,18 @@
 
 import { styled } from "styled-components";
 
-export const ConfirmationButton = styled.button`
+export default function CustomButton({ textContent, action }) {
+
+  const buttonActions = {
+    log: "I'm logging",
+    add: "I'm adding",
+    subtract: "I'm subtracting",
+  }
+
+  return <StyledButton onClick={() => console.log(buttonActions[action])}>{textContent}</StyledButton>;
+}
+
+export const StyledButton = styled.button`
   width: 25%;
   margin: 0 auto;
   border: 1px solid var(--white);

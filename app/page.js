@@ -1,25 +1,13 @@
 "use client";
 
 import { styled } from "styled-components";
-import { useState, useEffect } from "react";
-import Link from "next/link";
+import StyledLink from "@/components/StyledLink";
 
 export default function Home() {
-  const [exercises, setExercises] = useState("");
-
-  // Fetch exercises data from DB
-  useEffect(() => {
-    fetch("/api/exercises")
-      .then((res) => res.json())
-      .then((data) => setExercises(data));
-  }, []);
-
-  if (!exercises) return <div>Loading...</div>;
-
   return (
     <PageContainer>
-      <StyledLink href="/createTemplate"> Create New Template </StyledLink>
-      <StyledLink href="/allTemplates"> View All Templates </StyledLink>
+      <StyledLink targetHref="/createTemplate" target="Create New Template" /> 
+      <StyledLink targetHref="/allTemplates" target="View All Templates" />
     </PageContainer>
   );
 }
@@ -34,10 +22,4 @@ const PageContainer = styled.section`
   padding-bottom: calc(20px + var(--navbar-height));
 `;
 
-const StyledLink = styled(Link)`
-  color: #fff;
-  text-decoration: none;
-  &:visited {
-    color: var(--turquoise);
-  }
-`;
+

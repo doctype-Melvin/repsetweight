@@ -1,7 +1,7 @@
 "use client";
 
 import { styled } from "styled-components";
-import { ConfirmationButton as SubmitButton } from "../Buttons";
+import CustomButton from "../Buttons";
 import { sendPostTemplate } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
 
@@ -50,7 +50,7 @@ export default function Form() {
           <option value="none">Other</option>
         </StyledSelect>
       </StyledFieldset>
-      <SubmitButton type="submit">OK</SubmitButton>
+      <CustomButton type="submit" textContent="Submit" />
     </StyledForm>
   );
 }

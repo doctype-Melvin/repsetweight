@@ -1,3 +1,5 @@
+"use client"
+
 import Header from "../Header";
 import Navigation from "../Navigation";
 import { styled } from "styled-components";
