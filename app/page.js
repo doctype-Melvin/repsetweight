@@ -1,11 +1,13 @@
 "use client";
 
 import { styled } from "styled-components";
+import StyledLink from "@/components/StyledLink";
 
 export default function Home() {
   return (
     <PageContainer>
-      <div>Hello World!</div>
+      <StyledLink targetHref="/createTemplate" target="Create New Template" /> 
+      <StyledLink targetHref="/allTemplates" target="View All Templates" />
     </PageContainer>
   );
 }
@@ -19,3 +21,5 @@ const PageContainer = styled.section`
   padding-top: 1rem;
   padding-bottom: calc(20px + var(--navbar-height));
 `;
+
+

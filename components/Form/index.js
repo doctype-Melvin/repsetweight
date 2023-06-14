@@ -1,15 +1,23 @@
 "use client";
 
 import { styled } from "styled-components";
+import CustomButton from "../Buttons";
+import { sendPostTemplate } from "@/utils/helpers";
+import { useRouter } from "next/navigation";
 
 export default function Form() {
-  const handleSubmit = (event) => {
+  const router = useRouter();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.target);
     const templateData = Object.fromEntries(formData);
 
-    console.log(templateData);
+    const id  = await sendPostTemplate(templateData);
+
+    router.push(`/createTemplate/${id}`);
+    
   };
 
   return (
@@ -28,12 +36,6 @@ export default function Form() {
       </StyledFieldset>
       <StyledFieldset>
         <legend>
-          <StyledLabel htmlFor="days">Days</StyledLabel>
-        </legend>
-        <StyledInput type="number" name="days" id="days" min={1} max={7} />
-      </StyledFieldset>
-      <StyledFieldset>
-        <legend>
           <StyledLabel htmlFor="focus" name="focus">
             Focus
           </StyledLabel>
@@ -45,10 +47,10 @@ export default function Form() {
           <option value="conditioning">Conditioning</option>
           <option value="endurance">Endurance</option>
           <option value="athleticism">General Athleticism</option>
-          <option value="none">None</option>
+          <option value="none">Other</option>
         </StyledSelect>
       </StyledFieldset>
-      <StyledSubmitButton type="submit">OK</StyledSubmitButton>
+      <CustomButton type="submit" textContent="Submit" />
     </StyledForm>
   );
 }
@@ -84,13 +86,4 @@ const StyledSelect = styled.select`
   background-color: var(--white);
   border: none;
   border-radius: 5px;
-`;
-
-const StyledSubmitButton = styled.button`
-  width: 25%;
-  margin: 0 auto;
-  border: none;
-  border-radius: 5px;
-  background-color: var(--yellow);
-  padding: 0.5rem 1rem;
 `;
