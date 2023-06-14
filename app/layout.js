@@ -1,3 +1,5 @@
+"use client"
+
 import MainLayout from "@/components/Layout";
 import React from "react";
 import StyledComponentsRegistry from "./registry";

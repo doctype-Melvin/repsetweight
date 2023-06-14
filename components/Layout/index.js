@@ -2,7 +2,7 @@
 
 import Header from "../Header";
 import Navigation from "../Navigation";
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 export default function MainLayout({ children }) {
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { styled } from "styled-components";
+import styled from "styled-components";
 import StyledLink from "@/components/StyledLink";
 
 export default function Home() {

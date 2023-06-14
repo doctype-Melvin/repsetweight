@@ -2,7 +2,7 @@
 
 import Form from "@/components/Form";
 import Link from "next/link";
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 export default function CreateTemplate() {
   

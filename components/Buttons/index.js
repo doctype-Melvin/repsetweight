@@ -1,6 +1,6 @@
 "use client";
 
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 export default function CustomButton({ textContent, action }) {
  // How to handle button actions through a library

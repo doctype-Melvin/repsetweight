@@ -1,40 +1,20 @@
-"use client";
-
-import { styled } from "styled-components";
-import { useState, useEffect } from "react";
+import Template from "@/database/models/Templates";
 import { BackLink } from "../createTemplate/page";
+import TemplateCard from "@/components/TemplateCard";
+import styled from "styled-components";
 
-export default function AllTemplates() {
-  const [allTemplates, setAllTemplates] = useState("");
+export default async function AllTemplates() {
 
-  useEffect(() => {
-    fetch(`/api/templates`)
-      .then((res) => res.json())
-      .then((data) => setAllTemplates(data));
-  }, []);
-
-  if (!allTemplates) return <div>Loading...</div>;
-
-  if (allTemplates.length === 0) return (
-  <>
-  <BackLink href="/">&lt; Back </BackLink>
-  <div>No templates found</div>
-  </>
-  );
+  const allTemplates = await Template.find()
 
   return (
-    <PageContainer>
+    <section>
       <BackLink href="/">&lt; Back </BackLink>
       <ul>
         {allTemplates.map((template) => (
-          <li key={template._id}>{template.name}</li>
+          <TemplateCard template={template} key={template._id} />
         ))}
       </ul>
-    </PageContainer>
+    </section>
   );
 }
-
-const PageContainer = styled.section`
-  display: flex;
-  flex-direction: column;
-`;
