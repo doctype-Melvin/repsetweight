@@ -15,6 +15,7 @@ export default function Form() {
     const templateData = Object.fromEntries(formData);
 
     const id  = await sendPostTemplate(templateData);
+
     router.push(`/createTemplate/${id}`);
     
   };

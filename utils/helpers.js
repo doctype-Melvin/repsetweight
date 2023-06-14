@@ -19,16 +19,3 @@ export const sendPostTemplate = async (templateData) => {
 };
 
 
-// This does not work really well
-export const findTemplateById = async (templateId) => {
-    const response = await fetch(`/api/templates/?id=${templateId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-
-    });
-
-    const templateData = await response.json();
-    return templateData;
-}

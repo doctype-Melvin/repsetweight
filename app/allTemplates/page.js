@@ -15,7 +15,12 @@ export default function AllTemplates() {
 
   if (!allTemplates) return <div>Loading...</div>;
 
-  if (allTemplates.length === 0) return <div>No templates found</div>;
+  if (allTemplates.length === 0) return (
+  <>
+  <BackLink href="/">&lt; Back </BackLink>
+  <div>No templates found</div>
+  </>
+  );
 
   return (
     <PageContainer>
