@@ -1,12 +1,15 @@
+import dbConnect from "@/database/connectDB"
 import "./styles.css"
+import Template from "@/database/models/Templates"
 
 export default function Form() {
    const createTemplate = async (FormData) => {
       "use server"
       const name = FormData.get("templateName")?.valueOf()
       const focus = FormData.get("focus")?.valueOf()
-      console.log('create template: ', name)
-      console.log('template focus: ', focus)
+      
+      await dbConnect()
+      await Template.create({ name, focus })
     }
   
   return (
@@ -36,7 +39,7 @@ export default function Form() {
           <option value="mobility">Mobility</option>
           <option value="conditioning">Conditioning</option>
           <option value="endurance">Endurance</option>
-          <option value="athleticism">General Athleticism</option>
+          <option value="general athleticism">General Athleticism</option>
           <option value="none">Other</option>
         </select>
       </fieldset>
