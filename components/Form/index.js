@@ -7,9 +7,12 @@ export default function Form() {
       "use server"
       const name = FormData.get("templateName")?.valueOf()
       const focus = FormData.get("focus")?.valueOf()
-      
-      await dbConnect()
-      await Template.create({ name, focus })
+      try {
+        await dbConnect()
+        await Template.create({ name, focus })
+      } catch (error) {
+        console.log(error)
+      }
     }
   
   return (
@@ -40,7 +43,7 @@ export default function Form() {
           <option value="conditioning">Conditioning</option>
           <option value="endurance">Endurance</option>
           <option value="general athleticism">General Athleticism</option>
-          <option value="none">Other</option>
+          <option value="other">Other</option>
         </select>
       </fieldset>
       <button type="submit">Submit</button>
