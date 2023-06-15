@@ -1,20 +1,8 @@
-"use client";
-import styled from "styled-components";
-
 export default function Header({ headerText }) {
   return (
-    <HeaderContainer>
+    <section>
       {headerText}
       Change name according to page
-    </HeaderContainer>
+    </section>
   );
 }
-
-const HeaderContainer = styled.section`
-  height: fit-content;
-  padding: 0.5rem 2rem;
-  background-color: var(--light-purple);
-  color: #fff;
-  text-align: center;
-  font-size: 1.2rem;
-`;

@@ -1,9 +1,6 @@
-"use client"
-
 import MainLayout from "@/components/Layout";
 import React from "react";
-import StyledComponentsRegistry from "./registry";
-import { GlobalStyle } from "./style.js";
+import "./global.css"
 
 export default function RootLayout({ children }) {
   return (
@@ -20,11 +17,8 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body>
-        <StyledComponentsRegistry>
-          <GlobalStyle />
+      <body>     
           <MainLayout>{children}</MainLayout>
-        </StyledComponentsRegistry>
       </body>
     </html>
   );
