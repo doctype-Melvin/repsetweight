@@ -4,7 +4,6 @@ import "./styles.css"
 
 
 export default function CreateTemplate() {
- 
   return (
     <section className="form__container">
       <Link className="back-link" href="/"> &lt; Back </Link>
