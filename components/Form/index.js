@@ -1,23 +1,19 @@
-
-import CustomButton from "../Buttons";
-import { sendPostTemplate } from "@/utils/helpers";
-
-
-const createTemplate = async (templateData) => {
-
-  console.log('create template')
-}
-
+import "./styles.css"
 
 export default function Form() {
+  const createTemplate = async (templateData) => {
+    "use server"
+    console.log('create template')
+  }
   
   return (
     <form action={createTemplate}>
-      <fieldset>
+      <fieldset className="fieldset__styled">
         <legend>
-          <label htmlFor="templateName">Template Name</label>
+          <label htmlFor="templateName"> Template Name </label>
         </legend>
         <input
+        className="input-field"
           type="text"
           name="templateName"
           id="templateName"
@@ -25,13 +21,13 @@ export default function Form() {
           max={30}
         />
       </fieldset>
-      <fieldset>
+      <fieldset className="fieldset__styled">
         <legend>
           <label htmlFor="focus" name="focus">
             Focus
           </label>
         </legend>
-        <select name="focus">
+        <select name="focus" className="input-field">
           <option value="strength">Strength</option>
           <option value="hypertrophy">Hypertrophy</option>
           <option value="mobility">Mobility</option>
@@ -41,7 +37,7 @@ export default function Form() {
           <option value="none">Other</option>
         </select>
       </fieldset>
-      <CustomButton type="submit" textContent="Submit" />
+      <button type="submit">Submit</button>
     </form>
   );
 }

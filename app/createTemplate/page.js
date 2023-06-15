@@ -1,27 +1,14 @@
-"use client";
-
 import Form from "@/components/Form";
 import Link from "next/link";
-import styled from "styled-components";
+import "./styles.css"
 
 export default function CreateTemplate() {
-  
   return (
-    <PageContainer>
-      <BackLink href="/"> &lt; Back </BackLink>
+    <section className="page__container">
+      <Link href="/"> &lt; Back </Link>
         <Form />
-    </PageContainer>
+    </section>
   );
 }
 
-const PageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
 
-export const BackLink = styled(Link)`
-  text-decoration: none;
-  color: #fff;
-  padding: 0.5rem 0;
-`;
