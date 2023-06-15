@@ -1,10 +1,13 @@
 import "./styles.css"
 
 export default function Form() {
-  const createTemplate = async (templateData) => {
-    "use server"
-    console.log('create template')
-  }
+   const createTemplate = async (FormData) => {
+      "use server"
+      const name = FormData.get("templateName")?.valueOf()
+      const focus = FormData.get("focus")?.valueOf()
+      console.log('create template: ', name)
+      console.log('template focus: ', focus)
+    }
   
   return (
     <form action={createTemplate}>

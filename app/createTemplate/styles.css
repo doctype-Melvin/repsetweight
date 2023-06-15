@@ -1,5 +1,4 @@
-.page__container {
+.form__container {
     display: flex;
-  flex-direction: column;
-  justify-content: center;
+    flex-direction: column;
 }
