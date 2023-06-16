@@ -1,26 +1,9 @@
-import dbConnect from "@/database/connectDB"
 import "./styles.css"
-import Template from "@/database/models/Templates"
-import { redirect } from "next/navigation"
 
-export default function Form() {
-
-   const createTemplate = async (FormData) => {
-      "use server"
-      const name = FormData.get("templateName")?.valueOf()
-      const focus = FormData.get("focus")?.valueOf()
-      try {
-        await dbConnect()
-        const { id } = await Template.create({ name, focus })
-        console.log(id)
-        redirect(`/createTemplate/${id}`)
-      } catch (error) {
-        console.log(error)
-      }
-    }
+export default function Form({onSubmit}) {
   
   return (
-    <form action={createTemplate}>
+    <form action={onSubmit}>
       <fieldset className="fieldset__styled">
         <legend>
           <label htmlFor="templateName"> Template Name </label>
