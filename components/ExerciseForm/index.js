@@ -2,7 +2,7 @@
 
 import { ConfirmationButton } from "../Buttons";
 import { useState } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 export default function ExerciseForm({ exercises }) {
   const [searchValue, setSearchValue] = useState("");

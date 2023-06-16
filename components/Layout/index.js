@@ -1,26 +1,15 @@
-"use client"
-
 import Header from "../Header";
 import Navigation from "../Navigation";
-import { styled } from "styled-components";
+import "./styles.css"
 
 export default function MainLayout({ children }) {
   return (
-    <LayoutContainer>
+    <section className="layout__container">
       <Header />
-      <MainContainer>{children}</MainContainer>
+      <main className="main__content">{children}</main>
       <Navigation />
-    </LayoutContainer>
+    </section>
   );
 }
 
-const LayoutContainer = styled.section`
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
 
-const MainContainer = styled.main`
-  flex-grow: 1;
-`;

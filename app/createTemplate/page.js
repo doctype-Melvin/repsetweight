@@ -1,27 +1,32 @@
-"use client";
-
 import Form from "@/components/Form";
 import Link from "next/link";
-import { styled } from "styled-components";
+import "./styles.css"
+import dbConnect from "@/database/connectDB"
+import Template from "@/database/models/Templates"
+import { redirect } from "next/navigation"
+
+
 
 export default function CreateTemplate() {
-  
+
+   const createTemplate = async (FormData) => {
+      "use server"
+      const name = FormData.get("templateName")?.valueOf()
+      const focus = FormData.get("focus")?.valueOf()
+    // This needs error handling
+    // Don't use try catch as the redirect() will
+    // trigger the catch block
+        await dbConnect()
+        const { id } = await Template.create({ name, focus })
+        redirect(`/createTemplate/${id}`)      
+    }
+
   return (
-    <PageContainer>
-      <BackLink href="/"> &lt; Back </BackLink>
-        <Form />
-    </PageContainer>
+    <section className="form__container">
+      <Link className="back-link" href="/"> &lt; Back </Link>
+        <Form onSubmit={createTemplate}/>
+    </section>
   );
 }
 
-const PageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
 
-export const BackLink = styled(Link)`
-  text-decoration: none;
-  color: #fff;
-  padding: 0.5rem 0;
-`;
