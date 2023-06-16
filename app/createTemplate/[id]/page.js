@@ -1,5 +1,7 @@
 import Link from "next/link"
 import Template from "@/database/models/Templates"
+import TemplateHeader from "@/components/TemplateHeader"
+import "./styles.css"
 
 export default async function NewTemplate({ params }) {
   const { id } = params
@@ -9,11 +11,11 @@ export default async function NewTemplate({ params }) {
   if (!template) return <div> Loading ...</div>
 
     return (
-        <div>
+        <section className="create__template__container">
             <Link href="/"> &lt; Back </Link>
-            <div>{template.name}</div>
+            <TemplateHeader name={template.name} focus={template.focus} />
             <button type="button">Add Day</button>
-        </div>
+        </section>
     )
 }
 
