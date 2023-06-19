@@ -1,0 +1,17 @@
+.template__card {
+	width: fit-content;
+	margin: 0 auto;
+	padding: 10px 15px;
+	margin-bottom: 1rem;
+	background-color: var(--dark-purple);
+	border-radius: 3px;
+}
+
+.template__link {
+	color: #fff;
+	text-decoration: none;
+}
+
+template__link:visited {
+	color: var(--turquoise);
+}
