@@ -19,3 +19,9 @@ export default async function NewTemplate({ params }) {
     )
 }
 
+// First redo the directory structure
+// replace createTemplate dir path with something like
+// template/new/*here is the page with the form* 
+// template/[id]/*individual template page*
+// template/all/*all templates page*
+// Now remove the allTemplates directory

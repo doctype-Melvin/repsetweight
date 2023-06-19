@@ -1,6 +1,0 @@
-.create__template__container {
-    min-height: 100%;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(auto-fit, 100px);
-}

@@ -18,7 +18,7 @@ export default function CreateTemplate() {
     // trigger the catch block
         await dbConnect()
         const { id } = await Template.create({ name, focus })
-        redirect(`/createTemplate/${id}`)      
+        redirect(`/template/${id}`)      
     }
 
   return (

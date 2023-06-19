@@ -7,3 +7,8 @@ export default function TemplateCard( { template } ) {
         </li>
     )
 }
+
+// replace createTemplate dir path with something like
+// template/new/*here is the page with the form* 
+// template/[id]/*individual template page*
+// template/all/*all templates page*
