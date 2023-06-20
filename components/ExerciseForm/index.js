@@ -1,6 +1,5 @@
 "use client";
 
-import { ConfirmationButton } from "../Buttons";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -27,9 +26,9 @@ export default function ExerciseForm({ exercises }) {
           onChange={handleChange}
           autoComplete="off"
         />
-        <ConfirmationButton type="button" onClick={() => onAdd(searchValue)}>
+        <button type="button" onClick={() => onAdd(searchValue)}>
           Add
-        </ConfirmationButton>
+        </button>
       </TempContainer>
       <div>
         {exercises
