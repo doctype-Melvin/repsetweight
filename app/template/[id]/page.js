@@ -20,8 +20,8 @@ export default async function NewTemplate({ params }) {
             <TemplateHeader name={template.name} focus={template.focus} />
             <SessionForm exercises={exercises}/>
             {/* Client component handles all the user's input */}
-            {/* Create a component that has a button to toggle a form */}
-            {/* The form should allow for exercise choice and parameters */}
+            {/* SessionForm should handle the creation of workout days */}
+            {/* There should be intuitive input options */}
             {/* Think about a progression model */}
         </section>
     )

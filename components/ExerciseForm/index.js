@@ -17,7 +17,7 @@ export default function ExerciseForm({ exercises }) {
   };
 
   return (
-    <div>
+    <section>
       <div className="exercise__search__form">
         <input
           className="exercise__search__box"
@@ -56,7 +56,7 @@ export default function ExerciseForm({ exercises }) {
             </div>
           ))}
       </div>
-    </div>
+    </section>
   );
 }
 
