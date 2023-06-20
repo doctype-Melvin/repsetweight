@@ -11,14 +11,15 @@ export default function CreateTemplate() {
 
    const createTemplate = async (FormData) => {
       "use server"
-      const name = FormData.get("templateName")?.valueOf()
-      const focus = FormData.get("focus")?.valueOf()
+      const name = FormData.get("templateName")?.valueOf();
+      const focus = FormData.get("focus")?.valueOf();
+      const routine = [];
     // This needs error handling
     // Don't use try catch as the redirect() will
     // trigger the catch block
         await dbConnect()
-        const { id } = await Template.create({ name, focus })
-        redirect(`/createTemplate/${id}`)      
+        const { id } = await Template.create({ name, focus, routine })
+        redirect(`/template/${id}`)      
     }
 
   return (

@@ -4,8 +4,8 @@ import "./styles.css"
 export default function Home() {
   return (
     <section className="page__container">
-      <Link href="/createTemplate" className="link__styled"> New Template </Link>
-      <Link href="/allTemplates" className="link__styled"> All Templates </Link>
+      <Link href="/template/new" className="link__styled"> New Template </Link>
+      <Link href="/template" className="link__styled"> All Templates </Link>
     </section>
   );
 }

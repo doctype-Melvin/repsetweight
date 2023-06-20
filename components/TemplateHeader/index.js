@@ -1,25 +1,9 @@
-"use client"
-
-import styled from "styled-components"
-
-
 export default function TemplateHeader({name, focus}) {
     return (
-        <ContentContainer>
-            <StyledHeading>{name}</StyledHeading>
-            <p>{focus}</p>
-        </ContentContainer>
+        <section className="template__header__container">
+            <p className="template__name">{name}</p>
+            <p className="template__focus">{focus}</p>
+        </section>
     )
 }
 
-const ContentContainer = styled.div`
-width: 100%;
-display: grid;
-grid-template-columns: 1fr;
-justify-items: center;
-`
-
-const StyledHeading = styled.h1`
-padding: 0;
-margin: 0;
-`

@@ -8,3 +8,6 @@ export async function GET(request, { params }) {
     const newTemplate = await Template.findById(id)
     return NextResponse.json({ newTemplate })
 }
+
+// Create the endpoint to update and to delete 
+// an individual template
