@@ -1,0 +1,16 @@
+.template__header__container {
+	background-color: var(--yellow);
+	color: var(--dark-background);
+	padding: 5px;
+}
+
+.template__name,
+.template__focus {
+	margin: 0;
+	text-align: center;
+}
+
+.template__name {
+	font-size: 1.25rem;
+	font-weight: 600;
+}
