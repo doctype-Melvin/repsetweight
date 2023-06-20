@@ -1,6 +1,3 @@
-.create__template__container {
+.modify__template__view {
 	min-height: 100%;
-	display: grid;
-	grid-template-columns: 1fr;
-	grid-template-rows: repeat(auto-fill, 75px);
 }

@@ -11,17 +11,11 @@ export default async function NewTemplate({ params }) {
   if (!template) return <div> Loading ...</div>
 
     return (
-        <section className="create__template__container">
-            <Link href="/"> &lt; Back </Link>
+        <section className="modify__template__view">
+            <Link className="back-link" href="/template"> &lt; Back </Link>
             <TemplateHeader name={template.name} focus={template.focus} />
             <button type="button">Add Day</button>
         </section>
     )
 }
 
-// First redo the directory structure
-// replace createTemplate dir path with something like
-// template/new/*here is the page with the form* 
-// template/[id]/*individual template page*
-// template/all/*all templates page*
-// Now remove the allTemplates directory
