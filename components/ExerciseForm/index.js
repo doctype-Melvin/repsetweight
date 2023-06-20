@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import styled from "styled-components";
+import "./styles.css"
 
 export default function ExerciseForm({ exercises }) {
   const [searchValue, setSearchValue] = useState("");
@@ -17,8 +18,9 @@ export default function ExerciseForm({ exercises }) {
 
   return (
     <div>
-      <TempContainer>
+      <div className="exercise__search__form">
         <input
+          className="exercise__search__box"
           type="text"
           name="exercise"
           id="exercise"
@@ -29,7 +31,7 @@ export default function ExerciseForm({ exercises }) {
         <button type="button" onClick={() => onAdd(searchValue)}>
           Add
         </button>
-      </TempContainer>
+      </div>
       <div>
         {exercises
           .filter((exercise) => {
@@ -45,6 +47,7 @@ export default function ExerciseForm({ exercises }) {
           .slice(0, 7)
           .map((exercise) => (
             <div
+              className="search__results"
               key={exercise._id}
               onClick={() => onAdd(exercise.name)}
               exercise={exercise}
