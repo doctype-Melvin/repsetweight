@@ -5,7 +5,8 @@ const { Schema } = mongoose;
 const templateSchema = new Schema({
   name: String,
   focus: String,
-  frequency: Number,
+  routine: Array,
+
 });
 
 const Template =

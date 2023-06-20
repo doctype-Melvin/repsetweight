@@ -3,7 +3,7 @@ import "./styles.css"
 export default function Form({onSubmit}) {
   
   return (
-    <form action={onSubmit}>
+    <form action={onSubmit} autoComplete="off">
       <fieldset className="fieldset__styled">
         <legend>
           <label htmlFor="templateName"> Template Name </label>
