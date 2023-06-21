@@ -13,7 +13,11 @@ export default function SessionContainer({ session }) {
     <li className="day__container">
       <p className="day__ident">Day {session.day}</p>
       {session.exercises.length > 0 && <p>List of exercises</p>}
-      {!showForm && <button type="button" onClick={handleToggleForm}>+</button>}
+      {!showForm && (
+        <button type="button" onClick={handleToggleForm}>
+          +
+        </button>
+      )}
       {showForm && <SessionForm onButtonClick={handleToggleForm} />}
     </li>
   );
