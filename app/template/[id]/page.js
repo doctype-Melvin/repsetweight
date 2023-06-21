@@ -21,11 +21,9 @@ export default async function NewTemplate({ params }) {
             {
                 template.routine.map(session => <div key={session.id}>Day {session.day}</div>)
             }
-            {/* <SessionForm exercises={exercises}/> */}
-            {/* Client component handles all the user's input */}
-            {/* SessionForm should handle the creation of workout days */}
-            {/* There should be intuitive input options */}
-            {/* Think about a progression model */}
+            {/* Fetch the routine array */}
+            {/* Render the first day of a new template */}
+            {/* The day component allows for CRUDing exercises  */}
         </section>
     )
 }
