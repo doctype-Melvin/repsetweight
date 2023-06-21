@@ -1,7 +1,6 @@
-import "./styles.css"
+import "./styles.css";
 
-export default function Form({onSubmit}) {
-  
+export default function Form({ onSubmit }) {
   return (
     <form action={onSubmit} autoComplete="off">
       <fieldset className="fieldset__styled">
@@ -9,7 +8,7 @@ export default function Form({onSubmit}) {
           <label htmlFor="templateName"> Template Name </label>
         </legend>
         <input
-        className="input-field"
+          className="input-field"
           type="text"
           name="templateName"
           id="templateName"
@@ -36,4 +35,3 @@ export default function Form({onSubmit}) {
     </form>
   );
 }
-

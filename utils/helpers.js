@@ -11,11 +11,9 @@ export const sendPostTemplate = async (templateData) => {
 
   if (!response.ok) {
     const error = await response.json();
-        throw new Error(error.message);
-  } else { 
-      const { _id: id } = await response.json();
-      return id;
-    }
+    throw new Error(error.message);
+  } else {
+    const { _id: id } = await response.json();
+    return id;
+  }
 };
-
-

@@ -1,6 +1,6 @@
 import Header from "../Header";
 import Navigation from "../Navigation";
-import "./styles.css"
+import "./styles.css";
 
 export default function MainLayout({ children }) {
   return (
@@ -11,5 +11,3 @@ export default function MainLayout({ children }) {
     </section>
   );
 }
-
-

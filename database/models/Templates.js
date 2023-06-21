@@ -6,7 +6,6 @@ const templateSchema = new Schema({
   name: String,
   focus: String,
   routine: Array,
-
 });
 
 const Template =

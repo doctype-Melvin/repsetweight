@@ -3,11 +3,11 @@ import dbConnect from "@/database/connectDB";
 import { NextResponse } from "next/server";
 
 export async function GET(request, { params }) {
-    await dbConnect();
-    const { id } = params
-    const newTemplate = await Template.findById(id)
-    return NextResponse.json({ newTemplate })
+  await dbConnect();
+  const { id } = params;
+  const newTemplate = await Template.findById(id);
+  return NextResponse.json({ newTemplate });
 }
 
-// Create the endpoint to update and to delete 
+// Create the endpoint to update and to delete
 // an individual template

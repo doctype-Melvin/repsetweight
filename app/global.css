@@ -27,9 +27,9 @@ body {
 }
 
 .back-link {
-  color: var(--white)
+  color: var(--white);
 }
 
 .back-link:visited {
-  color: var(--turquoise)
+  color: var(--turquoise);
 }

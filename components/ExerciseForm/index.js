@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import styled from "styled-components";
-import "./styles.css"
+import "./styles.css";
 
 export default function ExerciseForm({ exercises }) {
   const [searchValue, setSearchValue] = useState("");

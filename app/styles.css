@@ -1,6 +1,6 @@
 .page__container {
-    display: grid;
-    min-height: 100%;
+  display: grid;
+  min-height: 100%;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(auto-fill, 3rem);
   justify-items: center;
@@ -11,9 +11,9 @@
 
 .link__styled {
   text-decoration: none;
-  color: var(--white)
+  color: var(--white);
 }
 
 .link__styled:visited {
-  color: var(--turquoise)
+  color: var(--turquoise);
 }
