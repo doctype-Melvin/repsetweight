@@ -4,6 +4,7 @@ import "./styles.css"
 import dbConnect from "@/database/connectDB"
 import Template from "@/database/models/Templates"
 import { redirect } from "next/navigation"
+import { nanoid } from "nanoid";
 
 
 
@@ -13,7 +14,12 @@ export default function CreateTemplate() {
       "use server"
       const name = FormData.get("templateName")?.valueOf();
       const focus = FormData.get("focus")?.valueOf();
-      const routine = [];
+      const initialDay = {
+        day: 1,
+        exercises: [],
+        id: nanoid(4),
+      }
+      const routine = [initialDay];
     // This needs error handling
     // Don't use try catch as the redirect() will
     // trigger the catch block

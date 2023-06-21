@@ -18,7 +18,7 @@ export default function ExerciseForm({ exercises }) {
 
   return (
     <section>
-      <div className="exercise__search__form">
+      <form className="exercise__search__form">
         <input
           className="exercise__search__box"
           type="text"
@@ -31,7 +31,7 @@ export default function ExerciseForm({ exercises }) {
         <button type="button" onClick={() => onAdd(searchValue)}>
           Add
         </button>
-      </div>
+      </form>
       <div>
         {exercises
           .filter((exercise) => {

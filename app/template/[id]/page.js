@@ -18,7 +18,10 @@ export default async function NewTemplate({ params }) {
         <section className="modify__template__view">
             <Link className="back-link" href="/template"> &lt; Back </Link>
             <TemplateHeader name={template.name} focus={template.focus} />
-            <SessionForm exercises={exercises}/>
+            {
+                template.routine.map(session => <div key={session.id}>Day {session.day}</div>)
+            }
+            {/* <SessionForm exercises={exercises}/> */}
             {/* Client component handles all the user's input */}
             {/* SessionForm should handle the creation of workout days */}
             {/* There should be intuitive input options */}

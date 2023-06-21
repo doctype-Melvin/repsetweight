@@ -26,7 +26,6 @@ export default function Form({onSubmit}) {
         <select name="focus" className="input-field">
           <option value="strength">Strength</option>
           <option value="hypertrophy">Hypertrophy</option>
-          <option value="mobility">Mobility</option>
           <option value="conditioning">Conditioning</option>
           <option value="endurance">Endurance</option>
           <option value="general athleticism">General Athleticism</option>
