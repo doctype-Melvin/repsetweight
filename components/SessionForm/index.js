@@ -7,9 +7,19 @@ export default function SessionForm({ onButtonClick }) {
   
   const [selectedOption, setSelectedOption] = useState("");
 
+  const submitHandler = ( event ) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData)
+
+    console.log(data)
+    onButtonClick()
+  }
+
   return (
     <section className="session__form__container">
-        <form>
+        <form onSubmit={submitHandler}>
           <select
             name="type"
             onChange={(event) => setSelectedOption(event.target.value)}
@@ -42,7 +52,7 @@ export default function SessionForm({ onButtonClick }) {
                 <input type="number" id="reps" name="reps" />
             </>
           )}
-          <button type="button" onClick={onButtonClick}>
+          <button type="submit">
             OK
           </button>
         </form>
