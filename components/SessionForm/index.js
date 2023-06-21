@@ -21,23 +21,25 @@ export default function SessionForm({ onButtonClick }) {
           </select>
           <label htmlFor="exercise">
             Exercise
-            <input type="text" id="exercise" name="exercise" />
           </label>
+            <input type="text" id="exercise" name="exercise" />
           {selectedOption === "endurance" ? (
+            <>
             <label htmlFor="duration">
               Duration
-              <input type="number" id="duration" name="duration" />
             </label>
+              <input type="number" id="duration" name="duration" />
+            </>
           ) : (
             <>
               <label htmlFor="sets">
                 Sets
-                <input type="number" id="sets" name="sets" />
               </label>
+                <input type="number" id="sets" name="sets" />
               <label htmlFor="reps">
                 Reps
-                <input type="number" id="reps" name="reps" />
               </label>
+                <input type="number" id="reps" name="reps" />
             </>
           )}
           <button type="button" onClick={onButtonClick}>
