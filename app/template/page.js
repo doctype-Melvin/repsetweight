@@ -2,7 +2,7 @@ import Template from "@/database/models/Templates";
 import Link from "next/link";
 import TemplateCard from "@/components/TemplateCard";
 import dbConnect from "@/database/connectDB";
-import "./styles.css";
+import styles from "./styles.module.css";
 
 export default async function AllTemplates() {
   await dbConnect();
@@ -13,7 +13,7 @@ export default async function AllTemplates() {
       <Link href="/" className="back-link">
         &lt; Back{" "}
       </Link>
-      <ul className="list__container">
+      <ul className={styles.list__container}>
         {allTemplates.map((template) => (
           <TemplateCard template={template} key={template._id} />
         ))}

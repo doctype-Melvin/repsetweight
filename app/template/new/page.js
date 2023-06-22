@@ -1,6 +1,6 @@
 import Form from "@/components/Form";
 import Link from "next/link";
-import "./styles.css";
+import styles from  "./styles.module.css";
 import dbConnect from "@/database/connectDB";
 import Template from "@/database/models/Templates";
 import { redirect } from "next/navigation";
@@ -26,7 +26,7 @@ export default function CreateTemplate() {
   };
 
   return (
-    <section className="form__container">
+    <section className={styles.form__container}>
       <Link className="back-link" href="/">
         {" "}
         &lt; Back{" "}

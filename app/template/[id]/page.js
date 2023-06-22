@@ -1,9 +1,8 @@
 import Link from "next/link";
 import Template from "@/database/models/Templates";
 import TemplateHeader from "@/components/TemplateHeader";
-import SessionForm from "@/components/SessionForm";
 import SessionContainer from "@/components/SessionContainer";
-import "./styles.css";
+import styles from "./styles.module.css";
 import Exercise from "@/database/models/Exercises";
 
 export default async function NewTemplate({ params }) {
@@ -15,13 +14,13 @@ export default async function NewTemplate({ params }) {
   if (!template || !exercises) return <div> Loading ...</div>;
 
   return (
-    <section className="modify__template__view">
+    <section className={styles.modify__template__view}>
       <Link className="back-link" href="/template">
         {" "}
         &lt; Back{" "}
       </Link>
       <TemplateHeader name={template.name} focus={template.focus} />
-      <ul className="session__list">
+      <ul className={styles.session__list}>
         {template.routine.map((session) => (
           <SessionContainer key={session.id} session={session} />
         ))}
