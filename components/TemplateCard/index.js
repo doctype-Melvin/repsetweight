@@ -7,13 +7,15 @@ export default function TemplateCard({ template }) {
       <Link className="template__link" href={`template/${template.id}`}>
         <div>{template.name}</div>
       </Link>
-      <div className="template__focus">{template.focus}</div>
-      <button type="button" className="edit__button">
+      <div className="template__focus">Focus: {template.focus}</div>
+      <div className="template__level">Level: {template.level}</div>
+      <p className="template__description">{template.description}</p>
+      {template.mutable && <button type="button" className="edit__button">
         Edit
-      </button>
-      <button type="button" className="delete__button">
+      </button>}
+      {template.mutable && <button type="button" className="delete__button">
         Delete
-      </button>
+      </button>}
     </li>
   );
 }
