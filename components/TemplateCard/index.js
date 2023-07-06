@@ -10,7 +10,6 @@ export default function TemplateCard({ template }) {
       </Link>
       <div className="template__focus">Focus: {template.focus}</div>
       <div className="template__level">Level: {template.level}</div>
-      {/* <p className="template__description">{template.description}</p> */}
       <Collapsible content={template.description} />
       {template.mutable && (
         <button type="button" className="edit__button">
