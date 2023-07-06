@@ -1,14 +1,19 @@
 .day__container {
-  width: minmax(300px, 1fr);
-  margin: 0 auto;
-  border-radius: 3px;
-  text-align: center;
+	width: minmax(300px, 1fr);
+	margin: 0 auto;
+	border-radius: 3px;
+	text-align: center;
 }
 
 .day__ident {
-  text-align: center;
-  margin-top: 0;
-  background-color: var(--dark-purple);
-  padding: 0.5rem;
-  font-size: 1.15rem;
+	text-align: center;
+	margin-top: 0;
+	background-color: var(--dark-purple);
+	padding: 0.5rem;
+	font-size: 1.15rem;
+}
+
+.day__exercise__list {
+	list-style-type: none;
+	padding: 0 0 1rem 0;
 }

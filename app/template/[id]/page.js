@@ -12,7 +12,6 @@ export default async function NewTemplate({ params }) {
   const exercises = await JSON.parse(JSON.stringify(await Exercise.find()));
 
   if (!template || !exercises) return <div> Loading ...</div>;
-
   return (
     <section className={styles.modify__template__view}>
       <Link className="back-link" href="/template">
