@@ -16,4 +16,13 @@
 .day__exercise__list {
 	list-style-type: none;
 	padding: 0 0 1rem 0;
+	width: 100%;
+}
+
+.day__exercise__item {
+	width: 70%;
+	display: flex;
+	justify-content: space-between;
+	margin: 0 auto;
+	padding: 3px;
 }

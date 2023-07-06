@@ -1,6 +1,6 @@
 import Form from "@/components/Form";
 import Link from "next/link";
-import styles from  "./styles.module.css";
+import styles from "./styles.module.css";
 import dbConnect from "@/database/connectDB";
 import Template from "@/database/models/Templates";
 import { redirect } from "next/navigation";

@@ -1,5 +1,6 @@
 import "./styles.css";
 import Link from "next/link";
+import Collapsible from "../Collapsible";
 
 export default function TemplateCard({ template }) {
   return (
@@ -7,13 +8,19 @@ export default function TemplateCard({ template }) {
       <Link className="template__link" href={`template/${template.id}`}>
         <div>{template.name}</div>
       </Link>
-      <div className="template__focus">{template.focus}</div>
-      <button type="button" className="edit__button">
-        Edit
-      </button>
-      <button type="button" className="delete__button">
-        Delete
-      </button>
+      <div className="template__focus">Focus: {template.focus}</div>
+      <div className="template__level">Level: {template.level}</div>
+      <Collapsible content={template.description} />
+      {template.mutable && (
+        <button type="button" className="edit__button">
+          Edit
+        </button>
+      )}
+      {template.mutable && (
+        <button type="button" className="delete__button">
+          Delete
+        </button>
+      )}
     </li>
   );
 }
