@@ -8,7 +8,10 @@ export default function SessionContainer({ session }) {
       {session.exercises.length > 0 && (
         <ul className="day__exercise__list">
           {session.exercises.map((exercise, index) => (
-            <li key={index + exercise}>{exercise.toUpperCase()}</li>
+            <li className="day__exercise__item" key={index + exercise}>
+              <div>{exercise.name.toUpperCase()}</div>
+              <div>{exercise.mode}</div>
+            </li>
           ))}
         </ul>
       )}
