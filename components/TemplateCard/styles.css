@@ -8,7 +8,8 @@
 	box-shadow: 0px 0px 2px 1px #fff;
 	display: grid;
 	grid-template-columns: 1fr 0.25fr;
-	grid-template-rows: 0.3fr 0.3fr 0.3fr 1fr;
+	grid-template-rows: 1.25rem 1.25rem 1.25rem 1fr;
+	align-items: center;
 	gap: 0.5rem;
 }
 
@@ -36,9 +37,4 @@
 
 .delete__button {
 	grid-area: 2 / 2 / 2 / 3;
-}
-
-.template__description {
-	grid-area: 4 / 1 / 5 / 3;
-	margin: 0;
 }
