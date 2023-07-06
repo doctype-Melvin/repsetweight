@@ -10,12 +10,16 @@ export default function TemplateCard({ template }) {
       <div className="template__focus">Focus: {template.focus}</div>
       <div className="template__level">Level: {template.level}</div>
       <p className="template__description">{template.description}</p>
-      {template.mutable && <button type="button" className="edit__button">
-        Edit
-      </button>}
-      {template.mutable && <button type="button" className="delete__button">
-        Delete
-      </button>}
+      {template.mutable && (
+        <button type="button" className="edit__button">
+          Edit
+        </button>
+      )}
+      {template.mutable && (
+        <button type="button" className="delete__button">
+          Delete
+        </button>
+      )}
     </li>
   );
 }
