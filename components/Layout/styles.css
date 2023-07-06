@@ -1,10 +1,10 @@
 .layout__container {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: .35fr 5fr .5fr;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.35fr 5fr 0.5fr;
 }
 
 .main__content {
-    width: 100%;
+  width: 100%;
 }

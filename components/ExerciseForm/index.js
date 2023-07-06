@@ -1,8 +1,8 @@
 "use client";
 
-import { ConfirmationButton } from "../Buttons";
 import { useState } from "react";
 import styled from "styled-components";
+import "./styles.css";
 
 export default function ExerciseForm({ exercises }) {
   const [searchValue, setSearchValue] = useState("");
@@ -17,9 +17,10 @@ export default function ExerciseForm({ exercises }) {
   };
 
   return (
-    <div>
-      <TempContainer>
+    <section>
+      <form className="exercise__search__form">
         <input
+          className="exercise__search__box"
           type="text"
           name="exercise"
           id="exercise"
@@ -27,10 +28,10 @@ export default function ExerciseForm({ exercises }) {
           onChange={handleChange}
           autoComplete="off"
         />
-        <ConfirmationButton type="button" onClick={() => onAdd(searchValue)}>
+        <button type="button" onClick={() => onAdd(searchValue)}>
           Add
-        </ConfirmationButton>
-      </TempContainer>
+        </button>
+      </form>
       <div>
         {exercises
           .filter((exercise) => {
@@ -46,6 +47,7 @@ export default function ExerciseForm({ exercises }) {
           .slice(0, 7)
           .map((exercise) => (
             <div
+              className="search__results"
               key={exercise._id}
               onClick={() => onAdd(exercise.name)}
               exercise={exercise}
@@ -54,7 +56,7 @@ export default function ExerciseForm({ exercises }) {
             </div>
           ))}
       </div>
-    </div>
+    </section>
   );
 }
 

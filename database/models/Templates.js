@@ -6,7 +6,12 @@ const templateSchema = new Schema({
   name: String,
   focus: String,
   routine: Array,
-
+  description: String,
+  duration: Number,
+  mode: String,
+  level: String,
+  increments: Object,
+  exercises: Array,
 });
 
 const Template =
