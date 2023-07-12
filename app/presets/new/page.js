@@ -2,7 +2,7 @@ import Form from "@/components/Form";
 import Link from "next/link";
 import styles from "./styles.module.css";
 import dbConnect from "@/database/connectDB";
-import Template from "@/database/models/Templates";
+import Preset from "@/database/models/Presets";
 import { redirect } from "next/navigation";
 import { nanoid } from "nanoid";
 
@@ -21,8 +21,8 @@ export default function CreateTemplate() {
     // Don't use try catch as the redirect() will
     // trigger the catch block
     await dbConnect();
-    const { id } = await Template.create({ name, focus, routine });
-    redirect(`/template/${id}`);
+    const { id } = await Preset.create({ name, focus, routine, mutable: true });
+    redirect(`/presets/${id}`);
   };
 
   return (

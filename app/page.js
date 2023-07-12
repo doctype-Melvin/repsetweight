@@ -9,6 +9,9 @@ export default function Home() {
       <Link href="/presets" className={styles.link__styled}>
         All Templates
       </Link>
+      <Link href="/presets/new" className={styles.link__styled}>
+        Create new Template
+      </Link>
     </section>
   );
 }

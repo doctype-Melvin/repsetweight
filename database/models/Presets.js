@@ -12,6 +12,7 @@ const presetSchema = new Schema({
   level: String,
   increments: Object,
   exercises: Array,
+  mutable: Boolean,
 });
 
 const Preset =
