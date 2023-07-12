@@ -29,7 +29,7 @@ export default function Carousel() {
       } else {
         setCurrentSlide(1);
       }
-    }, 3500);
+    }, 5500);
 
     return () => clearTimeout(timeout);
   }, [currentSlide]);
@@ -41,7 +41,7 @@ export default function Carousel() {
         key={currentSlide}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.75 }}
       >
         {slides.find((slide) => slide.slide === currentSlide).text}
       </motion.div>
