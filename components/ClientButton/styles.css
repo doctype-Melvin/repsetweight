@@ -1,15 +1,15 @@
 .button__current {
-	background-color: var(--turquoise);
-	border: solid 1px var(--turquoise);
-	border-radius: 5px;
-	color: var(--dark-background);
-	display: block;
-	margin: 0 auto;
-	padding: 5px 10px;
-	margin-bottom: 1rem;
+  background-color: var(--turquoise);
+  border: solid 1px var(--turquoise);
+  border-radius: 5px;
+  color: var(--dark-background);
+  display: block;
+  margin: 0 auto;
+  padding: 5px 10px;
+  margin-bottom: 1rem;
 }
 
 .button__current:active {
-	background-color: var(--dark-turquoise);
-	color: #fff;
+  background-color: var(--dark-turquoise);
+  color: #fff;
 }

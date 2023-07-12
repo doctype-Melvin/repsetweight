@@ -11,7 +11,7 @@ export default async function NewTemplate({ params }) {
 
   const template = await Template.findById(id);
   const exercises = await JSON.parse(JSON.stringify(await Exercise.find()));
-  
+
   if (!template || !exercises) return <div> Loading ...</div>;
 
   return (
