@@ -1,7 +1,18 @@
-import "./styles.css";
+"use client"
 
-export default function SessionContainer({ session }) {
+import "./styles.css";
+import ClientButton from "../ClientButton";
+import ExerciseForm from "../ExerciseForm";
+import { useState } from "react";
+
+export default function SessionContainer({ session, exercises }) {
+  const [toggleForm, setToggleForm ] = useState(false)
+
+  // const handleToggleForm = () => setToggleForm(!toggleForm)
+  const handleToggleForm = () => setToggleForm(!toggleForm)
+
   return (
+    <>
     <li className="day__container">
       <p className="day__ident">Day {session.day}</p>
       {session.exercises.length > 0 && (
@@ -15,5 +26,8 @@ export default function SessionContainer({ session }) {
         </ul>
       )}
     </li>
+   {!toggleForm && <ClientButton textContent="Add Exercise" handler={handleToggleForm}/>}
+   {toggleForm && <ExerciseForm exercises={exercises} handler={handleToggleForm}/>}
+    </>
   );
 }
