@@ -1,6 +1,11 @@
+"use client"
+
 import './styles.css'
+import { useState, useEffect } from 'react'
 
 export default function Carousel() {
+
+    const [ currentSlide, setCurrentSlide ] = useState(1)
 
     const slides = [
         {
@@ -17,14 +22,26 @@ export default function Carousel() {
         },
     ]
 
+    useEffect(() => {
+        setTimeout(() => {
+            if (currentSlide !== slides.length) {
+                setCurrentSlide(prevState => prevState + 1)
+            } else {
+                setCurrentSlide(1)
+            }
+        }, 3500)
+    }, [currentSlide])
+
     return (
         <section className="carousel-container">
             <div>
-                Some engaging content
+                {
+                    slides.find(slide => slide.slide === currentSlide).text
+                }
             </div>
             <ul className='dots-container'>
             {slides.map(slide => <li key={slide.slide}>
-                <div className='carousel-dot' dataSlideNumber={slide.slide}>
+                <div className={`carousel-dot ${slide.slide === currentSlide ? "active" : ""}`} dataSlideNumber={slide.slide}>
             </div> 
             </li>)}
             </ul>
