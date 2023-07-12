@@ -1,28 +1,28 @@
 .day__container {
-	width: minmax(300px, 1fr);
-	margin: 0 auto;
-	border-radius: 3px;
-	text-align: center;
+  width: minmax(300px, 1fr);
+  margin: 0 auto;
+  border-radius: 3px;
+  text-align: center;
 }
 
 .day__ident {
-	text-align: center;
-	margin-top: 0;
-	background-color: var(--dark-purple);
-	padding: 0.5rem;
-	font-size: 1.15rem;
+  text-align: center;
+  margin-top: 0;
+  background-color: var(--dark-purple);
+  padding: 0.5rem;
+  font-size: 1.15rem;
 }
 
 .day__exercise__list {
-	list-style-type: none;
-	padding: 0 0 1rem 0;
-	width: 100%;
+  list-style-type: none;
+  padding: 0 0 1rem 0;
+  width: 100%;
 }
 
 .day__exercise__item {
-	width: 70%;
-	display: flex;
-	justify-content: space-between;
-	margin: 0 auto;
-	padding: 3px;
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 3px;
 }
