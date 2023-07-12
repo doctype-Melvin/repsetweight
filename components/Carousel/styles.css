@@ -25,6 +25,11 @@
 	justify-content: space-around;
 }
 
+.carousel-content {
+	font-size: 1.25rem;
+	text-align: center;
+}
+
 .carousel-dot {
 	height: 0.9rem;
 	width: 0.9rem;

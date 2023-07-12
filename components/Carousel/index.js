@@ -2,6 +2,7 @@
 
 import './styles.css'
 import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 
 export default function Carousel() {
 
@@ -9,39 +10,41 @@ export default function Carousel() {
 
     const slides = [
         {
-            text: 'This is an awesome carousel',
+            text: 'Choose one of the preset templates',
             slide: 1,
         },
         {
-            text: 'Wait... there is more',
+            text: 'Keep track of your progress',
             slide: 2,
         },
         {
-            text: 'Can you believe that',
+            text: 'Create your own templates',
             slide: 3,
         },
     ]
 
     useEffect(() => {
-        setTimeout(() => {
+       const timeout = setTimeout(() => {
             if (currentSlide !== slides.length) {
                 setCurrentSlide(prevState => prevState + 1)
             } else {
                 setCurrentSlide(1)
             }
         }, 3500)
+
+        return () => clearTimeout(timeout)
     }, [currentSlide])
 
     return (
         <section className="carousel-container">
-            <div>
+            <motion.div className='carousel-content' initial={{opacity: 0}} animate={{opacity: 1}} transition={{ duration: 0.25}}>
                 {
                     slides.find(slide => slide.slide === currentSlide).text
                 }
-            </div>
+            </motion.div>
             <ul className='dots-container'>
             {slides.map(slide => <li key={slide.slide}>
-                <div className={`carousel-dot ${slide.slide === currentSlide ? "active" : ""}`} dataSlideNumber={slide.slide}>
+                <div className={`carousel-dot ${slide.slide === currentSlide ? "active" : ""}`} >
             </div> 
             </li>)}
             </ul>
