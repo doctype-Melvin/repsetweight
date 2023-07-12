@@ -5,7 +5,7 @@ import Collapsible from "../Collapsible";
 export default function TemplateCard({ template }) {
   return (
     <li className="template__card">
-      <Link className="template__link" href={`template/${template.id}`}>
+      <Link className="template__link" href={`presets/${template.id}`}>
         <div>{template.name}</div>
       </Link>
       <div className="template__focus">Focus: {template.focus}</div>

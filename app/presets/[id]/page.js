@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Template from "@/database/models/Templates";
+import Preset from "@/database/models/Presets";
 import TemplateHeader from "@/components/TemplateHeader";
 import SessionContainer from "@/components/SessionContainer";
 import styles from "./styles.module.css";
@@ -9,21 +9,21 @@ import ClientButton from "@/components/ClientButton";
 export default async function NewTemplate({ params }) {
   const { id } = params;
 
-  const template = await Template.findById(id);
+  const preset = await Preset.findById(id);
   const exercises = await JSON.parse(JSON.stringify(await Exercise.find()));
 
-  if (!template || !exercises) return <div> Loading ...</div>;
+  if (!preset || !exercises) return <div> Loading ...</div>;
 
   return (
     <section className={styles.modify__template__view}>
-      <Link className="back-link" href="/template">
+      <Link className="back-link" href="/presets">
         {" "}
         &lt; Back{" "}
       </Link>
-      <TemplateHeader name={template.name} focus={template.focus} />
+      <TemplateHeader name={preset.name} focus={preset.focus} />
       <ClientButton textContent="Set Current" />
       <ul className={styles.session__list}>
-        {template.routine.map((session) => (
+        {preset.routine.map((session) => (
           <SessionContainer key={session.id} session={session} />
         ))}
       </ul>

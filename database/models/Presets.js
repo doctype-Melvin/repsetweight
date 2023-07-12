@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-const templateSchema = new Schema({
+const presetSchema = new Schema({
   name: String,
   focus: String,
   routine: Array,
@@ -14,7 +14,7 @@ const templateSchema = new Schema({
   exercises: Array,
 });
 
-const Template =
-  mongoose.models.Template || mongoose.model("Template", templateSchema);
+const Preset =
+  mongoose.models.Preset || mongoose.model("Preset", presetSchema);
 
-export default Template;
+export default Preset;

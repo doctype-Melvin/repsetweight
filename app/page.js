@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <section className={styles.page__container}>
       <Carousel />
-      <Link href="/template" className={styles.link__styled}>
+      <Link href="/presets" className={styles.link__styled}>
         All Templates
       </Link>
     </section>
