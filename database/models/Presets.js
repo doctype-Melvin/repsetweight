@@ -15,7 +15,6 @@ const presetSchema = new Schema({
   mutable: Boolean,
 });
 
-const Preset =
-  mongoose.models.Preset || mongoose.model("Preset", presetSchema);
+const Preset = mongoose.models.Preset || mongoose.model("Preset", presetSchema);
 
 export default Preset;

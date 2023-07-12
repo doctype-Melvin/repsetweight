@@ -58,4 +58,3 @@ export default function ExerciseForm({ exercises, handler }) {
     </section>
   );
 }
-

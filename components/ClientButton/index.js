@@ -2,7 +2,6 @@
 
 import "./styles.css";
 
-
 export default function ClientButton({ textContent, id, handler }) {
   const handleButtonClick = () => handler();
 
