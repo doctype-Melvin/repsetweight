@@ -1,8 +1,6 @@
-
 import "./styles.css";
 import Link from "next/link";
 import Collapsible from "../Collapsible";
-import ClientButton from "../ClientButton";
 
 export default function TemplateCard({ template }) {
   return (

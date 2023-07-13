@@ -8,7 +8,7 @@ export default function ClientButton({ textContent, id, handler }) {
   return (
     <button
       type="button"
-      className="button__current"
+      className="button__client"
       onClick={handleButtonClick}
     >
       {textContent}

@@ -11,6 +11,7 @@ export default function CreateTemplate() {
     "use server";
     const name = FormData.get("templateName")?.valueOf();
     const focus = FormData.get("focus")?.valueOf();
+    const days = FormData.get("days")?.valueOf();
     const initialDay = {
       day: 1,
       exercises: [],
@@ -21,8 +22,8 @@ export default function CreateTemplate() {
     // Don't use try catch as the redirect() will
     // trigger the catch block
     await dbConnect();
-    const { id } = await Preset.create({ name, focus, routine, mutable: true, isCurrent: false });
-    redirect(`/presets/${id}`);
+    const { id } = await Preset.create({ name, focus, days, routine, mutable: true, isCurrent: false });
+    redirect(`/preset/${id}`);
   };
 
   return (

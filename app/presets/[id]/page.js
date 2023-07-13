@@ -6,9 +6,10 @@ import styles from "./styles.module.css";
 import Exercise from "@/database/models/Exercises";
 import ClientButton from "@/components/ClientButton";
 import dbConnect from "@/database/connectDB";
-
+import { redirect } from "next/navigation";
 
 export default async function SingleTemplateView({ params }) {
+  
   const { id } = params;
   const preset = await Preset.findById(id);
   const exercises = await JSON.parse(JSON.stringify(await Exercise.find()));
@@ -20,7 +21,6 @@ export default async function SingleTemplateView({ params }) {
   await Preset.updateMany({ isCurrent: false })
   await Preset.findByIdAndUpdate(id, { isCurrent: true })
   console.log('Template set as current')
-
   };
 
   if (!preset || !exercises) return <div> Loading ...</div>;

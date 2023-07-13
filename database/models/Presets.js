@@ -14,6 +14,7 @@ const presetSchema = new Schema({
   exercises: Array,
   mutable: Boolean,
   isCurrent: Boolean,
+  days: Number,
 });
 
 const Preset = mongoose.models.Preset || mongoose.model("Preset", presetSchema);
