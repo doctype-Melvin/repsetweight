@@ -21,7 +21,7 @@ export default function CreateTemplate() {
     // Don't use try catch as the redirect() will
     // trigger the catch block
     await dbConnect();
-    const { id } = await Preset.create({ name, focus, routine, mutable: true });
+    const { id } = await Preset.create({ name, focus, routine, mutable: true, isCurrent: false });
     redirect(`/presets/${id}`);
   };
 

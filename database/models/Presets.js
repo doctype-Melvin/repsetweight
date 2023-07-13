@@ -13,6 +13,7 @@ const presetSchema = new Schema({
   increments: Object,
   exercises: Array,
   mutable: Boolean,
+  isCurrent: Boolean,
 });
 
 const Preset = mongoose.models.Preset || mongoose.model("Preset", presetSchema);

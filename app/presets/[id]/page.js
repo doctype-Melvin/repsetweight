@@ -5,6 +5,8 @@ import SessionContainer from "@/components/SessionContainer";
 import styles from "./styles.module.css";
 import Exercise from "@/database/models/Exercises";
 import ClientButton from "@/components/ClientButton";
+import dbConnect from "@/database/connectDB";
+
 
 export default async function SingleTemplateView({ params }) {
   const { id } = params;
@@ -13,7 +15,12 @@ export default async function SingleTemplateView({ params }) {
 
   const tempHandler = async () => {
     "use server";
-    console.log(`Set template with id: ${id}`);
+  await dbConnect();
+  const { id } = params;
+  await Preset.updateMany({ isCurrent: false })
+  await Preset.findByIdAndUpdate(id, { isCurrent: true })
+  console.log('Template set as current')
+
   };
 
   if (!preset || !exercises) return <div> Loading ...</div>;
