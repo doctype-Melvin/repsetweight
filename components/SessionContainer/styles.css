@@ -1,5 +1,6 @@
 .day__container {
-	width: minmax(300px, 1fr);
+	/* width: minmax(300px, 1fr); */
+	width: 100%;
 	margin: 0 auto;
 	border-radius: 3px;
 	text-align: center;
@@ -20,9 +21,31 @@
 }
 
 .day__exercise__item {
-	width: 70%;
-	display: flex;
-	justify-content: space-between;
+	width: 95%;
+	display: grid;
+	grid-template-columns: 1fr 0.5fr 0.5fr;
+	grid-template-rows: auto;
+	align-items: center;
 	margin: 0 auto;
 	padding: 3px;
+}
+
+.container__buttons {
+	display: flex;
+	justify-content: space-between;
+}
+
+.button {
+	border: none;
+	padding: 2px 3px;
+}
+
+.edit {
+	background-color: var(--yellow);
+	color: var(--black);
+}
+
+.delete {
+	background-color: var(--red);
+	color: var(--white);
 }
