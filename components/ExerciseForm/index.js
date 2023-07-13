@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import styled from "styled-components";
 import "./styles.css";
+import { useState } from "react";
+import ClientButton from "../ClientButton";
 
-export default function ExerciseForm({ exercises }) {
+export default function ExerciseForm({ exercises, handler }) {
   const [searchValue, setSearchValue] = useState("");
 
   const onAdd = (searchTerm) => {
@@ -28,9 +28,7 @@ export default function ExerciseForm({ exercises }) {
           onChange={handleChange}
           autoComplete="off"
         />
-        <button type="button" onClick={() => onAdd(searchValue)}>
-          Add
-        </button>
+        <ClientButton textContent="Add" handler={() => onAdd(searchValue)} />
       </form>
       <div>
         {exercises
@@ -56,10 +54,7 @@ export default function ExerciseForm({ exercises }) {
             </div>
           ))}
       </div>
+      <ClientButton textContent="Close" handler={handler} />
     </section>
   );
 }
-
-const TempContainer = styled.div`
-  display: flex;
-`;

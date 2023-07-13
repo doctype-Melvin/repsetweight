@@ -31,6 +31,14 @@ export default function Form({ onSubmit }) {
           <option value="other">Other</option>
         </select>
       </fieldset>
+      <fieldset className="fieldset__styled">
+        <legend>
+          <label htmlFor="days" name="days">
+            Days
+          </label>
+        </legend>
+        <input className="input-field" type="number" min={1} max={7} name="days" />
+      </fieldset>
       <button type="submit">Submit</button>
     </form>
   );
