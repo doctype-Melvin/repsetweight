@@ -1,0 +1,21 @@
+.container__link {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--beige);
+	border-radius: 10px;
+	padding: 0 1rem;
+}
+
+.link__title {
+	font-weight: 600;
+}
+
+.link__icon {
+	font-size: 3rem;
+}
+
+.link__description {
+	text-align: center;
+}

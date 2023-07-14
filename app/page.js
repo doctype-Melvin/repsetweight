@@ -1,16 +1,22 @@
 import Link from "next/link";
 import styles from "./styles.module.css";
 import TileElement from "@/components/TileElement";
+import { SlBookOpen as Book } from "react-icons/sl"
+import { SlNote as Write } from "react-icons/sl"
+import LinkCard from "@/components/LinkCard";
 
 export default function Home() {
   return (
     <section className={styles.page__container}>
       <TileElement />
       <Link href="/presets" className={styles.link__styled__span}>
-        All Templates
+        <LinkCard linkTitle="All Templates" icon={<Book />} 
+        description="Explore the preset workout templates"/>
       </Link>
       <Link href="/presets/new" className={styles.link__styled__span}>
-        Customize
+        <LinkCard linkTitle="Customize" icon={<Write />} 
+        description="Create your own template"
+        />
       </Link>
     </section>
   );
