@@ -2,7 +2,7 @@
 	display: grid;
 	min-height: 100%;
 	grid-template-columns: 1fr 1fr;
-	grid-template-rows: repeat(auto-fill, minmax(1rem, 50px));
+	grid-template-rows: 1fr repeat(auto-fill, minmax(1rem, 50px));
 	justify-items: center;
 	row-gap: 1rem;
 	padding-top: 1rem;
