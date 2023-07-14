@@ -8,7 +8,7 @@ export default function Home() {
         All Templates
       </Link>
       <Link href="/presets/new" className={styles.link__styled__span}>
-        Create new Template
+        Customize
       </Link>
     </section>
   );

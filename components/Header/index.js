@@ -1,10 +1,11 @@
 import "./styles.css";
+import Navigation from "../Navigation";
 
-export default function Header({ headerText }) {
+export default function Header() {
   return (
     <section className="header__container">
-      {headerText}
-      Header
+        <h1>GoGYM</h1>
+        <Navigation />
     </section>
   );
 }

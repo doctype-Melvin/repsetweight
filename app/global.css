@@ -1,7 +1,8 @@
 :root {
-	--navbar-height: 3rem;
+	--header-height: 190px;
 	--background: #d8d8d8;
 	--lighter-shade: #eeeeee;
+	--lighter-shade-opacity: #eeeeeecc;
 	--dark-contrast: #007a8f;
 	--black: #000;
 	--white: #fff;
