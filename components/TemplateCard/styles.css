@@ -3,7 +3,7 @@
 	margin: 0 auto;
 	padding: 5px;
 	/* margin-bottom: 1rem; */
-	background-color: var(--white);
+	background-color: var(--orange-light);
 	border-radius: 3px;
 	box-shadow: 0px 0px 2px 1px #fff;
 	display: grid;
@@ -20,7 +20,7 @@
 }
 
 .template__link:visited {
-	color: var(--turquoise);
+	color: var(--black);
 }
 
 .template__focus {

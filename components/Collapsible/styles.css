@@ -20,7 +20,7 @@
 
 .button__toggle,
 span {
-	color: var(--dark-contrast);
+	color: var(--white);
 }
 
 .template__description {

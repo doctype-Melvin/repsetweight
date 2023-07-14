@@ -1,9 +1,13 @@
-.container__link {
+.container__link,
+.link__icon {
 	display: flex;
+}
+
+.container__link {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	background-color: var(--beige);
+	background-color: var(--orange-light);
 	border-radius: 10px;
 	padding: 0 1rem;
 }

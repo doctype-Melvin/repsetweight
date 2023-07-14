@@ -1,6 +1,7 @@
 .template__header__container {
 	background-color: transparent;
-	color: var(--dark-contrast);
+	color: var(--black);
+	background-color: var(--orange);
 	padding: 5px;
 	margin-bottom: 1rem;
 }
