@@ -17,7 +17,7 @@ export default function ExerciseForm({ exercises, handler }) {
   };
 
   return (
-    <section>
+    <section className="container__exercise-form">
       <form className="exercise__search__form">
         <input
           className="exercise__search__box"
@@ -28,9 +28,12 @@ export default function ExerciseForm({ exercises, handler }) {
           onChange={handleChange}
           autoComplete="off"
         />
-        <ClientButton textContent="Add" handler={() => onAdd(searchValue)} />
+        <div className="container__exercise-form__buttons">
+          <ClientButton textContent="Add" type="button" handler={() => onAdd(searchValue)} />
+          <ClientButton textContent="Close" type="button" handler={handler} />
+        </div>
       </form>
-      <div>
+      <div className="container__search__results">
         {exercises
           .filter((exercise) => {
             const searchTerm = searchValue.toLowerCase();
@@ -54,7 +57,6 @@ export default function ExerciseForm({ exercises, handler }) {
             </div>
           ))}
       </div>
-      <ClientButton textContent="Close" handler={handler} />
     </section>
   );
 }

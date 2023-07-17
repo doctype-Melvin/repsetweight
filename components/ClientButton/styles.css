@@ -1,14 +1,14 @@
 .button__client {
-  background-color: var(--white);
-  color: var(--black);
-  border: solid 3px var(--orange);
-  display: block;
-  margin: 0 auto;
-  padding: 5px 10px;
-  margin-bottom: 1rem;
+	background-color: var(--white);
+	color: var(--black);
+	border: solid 3px var(--orange);
+	/* display: inline-block; */
+	/* margin: 0 auto; */
+	padding: 5px 10px;
+	/* margin-bottom: 1rem; */
 }
 
 .button__client:active {
-  background-color: var(--orange-light);
-  color: var(--white);
+	background-color: var(--orange-light);
+	color: var(--white);
 }
