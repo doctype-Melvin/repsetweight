@@ -1,25 +1,25 @@
 .container__link,
 .link__icon {
-	display: flex;
+  display: flex;
 }
 
 .container__link {
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	background-color: var(--orange-light);
-	border-radius: 10px;
-	padding: 0 1rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--orange-light);
+  border-radius: 10px;
+  padding: 0 1rem;
 }
 
 .link__title {
-	font-weight: 600;
+  font-weight: 600;
 }
 
 .link__icon {
-	font-size: 3rem;
+  font-size: 3rem;
 }
 
 .link__description {
-	text-align: center;
+  text-align: center;
 }

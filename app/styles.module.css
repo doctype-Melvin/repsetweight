@@ -1,22 +1,22 @@
 .page__container {
-	display: grid;
-	min-height: 100%;
-	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 1fr repeat(auto-fill, minmax(1rem, 260px));
-	justify-items: center;
-	row-gap: 1rem;
-	padding-top: 1rem;
+  display: grid;
+  min-height: 100%;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr repeat(auto-fill, minmax(1rem, 260px));
+  justify-items: center;
+  row-gap: 1rem;
+  padding-top: 1rem;
 }
 
 .link__styled__span {
-	text-decoration: none;
-	color: var(--black);
-	grid-column: 1 / 3;
-	width: 80%;
-	height: 100%;
-	border-radius: 10px;
+  text-decoration: none;
+  color: var(--black);
+  grid-column: 1 / 3;
+  width: 80%;
+  height: 100%;
+  border-radius: 10px;
 }
 
 .link__styled__span:visited {
-	color: var(--black);
+  color: var(--black);
 }

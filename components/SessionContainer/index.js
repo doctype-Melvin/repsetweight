@@ -22,8 +22,12 @@ export default function SessionContainer({ session, exercises }) {
                 <div>{exercise.name.toUpperCase()}</div>
                 <div>{exercise.mode}</div>
                 <div className="container__buttons">
-                  <button type="button" className="button edit">Edit</button>
-                  <button type="button" className="button delete">Delete</button>
+                  <button type="button" className="button edit">
+                    Edit
+                  </button>
+                  <button type="button" className="button delete">
+                    Delete
+                  </button>
                 </div>
               </li>
             ))}

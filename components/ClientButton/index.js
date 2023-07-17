@@ -2,14 +2,14 @@
 
 import "./styles.css";
 
-export default function ClientButton({ textContent, id, handler }) {
+export default function ClientButton({ textContent, type, id, handler }) {
   const handleButtonClick = () => handler();
 
   return (
     <button
-      type="button"
+      type={type}
       className="button__client"
-      onClick={handleButtonClick}
+      onClick={handler ? handleButtonClick : null}
     >
       {textContent}
     </button>

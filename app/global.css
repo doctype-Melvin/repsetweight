@@ -1,39 +1,39 @@
 :root {
-	--header-height: 190px;
-	--grey: #d8d8d8;
-	--lighter-shade: #eeeeee;
-	--lighter-shade-opacity: #eeeeeecc;
-	--dark-grey: #333333;
-	--beige: #ede0d4;
-	--orange-light: #fd7b2b;
-	--orange: #fd6c12;
-	--dark-contrast: #007a8f;
-	--black: #000;
-	--white: #fff;
-	--red: crimson;
-	--yellow: rgb(247, 232, 100);
+  --header-height: 190px;
+  --grey: #d8d8d8;
+  --lighter-shade: #eeeeee;
+  --lighter-shade-opacity: #eeeeeecc;
+  --dark-grey: #333333;
+  --beige: #ede0d4;
+  --orange-light: #fd7b2b;
+  --orange: #fd6c12;
+  --dark-contrast: #007a8f;
+  --black: #000;
+  --white: #fff;
+  --red: crimson;
+  --yellow: rgb(247, 232, 100);
 }
 
 *,
 *:before,
 *:after {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html,
 body {
-	min-height: 100vh;
-	width: 100vw;
-	padding: 0;
-	margin: 0;
-	font-family: sans-serif;
-	background-color: var(--white);
+  min-height: 100vh;
+  width: 100vw;
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+  background-color: var(--white);
 }
 
 .back-link {
-	color: var(--white);
+  color: var(--white);
 }
 
 .back-link:visited {
-	color: var(--turquoise);
+  color: var(--turquoise);
 }
