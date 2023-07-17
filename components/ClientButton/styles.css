@@ -1,11 +1,11 @@
 .button__client {
-	background-color: var(--white);
-	color: var(--black);
-	border: solid 3px var(--orange);
-	padding: 5px 10px;
+  background-color: var(--white);
+  color: var(--black);
+  border: solid 3px var(--orange);
+  padding: 5px 10px;
 }
 
 .button__client:active {
-	background-color: var(--orange-light);
-	color: var(--white);
+  background-color: var(--orange-light);
+  color: var(--white);
 }

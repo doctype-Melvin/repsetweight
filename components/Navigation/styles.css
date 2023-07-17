@@ -1,29 +1,29 @@
 .navigation__container {
-	background-color: transparent;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 0.5rem;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
 }
 
 .navigation__links {
-	font-size: 1.35rem;
-	padding: 0;
-	margin: 0;
-	list-style-type: none;
+  font-size: 1.35rem;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
 }
 
 .navigation__item {
-	text-align: center;
-	padding: 0.35rem 0;
-	display: grid;
-	grid-template-columns: 0.5fr 1fr;
-	justify-items: center;
-	align-items: center;
+  text-align: center;
+  padding: 0.35rem 0;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr;
+  justify-items: center;
+  align-items: center;
 }
 
 .navigation__link {
-	text-decoration: none;
-	color: var(--black);
-	justify-self: start;
+  text-decoration: none;
+  color: var(--black);
+  justify-self: start;
 }
