@@ -5,7 +5,16 @@
 
 .exercise__search__form {
 	display: grid;
-	grid-template-columns: 1fr 0.5fr;
+	grid-template-columns: minmax(125px, 175px) 1fr;
+	position: relative;
+}
+
+.icon__search {
+	position: absolute;
+	top: 8px;
+	left: 20px;
+	font-size: 1.3rem;
+	color: var(--dark-grey);
 }
 
 .exercise__search__box {
@@ -13,8 +22,8 @@
 	padding: 3px 3px 3px 6px;
 	border-radius: 5px;
 	grid-column: 1 / 2;
-	margin: 0 1rem;
 	border: 1px solid var(--dark-grey);
+	margin-left: 1rem;
 }
 
 .container__search__results {
@@ -32,6 +41,6 @@
 
 .container__exercise-form__buttons {
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
 	grid-column: 2 / 3;
 }
