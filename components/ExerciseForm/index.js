@@ -34,9 +34,15 @@ export default function ExerciseForm({ exercises, handler }) {
           <ClientButton
             textContent="Add"
             type="button"
+            modifier="add"
             handler={() => onAdd(searchValue)}
           />
-          <ClientButton textContent="Close" type="button" handler={handler} />
+          <ClientButton
+            textContent="Close"
+            type="button"
+            modifier="close"
+            handler={handler}
+          />
         </div>
       </form>
       <div className="container__search__results">
