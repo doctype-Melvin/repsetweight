@@ -6,6 +6,11 @@ export default async function CreateTemplateForm({params}){
     const { id } = params;
     const newTemplate = await Preset.findById(id);
 
+    const submitHandler = async () => {
+        "use server"
+        console.log('Submit')
+    }
+
     return (
         <section>
             <form className={styles.form__styled}>
@@ -16,12 +21,13 @@ export default async function CreateTemplateForm({params}){
                     <input type="number" name="sets" />
                 </label>
                 <label htmlFor="reps"> Reps
-                    <input type="text" name="reps" />
+                    <input type="number" name="reps" />
                 </label>
                 <label htmlFor="weight"> Weight
-                    <input type="text" name="weight" />
+                    <input type="number" name="weight" />
                 </label>
             </form>
+                <ClientButton type="submit" textContent="Add" modifier="center" handler={submitHandler} />
         </section>
     )
 }
