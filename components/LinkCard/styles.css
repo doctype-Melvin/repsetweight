@@ -7,9 +7,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--orange-light);
+  background-image: linear-gradient(
+    to bottom right,
+    var(--orange-light),
+    var(--orange)
+  );
   border-radius: 10px;
   padding: 0 1rem;
+  box-shadow: 0 0 5px 3px var(--grey);
 }
 
 .link__title {

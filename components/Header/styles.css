@@ -1,7 +1,6 @@
 .header__container {
   position: relative;
   font-size: 1.25rem;
-  /* height: var(--header-height); */
   height: fit-content;
   background-color: var(--orange);
 }
@@ -10,5 +9,5 @@ h1 {
   text-align: center;
   font-size: 3rem;
   margin: 0;
-  padding-top: 0.5rem;
+  padding: 0.5rem 0;
 }
