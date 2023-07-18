@@ -1,5 +1,5 @@
 .layout__container {
-  min-height: 100vh;
+  height: calc(100vh - var(--header-height));
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 0.35fr 5fr 0.5fr;

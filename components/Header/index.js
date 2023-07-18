@@ -1,10 +1,9 @@
 import "./styles.css";
 
-export default function Header({ headerText }) {
+export default function Header() {
   return (
     <section className="header__container">
-      {headerText}
-      Header
+      <h1>GYM:log</h1>
     </section>
   );
 }

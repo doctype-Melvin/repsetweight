@@ -6,35 +6,30 @@ import styles from "./styles.module.css";
 import Exercise from "@/database/models/Exercises";
 import ClientButton from "@/components/ClientButton";
 import dbConnect from "@/database/connectDB";
-import { redirect } from "next/navigation";
 
 export default async function SingleTemplateView({ params }) {
-  
   const { id } = params;
   const preset = await Preset.findById(id);
   const exercises = await JSON.parse(JSON.stringify(await Exercise.find()));
 
   const tempHandler = async () => {
     "use server";
-  await dbConnect();
-  const { id } = params;
-  await Preset.updateMany({ isCurrent: false })
-  await Preset.findByIdAndUpdate(id, { isCurrent: true })
-  console.log('Template set as current')
+    await dbConnect();
+    const { id } = params;
+    await Preset.updateMany({ isCurrent: false });
+    await Preset.findByIdAndUpdate(id, { isCurrent: true });
+    console.log("Template set as current");
   };
 
   if (!preset || !exercises) return <div> Loading ...</div>;
 
   return (
     <section className={styles.modify__template__view}>
-      <Link className="back-link" href="/presets">
-        {" "}
-        &lt; Back{" "}
-      </Link>
       <TemplateHeader name={preset.name} focus={preset.focus} />
       <ClientButton
         textContent="Set Current"
         id={params.id}
+        modifier="center"
         handler={tempHandler}
       />
       <ul className={styles.session__list}>
@@ -43,6 +38,7 @@ export default async function SingleTemplateView({ params }) {
             key={session.id}
             session={session}
             exercises={exercises}
+            mutable={preset.mutable}
           />
         ))}
       </ul>

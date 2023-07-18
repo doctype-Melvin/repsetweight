@@ -1,7 +1,13 @@
 .header__container {
-	background-color: var(--lighter-shade);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 1.25rem;
+  position: relative;
+  font-size: 1.25rem;
+  height: fit-content;
+  background-color: var(--orange);
+}
+
+h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin: 0;
+  padding: 0.5rem 0;
 }

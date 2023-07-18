@@ -1,28 +1,60 @@
 .day__container {
-	width: minmax(300px, 1fr);
-	margin: 0 auto;
-	border-radius: 3px;
-	text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 3px;
+  text-align: center;
+  background-color: var(--grey);
 }
 
 .day__ident {
-	text-align: center;
-	margin-top: 0;
-	background-color: var(--white);
-	padding: 0.5rem;
-	font-size: 1.15rem;
+  text-align: center;
+  margin-top: 0;
+  background-color: var(--orange);
+  padding: 0.5rem;
+  font-size: 1.15rem;
 }
 
 .day__exercise__list {
-	list-style-type: none;
-	padding: 0 0 1rem 0;
-	width: 100%;
+  list-style-type: none;
+  padding: 0 0 1rem 0;
+  width: 100%;
 }
 
 .day__exercise__item {
-	width: 70%;
-	display: flex;
-	justify-content: space-between;
-	margin: 0 auto;
-	padding: 3px;
+  width: 95%;
+  display: grid;
+  grid-template-columns: 1fr 0.5fr 0.5fr;
+  grid-template-rows: auto;
+  align-items: center;
+  margin: 0 auto;
+  padding: 3px;
+}
+
+.two__columns {
+  grid-template-columns: 1fr 1fr;
+  width: 85%;
+}
+
+.three__columns {
+  grid-template-columns: 1fr 0.5fr 0.5fr;
+}
+
+.container__buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  border: none;
+  padding: 2px 3px;
+}
+
+.edit {
+  background-color: var(--yellow);
+  color: var(--black);
+}
+
+.delete {
+  background-color: var(--red);
+  color: var(--white);
 }

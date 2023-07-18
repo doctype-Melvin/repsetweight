@@ -12,8 +12,8 @@ export async function GET(request, { params }) {
 export async function PATCH(request, { params }) {
   await dbConnect();
   const { id } = params;
-  await Preset.findByIdAndUpdate(id, { isCurrent: true})
-  return NextResponse.alert('Template set to current');
+  await Preset.findByIdAndUpdate(id, { isCurrent: true });
+  return NextResponse.alert("Template set to current");
 }
 
 // Create the endpoint to update and to delete

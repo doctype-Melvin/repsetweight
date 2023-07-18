@@ -3,6 +3,7 @@
 import "./styles.css";
 import { useState } from "react";
 import ClientButton from "../ClientButton";
+import { AiOutlineSearch as Search } from "react-icons/ai";
 
 export default function ExerciseForm({ exercises, handler }) {
   const [searchValue, setSearchValue] = useState("");
@@ -17,7 +18,7 @@ export default function ExerciseForm({ exercises, handler }) {
   };
 
   return (
-    <section>
+    <section className="container__exercise-form">
       <form className="exercise__search__form">
         <input
           className="exercise__search__box"
@@ -28,9 +29,23 @@ export default function ExerciseForm({ exercises, handler }) {
           onChange={handleChange}
           autoComplete="off"
         />
-        <ClientButton textContent="Add" handler={() => onAdd(searchValue)} />
+        {searchValue === "" && <Search className="icon__search" />}
+        <div className="container__exercise-form__buttons">
+          <ClientButton
+            textContent="Add"
+            type="button"
+            modifier="add"
+            handler={() => onAdd(searchValue)}
+          />
+          <ClientButton
+            textContent="Close"
+            type="button"
+            modifier="close"
+            handler={handler}
+          />
+        </div>
       </form>
-      <div>
+      <div className="container__search__results">
         {exercises
           .filter((exercise) => {
             const searchTerm = searchValue.toLowerCase();
@@ -54,7 +69,6 @@ export default function ExerciseForm({ exercises, handler }) {
             </div>
           ))}
       </div>
-      <ClientButton textContent="Close" handler={handler} />
     </section>
   );
 }

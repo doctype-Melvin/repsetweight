@@ -2,18 +2,21 @@
   display: grid;
   min-height: 100%;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(auto-fill, 3rem);
+  grid-template-rows: 1fr repeat(auto-fill, minmax(1rem, 260px));
   justify-items: center;
   row-gap: 1rem;
   padding-top: 1rem;
-  /* padding-bottom: calc(20px + var(--navbar-height)); */
 }
 
-.link__styled {
+.link__styled__span {
   text-decoration: none;
-  color: var(--white);
+  color: var(--black);
+  grid-column: 1 / 3;
+  width: 80%;
+  height: 100%;
+  border-radius: 10px;
 }
 
-.link__styled:visited {
-  color: var(--turquoise);
+.link__styled__span:visited {
+  color: var(--black);
 }
