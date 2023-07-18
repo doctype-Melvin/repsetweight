@@ -26,10 +26,10 @@ export default async function SingleTemplateView({ params }) {
 
   return (
     <section className={styles.modify__template__view}>
-      <Link className="back-link" href="/presets">
+      {/* <Link className="back-link" href="/presets">
         {" "}
         &lt; Back{" "}
-      </Link>
+      </Link> */}
       <TemplateHeader name={preset.name} focus={preset.focus} />
       <ClientButton
         textContent="Set Current"

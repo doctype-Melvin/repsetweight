@@ -9,21 +9,18 @@ export default function Navigation() {
     <nav className="navigation__container">
       <ul className="navigation__links">
         <li key="home-link" className="navigation__item">
-          <Home />
           <Link className="navigation__link" href="/">
-            Home
+            <Home />
           </Link>
         </li>
         <li key="all-templates-link" className="navigation__item">
-          <Book />
           <Link className="navigation__link" href="/presets">
-            All Templates
+            <Book />
           </Link>
         </li>
         <li key="create-template-link" className="navigation__item">
-          <Write />
           <Link className="navigation__link" href="/presets/new">
-            Customize
+            <Write />
           </Link>
         </li>
       </ul>
