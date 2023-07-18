@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Preset from "@/database/models/Presets";
 import TemplateHeader from "@/components/TemplateHeader";
 import SessionContainer from "@/components/SessionContainer";

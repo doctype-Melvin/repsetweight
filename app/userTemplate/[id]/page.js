@@ -1,7 +1,27 @@
 import Preset from "@/database/models/Presets";
+import ClientButton from "@/components/ClientButton";
+import styles from "./styles.module.css"
 
 export default async function CreateTemplateForm({params}){
     const { id } = params;
     const newTemplate = await Preset.findById(id);
-    console.log(newTemplate)
+
+    return (
+        <section>
+            <form className={styles.form__styled}>
+                <label htmlFor="exercise"> Exercise
+                    <input type="text" name="exercise" />
+                </label>
+                <label htmlFor="sets"> Sets
+                    <input type="number" name="sets" />
+                </label>
+                <label htmlFor="reps"> Reps
+                    <input type="text" name="reps" />
+                </label>
+                <label htmlFor="weight"> Weight
+                    <input type="text" name="weight" />
+                </label>
+            </form>
+        </section>
+    )
 }
