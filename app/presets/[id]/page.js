@@ -6,7 +6,6 @@ import styles from "./styles.module.css";
 import Exercise from "@/database/models/Exercises";
 import ClientButton from "@/components/ClientButton";
 import dbConnect from "@/database/connectDB";
-import { redirect } from "next/navigation";
 
 export default async function SingleTemplateView({ params }) {
   const { id } = params;
@@ -26,10 +25,6 @@ export default async function SingleTemplateView({ params }) {
 
   return (
     <section className={styles.modify__template__view}>
-      {/* <Link className="back-link" href="/presets">
-        {" "}
-        &lt; Back{" "}
-      </Link> */}
       <TemplateHeader name={preset.name} focus={preset.focus} />
       <ClientButton
         textContent="Set Current"

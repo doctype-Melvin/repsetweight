@@ -4,7 +4,6 @@ import styles from "./styles.module.css";
 import dbConnect from "@/database/connectDB";
 import Preset from "@/database/models/Presets";
 import { redirect } from "next/navigation";
-import { nanoid } from "nanoid";
 
 export default function CreateTemplate() {
   const createTemplate = async (FormData) => {
@@ -12,12 +11,7 @@ export default function CreateTemplate() {
     const name = FormData.get("templateName")?.valueOf();
     const focus = FormData.get("focus")?.valueOf();
     const description = FormData.get("description")?.valueOf();
-    const initialDay = {
-      day: 1,
-      exercises: [],
-      id: nanoid(4),
-    };
-    const routine = [initialDay];
+    const routine = [];
     // This needs error handling
     // Don't use try catch as the redirect() will
     // trigger the catch block
@@ -30,7 +24,7 @@ export default function CreateTemplate() {
       mutable: true,
       isCurrent: false,
     });
-    redirect(`/presets/${id}`);
+    redirect(`/userTemplate/${id}`);
   };
 
   return (

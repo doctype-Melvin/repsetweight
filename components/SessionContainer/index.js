@@ -40,7 +40,8 @@ export default function SessionContainer({ session, exercises, mutable }) {
           </ul>
         )}
       </li>
-      {!toggleForm && (
+      
+      {mutable && !toggleForm && (
         <ClientButton
           textContent="Add Exercise"
           modifier="center"
@@ -50,6 +51,7 @@ export default function SessionContainer({ session, exercises, mutable }) {
       {toggleForm && (
         <ExerciseForm exercises={exercises} handler={handleToggleForm} />
       )}
+      
     </>
   );
 }
