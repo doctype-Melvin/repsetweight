@@ -2,7 +2,13 @@
 
 import "./styles.css";
 
-export default function ClientButton({ textContent, type, handler, modifier }) {
+export default function ClientButton({
+  textContent,
+  type,
+  handler,
+  modifier,
+  id,
+}) {
   const onButtonClick = () => handler();
 
   return (

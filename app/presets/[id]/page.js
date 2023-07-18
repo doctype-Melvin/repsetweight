@@ -34,6 +34,7 @@ export default async function SingleTemplateView({ params }) {
       <ClientButton
         textContent="Set Current"
         id={params.id}
+        modifier="center"
         handler={tempHandler}
       />
       <ul className={styles.session__list}>
@@ -42,6 +43,7 @@ export default async function SingleTemplateView({ params }) {
             key={session.id}
             session={session}
             exercises={exercises}
+            mutable={preset.mutable}
           />
         ))}
       </ul>

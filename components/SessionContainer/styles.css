@@ -30,6 +30,15 @@
   padding: 3px;
 }
 
+.two__columns {
+  grid-template-columns: 1fr 1fr;
+  width: 85%;
+}
+
+.three__columns {
+  grid-template-columns: 1fr 0.5fr 0.5fr;
+}
+
 .container__buttons {
   display: flex;
   justify-content: space-between;
