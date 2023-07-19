@@ -1,18 +1,21 @@
-import Preset from "@/database/models/Presets";
+"use client"
+
 import ClientButton from "@/components/ClientButton";
 import styles from "./styles.module.css"
+import useSWR from "swr"
+import { fetcher } from "@/utils/helpers";
+import TemplateHeader from "@/components/TemplateHeader";
 
-export default async function CreateTemplateForm({params}){
+export default function CreateTemplateForm({params}){
     const { id } = params;
-    const newTemplate = await Preset.findById(id);
+    console.log(id)
+    const { data, isLoading } = useSWR(`/api/templates/${id}`, fetcher)
 
-    const submitHandler = async () => {
-        "use server"
-        console.log('Submit')
-    }
+    if (!data || isLoading) return <div>Loading ... </div>
 
     return (
         <section>
+            <TemplateHeader name={data.name} focus={data.focus} />
             <form className={styles.form__styled}>
                 <label htmlFor="exercise"> Exercise
                     <input type="text" name="exercise" />
@@ -27,7 +30,7 @@ export default async function CreateTemplateForm({params}){
                     <input type="number" name="weight" />
                 </label>
             </form>
-                <ClientButton type="submit" textContent="Add" modifier="center" handler={submitHandler} />
+                <ClientButton type="submit" textContent="Add" modifier="center"  />
         </section>
     )
 }
