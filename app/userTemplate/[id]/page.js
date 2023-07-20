@@ -1,22 +1,39 @@
-"use client"
+"use client";
 
 import ClientButton from "@/components/ClientButton";
-import useSWR from "swr"
+import useSWR from "swr";
 import { fetcher } from "@/utils/helpers";
 import TemplateHeader from "@/components/TemplateHeader";
+import { nanoid } from "nanoid";
 import FormExerciseDetails from "@/components/FormExerciseDetails";
 
-export default function CreateTemplateForm({params}){
-    const { id } = params;
-    console.log(id)
-    const { data, isLoading } = useSWR(`/api/templates/${id}`, fetcher)
+export default function CreateTemplateForm({ params }) {
+  const { id } = params;
+  const { data, isLoading, mutate } = useSWR(`/api/templates/${id}`, fetcher);
+  console.log(id);
 
-    if (!data || isLoading) return <div>Loading ... </div>
+  const addNewDay = async () => {
+    const day = {
+      day: data.routine.length + 1,
+      exercises: [],
+      id: nanoid(4),
+    };
+    const updatedRoutine = [...data.routine, day];
+    mutate({ ...data, routine: updatedRoutine });
+    console.log("Add new day button");
+  };
 
-    return (
-        <section>
-            <TemplateHeader name={data.name} focus={data.focus} />
-            <ClientButton type="submit" textContent="Add" modifier="center"  />
-        </section>
-    )
+  if (!data || isLoading) return <div>Loading ... </div>;
+
+  return (
+    <section>
+      <TemplateHeader name={data.name} focus={data.focus} />
+      <ClientButton
+        type="submit"
+        textContent="Add Day"
+        modifier="center"
+        handler={addNewDay}
+      />
+    </section>
+  );
 }
