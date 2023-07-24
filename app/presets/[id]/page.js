@@ -1,23 +1,21 @@
-"use client";
-
 import TemplateHeader from "@/components/TemplateHeader";
 import SessionContainer from "@/components/SessionContainer";
 import styles from "./styles.module.css";
 import ClientButton from "@/components/ClientButton";
-import { nanoid } from "nanoid";
-import useSWR from "swr";
-import { fetcher } from "@/utils/helpers";
 
-export default function SingleTemplateView({ params }) {
+const getData = async (id) => {
+  const response = await fetch(`http://localhost:3000/api/templates/${id}`)
+  if (!response.ok) {
+    throw new Error(`Fetching ${id} failed`)
+  }
+  return response.json()
+}
+
+export default async function SingleTemplateView( { params }) {
   const { id } = params;
-  const {
-    data: template,
-    isLoading,
-    mutate,
-  } = useSWR(`/api/templates/${id}`, fetcher);
-  const { data: exercises, error } = useSWR("/api/exercises");
+  const template = await getData(id)
 
-  if (!template || isLoading) return <div> Loading ...</div>;
+  if (!template) return <div> Loading ...</div>;
 
   return (
     <section className={styles.modify__template__view}>
@@ -34,7 +32,7 @@ export default function SingleTemplateView({ params }) {
           <SessionContainer
             key={session.id}
             session={session}
-            exercises={exercises}
+            // exercises={exercises}
             mutable={template.mutable}
           />
         ))}

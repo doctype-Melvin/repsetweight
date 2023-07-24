@@ -5,9 +5,10 @@ import ClientButton from "../ClientButton";
 import ExerciseForm from "../ExerciseForm";
 import { useState } from "react";
 
+
 export default function SessionContainer({ session, exercises, mutable }) {
   const [toggleForm, setToggleForm] = useState(false);
-
+  
   const handleToggleForm = () => setToggleForm(!toggleForm);
 
   return (
