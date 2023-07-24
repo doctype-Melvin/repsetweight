@@ -3,15 +3,32 @@ import SessionContainer from "@/components/SessionContainer";
 import styles from "./styles.module.css";
 import ClientButton from "@/components/ClientButton";
 import { getTemplate, getExercises } from "@/utils/helpers";
+import { nanoid } from "nanoid";
+import Preset from "@/database/models/Presets";
 
 export default async function SingleTemplateView( { params }) {
   const { id } = params;
+
   const templateData = getTemplate(id);
   const exercisesData = getExercises();
-
   const [ template, exercises ] = await Promise.all([templateData, exercisesData])
 
-  if (!template) return <div> Loading ...</div>;
+  const handleAddDay = async () => {
+    "use server"
+    const day = {
+      day: template.routine.length + 1,
+      exercises: [],
+      id: nanoid(4),
+    }
+
+    const updatedRoutine = template.routine;
+    updatedRoutine[updatedRoutine.length] = day
+    await Preset.findByIdAndUpdate(id, { routine: updatedRoutine})
+    console.log(`Added day ${day.day} to ${template.name}`)
+  }
+
+
+  
 
   return (
     <section className={styles.modify__template__view}>
@@ -34,7 +51,7 @@ export default async function SingleTemplateView( { params }) {
         ))}
       </ul>
       {template.routine.length < 7 && template.mutable && (
-        <ClientButton textContent="Add Day" modifier="center" />
+        <ClientButton textContent="Add Day" modifier="center" handler={handleAddDay} />
       )}
       {/* Fetch the routine array */}
       {/* Render the first day of a new template */}
