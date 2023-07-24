@@ -3,7 +3,7 @@ import SessionContainer from "@/components/SessionContainer";
 import styles from "./styles.module.css";
 import ClientButton from "@/components/ClientButton";
 
-const getData = async (id) => {
+const getTemplate = async (id) => {
   const response = await fetch(`http://localhost:3000/api/templates/${id}`)
   if (!response.ok) {
     throw new Error(`Fetching ${id} failed`)
@@ -11,9 +11,20 @@ const getData = async (id) => {
   return response.json()
 }
 
+const getExercises = async () => {
+  const response = await fetch(`http://localhost:3000/api/exercises`)
+  if (!response.ok) {
+    throw new Error(`Fetching exercises failed`)
+   }
+   return response.json()
+}
+
 export default async function SingleTemplateView( { params }) {
   const { id } = params;
-  const template = await getData(id)
+  const templateData = getTemplate(id);
+  const exercisesData = getExercises();
+
+  const [ template, exercises ] = await Promise.all([templateData, exercisesData])
 
   if (!template) return <div> Loading ...</div>;
 
@@ -32,7 +43,7 @@ export default async function SingleTemplateView( { params }) {
           <SessionContainer
             key={session.id}
             session={session}
-            // exercises={exercises}
+            exercises={exercises}
             mutable={template.mutable}
           />
         ))}
