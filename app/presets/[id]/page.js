@@ -2,22 +2,7 @@ import TemplateHeader from "@/components/TemplateHeader";
 import SessionContainer from "@/components/SessionContainer";
 import styles from "./styles.module.css";
 import ClientButton from "@/components/ClientButton";
-
-const getTemplate = async (id) => {
-  const response = await fetch(`http://localhost:3000/api/templates/${id}`)
-  if (!response.ok) {
-    throw new Error(`Fetching ${id} failed`)
-  }
-  return response.json()
-}
-
-const getExercises = async () => {
-  const response = await fetch(`http://localhost:3000/api/exercises`)
-  if (!response.ok) {
-    throw new Error(`Fetching exercises failed`)
-   }
-   return response.json()
-}
+import { getTemplate, getExercises } from "@/utils/helpers";
 
 export default async function SingleTemplateView( { params }) {
   const { id } = params;
