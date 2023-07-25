@@ -3,11 +3,32 @@ form {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	grid-template-rows: repeat(auto-fit, 0.5fr);
+	align-items: center;
 	font-size: 1.25rem;
 	margin: 0 auto;
+	row-gap: 0.25rem;
+}
+
+section {
+	position: relative;
 }
 
 .button__form {
 	grid-column: 1 / 3;
 	display: flex;
+}
+
+input {
+	padding: 0.25rem;
+}
+
+.container__suggestions {
+	background-color: var(--white);
+	color: var(--black);
+	position: absolute;
+	bottom: 0;
+	right: 1rem;
+	padding: 0.25rem 0.5rem;
+	width: 90vw;
+	height: fit-content;
 }
