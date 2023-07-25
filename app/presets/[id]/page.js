@@ -6,7 +6,7 @@ import { getTemplate, getExercises } from "@/utils/helpers";
 import { nanoid } from "nanoid";
 import Preset from "@/database/models/Presets";
 
-export default async function SingleTemplateView( { params }) {
+export default async function TemplateDetail( { params }) {
   const { id } = params;
 
   const templateData = getTemplate(id);
@@ -25,6 +25,7 @@ export default async function SingleTemplateView( { params }) {
     updatedRoutine[updatedRoutine.length] = day
     await Preset.findByIdAndUpdate(id, { routine: updatedRoutine})
     console.log(`Added day ${day.day} to ${template.name}`)
+    // App needs to rerender immediately
   }
 
 

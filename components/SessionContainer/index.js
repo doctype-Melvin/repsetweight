@@ -3,6 +3,7 @@
 import "./styles.css";
 import ClientButton from "../ClientButton";
 import ExerciseForm from "../ExerciseForm";
+import FormExerciseDetails from "../FormExerciseDetails";
 import { useState } from "react";
 
 
@@ -50,7 +51,7 @@ export default function SessionContainer({ session, exercises, mutable }) {
         />
       )}
       {toggleForm && (
-        <ExerciseForm exercises={exercises} handler={handleToggleForm} />
+        <FormExerciseDetails exercises={exercises} handler={handleToggleForm} />
       )}
       
     </>
