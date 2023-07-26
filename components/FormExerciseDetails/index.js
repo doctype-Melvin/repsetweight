@@ -45,7 +45,7 @@ export default function FormExerciseDetails({exercises, handler}){
                 <ClientButton type="button" modifier="center close" textContent="Close" handler={handler} />
                 </div>
             </form>
-            {name === "" && <div className="container__suggestions">
+            {name === "" && <ul className="container__suggestions">
                         {exercises.filter((exercise) => {
                             const searchTerm = searchValue.toLowerCase();
                             const exerciseName = exercise.name.toLowerCase();
@@ -56,16 +56,16 @@ export default function FormExerciseDetails({exercises, handler}){
                             )
                         }).slice(0, 5)
                         .map((exercise) => (
-                            <div className="search__results"
+                            <li className="search__results"
                             key={exercise.id}
                             onClick={() => onAdd(exercise.name)}
                             exercise={exercise}
                             >
                             {exercise.name}
-                            </div>
+                            </li>
                         ))
                         }
-            </div>}
+            </ul>}
         </section>
     )
 }
