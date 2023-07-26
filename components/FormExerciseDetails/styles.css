@@ -23,12 +23,22 @@ input {
 }
 
 .container__suggestions {
-	background-color: var(--white);
+	background-color: var(--grey);
 	color: var(--black);
 	position: absolute;
-	bottom: 0;
+	top: 2rem;
 	right: 1rem;
 	padding: 0.25rem 0.5rem;
 	width: 90vw;
 	height: fit-content;
+	list-style-type: none;
+}
+
+.search__results {
+	padding: .5rem;
+}
+
+.search__results:hover {
+	background-color: var(--white);
+	cursor: pointer;
 }
