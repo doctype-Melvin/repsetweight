@@ -4,6 +4,7 @@ import "./styles.css"
 import ClientButton from "../ClientButton"
 import { useState } from "react"
 
+
 export default function FormExerciseDetails({exercises, handler}){
     const [ searchValue, setSearchValue ] = useState("")
     const [ name, setName ] = useState("")

@@ -28,9 +28,6 @@ export default async function TemplateDetail( { params }) {
     // App needs to rerender immediately
   }
 
-
-  
-
   return (
     <section className={styles.modify__template__view}>
       <TemplateHeader name={template.name} focus={template.focus} />
@@ -48,6 +45,7 @@ export default async function TemplateDetail( { params }) {
             session={session}
             exercises={exercises}
             mutable={template.mutable}
+            presetId={id}
           />
         ))}
       </ul>
