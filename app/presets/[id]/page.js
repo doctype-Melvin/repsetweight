@@ -53,16 +53,7 @@ export default async function TemplateDetail({ params }) {
           <SessionList id={false} template={template} />
         ) 
       }
-      {template.routine.length < 7 && template.mutable && (
-        <ClientButton
-          textContent="Add Day"
-          modifier="center"
-          handler={handleAddDay}
-        />
-      )}
-      {/* Fetch the routine array */}
-      {/* Render the first day of a new template */}
-      {/* The day component allows for CRUDing exercises  */}
+      
     </section>
   );
 }

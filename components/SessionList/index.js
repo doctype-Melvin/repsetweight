@@ -20,6 +20,10 @@ export default function SessionList({ id, template }) {
                     <div>Static Data</div>
                 )
             }
+            {
+                !template && <ClientButton textContent="Add Day"
+                modifier="center" handler={() => console.log('Add day here')} />
+          }
         </>
     )
 }
