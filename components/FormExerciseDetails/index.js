@@ -44,22 +44,22 @@ export default function FormExerciseDetails({exercises, toggleForm}){
                 <label htmlFor="exercise">
                     Exercise
                 </label>
-                    <input type="text" name="exercise" value={searchValue} onChange={handleChange}
+                    <input type="text" name="exercise" value={searchValue} onChange={handleChange} required
                 
                     />
                     
                 <label htmlFor="sets">
                     Sets
                 </label>
-                    <input type="number" name="sets" onFocus={handleFocus} />
+                    <input type="number" name="sets" onFocus={handleFocus} required />
                 <label htmlFor="reps">
                     Reps
                 </label>
-                    <input type="number" name="reps" onFocus={handleFocus} />
+                    <input type="number" name="reps" onFocus={handleFocus} required/>
                 <label htmlFor="weight">
                     Weight
                 </label>
-                    <input type="number" name="weight" onFocus={handleFocus} />
+                    <input type="number" name="weight" onFocus={handleFocus} required />
                 <div className="button__form">
                 <ClientButton type="submit" modifier="center add" textContent="Add" />
                 <ClientButton type="button" modifier="center close" textContent="Close" handler={toggleForm} />
