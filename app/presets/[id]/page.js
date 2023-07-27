@@ -1,10 +1,11 @@
 import TemplateHeader from "@/components/TemplateHeader";
 import SessionContainer from "@/components/SessionContainer";
-import styles from "./styles.module.css";
 import ClientButton from "@/components/ClientButton";
+import SessionList from "@/components/SessionList";
+import Preset from "@/database/models/Presets";
 import { getTemplate, getExercises } from "@/utils/helpers";
 import { nanoid } from "nanoid";
-import Preset from "@/database/models/Presets";
+import styles from "./styles.module.css";
 
 export default async function TemplateDetail({ params }) {
   const { id } = params;
@@ -45,18 +46,13 @@ export default async function TemplateDetail({ params }) {
           modifier="center"
         />
       )}
-
-      <ul className={styles.session__list}>
-        {template.routine.map((session) => (
-          <SessionContainer
-            key={session.id}
-            session={session}
-            exercises={exercises}
-            mutable={template.mutable}
-            presetId={id}
-          />
-        ))}
-      </ul>
+      {
+        template.mutable ? (
+          <SessionList id={template._id} template={false} />
+        ) : (
+          <SessionList id={false} template={template} />
+        ) 
+      }
       {template.routine.length < 7 && template.mutable && (
         <ClientButton
           textContent="Add Day"
