@@ -31,7 +31,7 @@ export default async function TemplateDetail( { params }) {
   return (
     <section className={styles.modify__template__view}>
       <TemplateHeader name={template.name} focus={template.focus} />
-      {template.routine.length > 0 && (
+      {!template.isCurrent && (
         <ClientButton
           textContent="Set Current"
           id={params.id}

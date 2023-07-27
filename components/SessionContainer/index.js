@@ -4,11 +4,16 @@ import "./styles.css";
 import ClientButton from "../ClientButton";
 import FormExerciseDetails from "../FormExerciseDetails";
 import { useState } from "react";
+import useSWR from "swr"
 
+export const fetcher = (...args) => fetch(...args).then(response => response.json())
 
 export default function SessionContainer({ session, exercises, mutable, presetId }) {
   const [toggleForm, setToggleForm] = useState(false);
   const handleToggleForm = () => setToggleForm(!toggleForm);
+  const { data, isLoading } = useSWR(`/api/templates/${presetId}`, fetcher)
+
+  if (!data || isLoading) return <div>Loading data ...</div>
   
   return (
     <>
