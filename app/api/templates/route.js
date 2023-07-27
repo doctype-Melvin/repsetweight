@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   await dbConnect();
-  console.log('Connected to DB')
+  console.log("Connected to DB");
   try {
     const templates = await Preset.find();
     return NextResponse.json(templates);

@@ -8,18 +8,19 @@ export const addDayToRoutine = async (id, updatedRoutine) => {
 };
 
 export const getTemplate = async (id) => {
-  const response = await fetch(`http://localhost:3000/api/templates/${id}`, { cache: 'no-store'})
+  const response = await fetch(`http://localhost:3000/api/templates/${id}`, {
+    cache: "no-store",
+  });
   if (!response.ok) {
-    throw new Error(`Fetching ${id} failed`)
+    throw new Error(`Fetching ${id} failed`);
   }
-  return response.json()
-}
+  return response.json();
+};
 
 export const getExercises = async () => {
-  const response = await fetch(`http://localhost:3000/api/exercises`)
+  const response = await fetch(`http://localhost:3000/api/exercises`);
   if (!response.ok) {
-    throw new Error(`Fetching exercises failed`)
-   }
-   return response.json()
-}
-
+    throw new Error(`Fetching exercises failed`);
+  }
+  return response.json();
+};

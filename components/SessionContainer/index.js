@@ -4,17 +4,23 @@ import "./styles.css";
 import ClientButton from "../ClientButton";
 import FormExerciseDetails from "../FormExerciseDetails";
 import { useState } from "react";
-import useSWR from "swr"
+import useSWR from "swr";
 
-export const fetcher = (...args) => fetch(...args).then(response => response.json())
+export const fetcher = (...args) =>
+  fetch(...args).then((response) => response.json());
 
-export default function SessionContainer({ session, exercises, mutable, presetId }) {
+export default function SessionContainer({
+  session,
+  exercises,
+  mutable,
+  presetId,
+}) {
   const [toggleForm, setToggleForm] = useState(false);
   const handleToggleForm = () => setToggleForm(!toggleForm);
-  const { data, isLoading } = useSWR(`/api/templates/${presetId}`, fetcher)
+  const { data } = useSWR(`/api/templates/${presetId}`, fetcher);
 
-  if (!data || isLoading) return <div>Loading data ...</div>
-  
+  // if (!data || isLoading) return <div>Loading data ...</div>
+
   return (
     <>
       <li className="day__container">
@@ -26,7 +32,7 @@ export default function SessionContainer({ session, exercises, mutable, presetId
                 className={`day__exercise__item ${
                   mutable ? "three__columns" : "two__columns"
                 }`}
-                key={index + exercise}
+                key={index + exercise.name}
               >
                 <div>{exercise.name.toUpperCase()}</div>
                 <div>{exercise.mode}</div>
@@ -45,7 +51,7 @@ export default function SessionContainer({ session, exercises, mutable, presetId
           </ul>
         )}
       </li>
-      
+
       {mutable && !toggleForm && (
         <ClientButton
           textContent="Add Exercise"
@@ -54,9 +60,11 @@ export default function SessionContainer({ session, exercises, mutable, presetId
         />
       )}
       {toggleForm && (
-        <FormExerciseDetails exercises={exercises} toggleForm={handleToggleForm} />
+        <FormExerciseDetails
+          exercises={exercises}
+          toggleForm={handleToggleForm}
+        />
       )}
-      
     </>
   );
 }
