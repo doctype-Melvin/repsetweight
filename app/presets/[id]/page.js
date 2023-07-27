@@ -15,7 +15,11 @@ export default async function TemplateDetail({ params }) {
     templateData,
     exercisesData,
   ]);
-
+  // The app can evaluate if the template is mutable or not
+  // If it is immutable, the data is static and can be rendered as is
+  // Otherwise, data can be mutated by the user
+  // In this case render client components and use SWR to handle dynamic
+  //    data mutations and data updates
   const handleAddDay = async () => {
     "use server";
     const day = {
@@ -41,9 +45,7 @@ export default async function TemplateDetail({ params }) {
           modifier="center"
         />
       )}
-      {/* Turn ul into component
-      useSWR to fetch sessions/days
-      Put Add Day Button into ul component */}
+
       <ul className={styles.session__list}>
         {template.routine.map((session) => (
           <SessionContainer
