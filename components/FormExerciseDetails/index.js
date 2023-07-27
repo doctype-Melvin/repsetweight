@@ -7,17 +7,34 @@ import { useState } from "react"
 
 export default function FormExerciseDetails({exercises, handler}){
     const [ searchValue, setSearchValue ] = useState("")
-    const [ name, setName ] = useState("")
+    const [ userChoice, setUserChoice ] = useState(false)
 
     const onAdd = (searchTerm) => {
         setSearchValue(searchTerm);
-        setName(searchTerm);
+        setUserChoice(true);
     }
 
     const handleChange = (event) => {
         setSearchValue(event.target.value);
-        setName("")
+        setUserChoice(false);
     }
+
+    const handleBlur = () => {
+        const searchTerm = searchValue.toLowerCase();
+        const exactMatch = exercises.find((exercise) => exercise.name.toLowerCase() === searchTerm); 
+        if (exactMatch) {
+            setUserChoice(true);
+        }
+    }
+
+    const searchSuggestions = exercises.filter(exercise => {
+        const searchTerm = searchValue.toLowerCase();
+        const exerciseName = exercise.name.toLowerCase();
+        return (
+                searchTerm &&
+                exerciseName.includes(searchTerm) &&
+                exerciseName !== searchTerm
+        )}).slice(0, 5)
 
     return (
         <section>
@@ -26,6 +43,7 @@ export default function FormExerciseDetails({exercises, handler}){
                     Exercise
                 </label>
                     <input type="text" name="exercise" value={searchValue} onChange={handleChange}
+                    // onBlur={() => setUserChoice(true)}
                     />
                     
                 <label htmlFor="sets">
@@ -45,26 +63,17 @@ export default function FormExerciseDetails({exercises, handler}){
                 <ClientButton type="button" modifier="center close" textContent="Close" handler={handler} />
                 </div>
             </form>
-            {name === "" && <ul className="container__suggestions">
-                        {exercises.filter((exercise) => {
-                            const searchTerm = searchValue.toLowerCase();
-                            const exerciseName = exercise.name.toLowerCase();
-                            return (
-                                searchTerm &&
-                                exerciseName.includes(searchTerm) &&
-                                exerciseName !== searchTerm
-                            )
-                        }).slice(0, 5)
-                        .map((exercise) => (
-                            <li className="search__results"
+            {!userChoice && searchSuggestions.length > 0 && <ul className="container__suggestions">
+                        {searchSuggestions.map((exercise) => (
+                            <li 
+                            className="search__results"
                             key={exercise.id}
                             onClick={() => onAdd(exercise.name)}
                             exercise={exercise}
                             >
                             {exercise.name}
                             </li>
-                        ))
-                        }
+                        ))}
             </ul>}
         </section>
     )

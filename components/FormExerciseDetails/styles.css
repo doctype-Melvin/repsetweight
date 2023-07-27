@@ -27,9 +27,9 @@ input {
 	color: var(--black);
 	position: absolute;
 	top: 2rem;
-	right: 1rem;
+	left: 1rem;
 	padding: 0.25rem 0.5rem;
-	width: 90vw;
+	width: 50%;
 	height: fit-content;
 	list-style-type: none;
 }
