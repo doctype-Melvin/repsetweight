@@ -66,8 +66,8 @@ export default function FormExerciseDetails({exercises, handler}){
             {!userChoice && searchSuggestions.length > 0 && <ul className="container__suggestions">
                         {searchSuggestions.map((exercise) => (
                             <li 
+                            key={exercise._id}
                             className="search__results"
-                            key={exercise.id}
                             onClick={() => onAdd(exercise.name)}
                             exercise={exercise}
                             >
