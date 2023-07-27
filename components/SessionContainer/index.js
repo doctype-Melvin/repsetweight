@@ -49,7 +49,7 @@ export default function SessionContainer({ session, exercises, mutable, presetId
         />
       )}
       {toggleForm && (
-        <FormExerciseDetails exercises={exercises} handler={handleToggleForm} />
+        <FormExerciseDetails exercises={exercises} toggleForm={handleToggleForm} />
       )}
       
     </>
