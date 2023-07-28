@@ -16,7 +16,7 @@ export default async function TemplateDetail({ params }) {
     templateData,
     exercisesData,
   ]);
-  // The app can evaluate if the template is mutable or not
+  // This component will evaluate if the template is mutable or not
   // If it is immutable, the data is static and can be rendered as is
   // Otherwise, data can be mutated by the user
   // In this case render client components and use SWR to handle dynamic
@@ -50,10 +50,9 @@ export default async function TemplateDetail({ params }) {
         template.mutable ? (
           <SessionList id={template._id} template={false} />
         ) : (
-          <SessionList id={false} template={template} />
+          <SessionList id={false} template={template}  />
         ) 
       }
-      
     </section>
   );
 }

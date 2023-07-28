@@ -11,13 +11,12 @@ export const fetcher = (...args) =>
 
 export default function SessionContainer({
   session,
-  exercises,
   mutable,
   presetId,
 }) {
   const [toggleForm, setToggleForm] = useState(false);
   const handleToggleForm = () => setToggleForm(!toggleForm);
-  const { data } = useSWR(`/api/templates/${presetId}`, fetcher);
+  // const { data } = useSWR(`/api/templates/${presetId}`, fetcher);
 
   // if (!data || isLoading) return <div>Loading data ...</div>
 
