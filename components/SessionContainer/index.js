@@ -6,7 +6,7 @@ import FormExerciseDetails from "../FormExerciseDetails";
 import { useState } from "react";
 import useSWR from "swr";
 
-export default function SessionContainer({ session, mutable }) {
+export default function SessionContainer({ session, mutable, addExercise }) {
 
   const { data: exercises } = useSWR(`/api/exercises`);
   const [toggleForm, setToggleForm] = useState(false);
@@ -54,6 +54,8 @@ export default function SessionContainer({ session, mutable }) {
         <FormExerciseDetails
           exercises={exercises}
           toggleForm={handleToggleForm}
+          dayId={session.id}
+          addExercise={addExercise}
         />
       )}
     </>
