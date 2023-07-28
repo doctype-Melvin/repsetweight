@@ -11,6 +11,7 @@ export default function TileElement() {
       <div className="container__overflow">
         <Image
           src={barbell}
+          priority={true}
           fill
           alt="Image of a barbell with weight on the floor"
           sizes="(max-width: 375px) 30vw"

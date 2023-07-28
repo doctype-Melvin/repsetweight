@@ -1,51 +1,59 @@
-import Link from "next/link";
-import Preset from "@/database/models/Presets";
 import TemplateHeader from "@/components/TemplateHeader";
 import SessionContainer from "@/components/SessionContainer";
-import styles from "./styles.module.css";
-import Exercise from "@/database/models/Exercises";
 import ClientButton from "@/components/ClientButton";
-import dbConnect from "@/database/connectDB";
+import SessionList from "@/components/SessionList";
+import Preset from "@/database/models/Presets";
+import SWRProvider from "@/app/SWRProvider";
+import { getTemplate, getExercises } from "@/utils/helpers";
+import { nanoid } from "nanoid";
+import styles from "./styles.module.css";
 
-export default async function SingleTemplateView({ params }) {
+export default async function TemplateDetail({ params }) {
   const { id } = params;
-  const preset = await Preset.findById(id);
-  const exercises = await JSON.parse(JSON.stringify(await Exercise.find()));
 
-  const tempHandler = async () => {
+  const templateData = getTemplate(id);
+  const exercisesData = getExercises();
+  const [template, exercises] = await Promise.all([
+    templateData,
+    exercisesData,
+  ]);
+  // This component will evaluate if the template is mutable or not
+  // If it is immutable, the data is static and can be rendered as is
+  // Otherwise, data can be mutated by the user
+  // In this case render client components and use SWR to handle dynamic
+  //    data mutations and data updates
+  const handleAddDay = async () => {
     "use server";
-    await dbConnect();
-    const { id } = params;
-    await Preset.updateMany({ isCurrent: false });
-    await Preset.findByIdAndUpdate(id, { isCurrent: true });
-    console.log("Template set as current");
+    const day = {
+      day: template.routine.length + 1,
+      exercises: [],
+      id: nanoid(4),
+    };
+
+    const updatedRoutine = template.routine;
+    updatedRoutine[updatedRoutine.length] = day;
+    await Preset.findByIdAndUpdate(id, { routine: updatedRoutine });
+    console.log(`Added day ${day.day} to ${template.name}`);
+    // App needs to rerender immediately
   };
 
-  if (!preset || !exercises) return <div> Loading ...</div>;
-
   return (
+    <SWRProvider>
     <section className={styles.modify__template__view}>
-      <TemplateHeader name={preset.name} focus={preset.focus} />
-      <ClientButton
-        textContent="Set Current"
-        id={params.id}
-        modifier="center"
-        handler={tempHandler}
-      />
-      <ul className={styles.session__list}>
-        {preset.routine.map((session) => (
-          <SessionContainer
-            key={session.id}
-            session={session}
-            exercises={exercises}
-            mutable={preset.mutable}
-          />
-        ))}
-      </ul>
-
-      {/* Fetch the routine array */}
-      {/* Render the first day of a new template */}
-      {/* The day component allows for CRUDing exercises  */}
+      <TemplateHeader name={template.name} focus={template.focus} />
+      {!template.isCurrent && (
+        <ClientButton
+          textContent="Set Current"
+          id={params.id}
+          modifier="center"
+        />
+        )}
+      {template.mutable ? (
+        <SessionList id={template._id} template={false} />
+        ) : (
+          <SessionList id={false} template={template} />
+          )}
     </section>
+    </SWRProvider>
   );
 }

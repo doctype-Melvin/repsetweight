@@ -24,7 +24,7 @@ export default function CreateTemplate() {
       mutable: true,
       isCurrent: false,
     });
-    redirect(`/userTemplate/${id}`);
+    redirect(`/presets/${id}`);
   };
 
   return (

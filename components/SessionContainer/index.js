@@ -2,15 +2,17 @@
 
 import "./styles.css";
 import ClientButton from "../ClientButton";
-import ExerciseForm from "../ExerciseForm";
+import FormExerciseDetails from "../FormExerciseDetails";
 import { useState } from "react";
+import useSWR from "swr";
 
-export default function SessionContainer({ session, exercises, mutable }) {
+export default function SessionContainer({ session, mutable }) {
+
+  const { data: exercises } = useSWR(`/api/exercises`);
   const [toggleForm, setToggleForm] = useState(false);
-
   const handleToggleForm = () => setToggleForm(!toggleForm);
-
-  return (
+  
+    return (
     <>
       <li className="day__container">
         <p className="day__ident">Day {session.day}</p>
@@ -21,7 +23,7 @@ export default function SessionContainer({ session, exercises, mutable }) {
                 className={`day__exercise__item ${
                   mutable ? "three__columns" : "two__columns"
                 }`}
-                key={index + exercise}
+                key={index + exercise.name}
               >
                 <div>{exercise.name.toUpperCase()}</div>
                 <div>{exercise.mode}</div>
@@ -40,7 +42,7 @@ export default function SessionContainer({ session, exercises, mutable }) {
           </ul>
         )}
       </li>
-      
+
       {mutable && !toggleForm && (
         <ClientButton
           textContent="Add Exercise"
@@ -49,9 +51,11 @@ export default function SessionContainer({ session, exercises, mutable }) {
         />
       )}
       {toggleForm && (
-        <ExerciseForm exercises={exercises} handler={handleToggleForm} />
+        <FormExerciseDetails
+          exercises={exercises}
+          toggleForm={handleToggleForm}
+        />
       )}
-      
     </>
   );
 }
