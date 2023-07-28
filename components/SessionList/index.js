@@ -18,7 +18,9 @@ export default function SessionList({ id, template }) {
         <ul>
             {
                 !data ? (
-                    <div>Static Data</div>
+                    template.routine.map(session => (
+                        <SessionContainer key={session.id} session={session} mutable={template.mutable} />
+                    ))
                     ) : (
                     data.routine.map(session => (
                         <SessionContainer key={session.id} session={session} mutable={data.mutable} />
