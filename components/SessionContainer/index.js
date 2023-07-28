@@ -7,13 +7,12 @@ import { useState } from "react";
 import useSWR from "swr";
 
 export default function SessionContainer({ session, mutable }) {
+
   const { data: exercises } = useSWR(`/api/exercises`);
   const [toggleForm, setToggleForm] = useState(false);
   const handleToggleForm = () => setToggleForm(!toggleForm);
-
-
-
-  return (
+  
+    return (
     <>
       <li className="day__container">
         <p className="day__ident">Day {session.day}</p>

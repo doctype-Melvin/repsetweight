@@ -3,8 +3,13 @@
 import "./styles.css";
 import ClientButton from "../ClientButton";
 import { useState } from "react";
+import { useParams } from "next/navigation";
+import { mutate } from "swr";
 
 export default function FormExerciseDetails({ exercises, toggleForm }) {
+
+  const { id } = useParams()
+
   const [searchValue, setSearchValue] = useState("");
   const [userChoice, setUserChoice] = useState(false);
 
