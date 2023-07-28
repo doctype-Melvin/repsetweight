@@ -9,16 +9,10 @@ import useSWR from "swr";
 export const fetcher = (...args) =>
   fetch(...args).then((response) => response.json());
 
-export default function SessionContainer({
-  session,
-  mutable,
-  presetId,
-}) {
+export default function SessionContainer({ session, mutable }) {
   const [toggleForm, setToggleForm] = useState(false);
   const handleToggleForm = () => setToggleForm(!toggleForm);
-  // const { data } = useSWR(`/api/templates/${presetId}`, fetcher);
-
-  // if (!data || isLoading) return <div>Loading data ...</div>
+  const { data: exercises } = useSWR(`/api/exercises`, fetcher);
 
   return (
     <>

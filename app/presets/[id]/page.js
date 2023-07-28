@@ -46,13 +46,11 @@ export default async function TemplateDetail({ params }) {
           modifier="center"
         />
       )}
-      {
-        template.mutable ? (
-          <SessionList id={template._id} template={false} />
-        ) : (
-          <SessionList id={false} template={template}  />
-        ) 
-      }
+      {template.mutable ? (
+        <SessionList id={template._id} template={false} />
+      ) : (
+        <SessionList id={false} template={template} />
+      )}
     </section>
   );
 }
