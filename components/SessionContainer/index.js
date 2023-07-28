@@ -6,13 +6,12 @@ import FormExerciseDetails from "../FormExerciseDetails";
 import { useState } from "react";
 import useSWR from "swr";
 
-export const fetcher = (...args) =>
-  fetch(...args).then((response) => response.json());
-
 export default function SessionContainer({ session, mutable }) {
+  const { data: exercises } = useSWR(`/api/exercises`);
   const [toggleForm, setToggleForm] = useState(false);
   const handleToggleForm = () => setToggleForm(!toggleForm);
-  const { data: exercises } = useSWR(`/api/exercises`, fetcher);
+
+
 
   return (
     <>

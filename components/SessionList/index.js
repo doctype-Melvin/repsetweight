@@ -6,13 +6,8 @@ import SessionContainer from "../SessionContainer";
 import { useState } from "react";
 import useSWR from "swr";
 
-const fetcher = (...args) => fetch(...args).then((response) => response.json());
-
 export default function SessionList({ id, template }) {
-  const { data, isLoading } = useSWR(
-    id ? `/api/templates/${id}` : null,
-    fetcher,
-  );
+  const { data, isLoading } = useSWR(id ? `/api/templates/${id}` : null);
 
   if (!template && !data && isLoading) return <div>Loading...</div>;
 

@@ -3,6 +3,7 @@ import SessionContainer from "@/components/SessionContainer";
 import ClientButton from "@/components/ClientButton";
 import SessionList from "@/components/SessionList";
 import Preset from "@/database/models/Presets";
+import SWRProvider from "@/app/SWRProvider";
 import { getTemplate, getExercises } from "@/utils/helpers";
 import { nanoid } from "nanoid";
 import styles from "./styles.module.css";
@@ -37,6 +38,7 @@ export default async function TemplateDetail({ params }) {
   };
 
   return (
+    <SWRProvider>
     <section className={styles.modify__template__view}>
       <TemplateHeader name={template.name} focus={template.focus} />
       {!template.isCurrent && (
@@ -45,12 +47,13 @@ export default async function TemplateDetail({ params }) {
           id={params.id}
           modifier="center"
         />
-      )}
+        )}
       {template.mutable ? (
         <SessionList id={template._id} template={false} />
-      ) : (
-        <SessionList id={false} template={template} />
-      )}
+        ) : (
+          <SessionList id={false} template={template} />
+          )}
     </section>
+    </SWRProvider>
   );
 }
