@@ -16,13 +16,14 @@ export default function Home() {
           description="Explore the preset workout templates"
         />
       </Link>
+        */}
       <Link href="/presets/new" className={styles.link__styled__span}>
         <LinkCard
           linkTitle="Customize"
           icon={<Write />}
-          description="Create your own template"
+          description="Create workout template"
         />
-      </Link> */}
+      </Link>
     </section>
   );
 }
