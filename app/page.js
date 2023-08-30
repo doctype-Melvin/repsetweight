@@ -8,8 +8,8 @@ import LinkCard from "@/components/LinkCard";
 export default function Home() {
   return (
     <section className={styles.page__container}>
-      <TileElement />
-      <Link href="/presets" className={styles.link__styled__span}>
+      {/* <TileElement /> */}
+      {/* <Link href="/presets" className={styles.link__styled__span}>
         <LinkCard
           linkTitle="All Templates"
           icon={<Book />}
@@ -22,7 +22,7 @@ export default function Home() {
           icon={<Write />}
           description="Create your own template"
         />
-      </Link>
+      </Link> */}
     </section>
   );
 }
