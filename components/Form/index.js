@@ -41,21 +41,6 @@ export default function Form({ onSubmit }) {
       <fieldset className="fieldset__styled">
         <legend>
           <label htmlFor="description" name="description">
-            Number of training days
-          </label>
-        </legend>
-        <input
-          className="input-field"
-          type="number"
-          min={1}
-          max={7}
-          name="number-of-days"
-          required
-        />
-      </fieldset>
-      <fieldset className="fieldset__styled">
-        <legend>
-          <label htmlFor="description" name="description">
             Description
           </label>
         </legend>

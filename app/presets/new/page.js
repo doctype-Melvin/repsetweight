@@ -11,7 +11,6 @@ export default function CreateTemplate() {
     const name = FormData.get("templateName")?.valueOf();
     const focus = FormData.get("focus")?.valueOf();
     const description = FormData.get("description")?.valueOf();
-    const numberOfDays = FormData.get("number-of-days")?.valueOf();
     const routine = [];
     // This needs error handling
     // Don't use try catch as the redirect() will
@@ -20,7 +19,6 @@ export default function CreateTemplate() {
     const { id } = await Preset.create({
       name,
       focus,
-      numberOfDays,
       description,
       routine,
       mutable: true,
