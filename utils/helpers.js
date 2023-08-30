@@ -24,3 +24,5 @@ export const getExercises = async () => {
   }
   return response.json();
 };
+
+

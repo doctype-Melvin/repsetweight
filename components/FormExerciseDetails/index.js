@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import { mutate } from "swr";
 
-export default function FormExerciseDetails({ exercises, toggleForm }) {
+export default function FormExerciseDetails({ exercises, toggleForm, dayId, addExercise }) {
 
   const { id } = useParams()
 
@@ -29,7 +29,8 @@ export default function FormExerciseDetails({ exercises, toggleForm }) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    console.log(data);
+    console.log(data, `for template id ${id}`, dayId);
+    addExercise(data, dayId)
     toggleForm();
   };
 
@@ -48,10 +49,10 @@ export default function FormExerciseDetails({ exercises, toggleForm }) {
   return (
     <section>
       <form autoComplete="off" onSubmit={(event) => handleSubmit(event)}>
-        <label htmlFor="exercise">Exercise</label>
+        <label htmlFor="name">Exercise</label>
         <input
           type="text"
-          name="exercise"
+          name="name"
           value={searchValue}
           onChange={handleChange}
           required

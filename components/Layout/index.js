@@ -7,7 +7,7 @@ export default function MainLayout({ children }) {
     <section className="layout__container">
       <Header />
       <main className="main__content">{children}</main>
-      <Navigation />
+      {/* <Navigation /> */}
     </section>
   );
 }
