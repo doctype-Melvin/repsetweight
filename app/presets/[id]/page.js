@@ -30,16 +30,24 @@ export default async function TemplateDetail({ params }) {
   const handleAddDay = async () => {
     "use server";
     const updatedTemplate = await getTemplate(id);
-    const day = {
-      day: updatedTemplateemplate.routine.length + 1,
-      exercises: [],
-      id: nanoid(4),
-    };
 
-    const updatedRoutine = updatedTemplate.routine;
-    updatedRoutine[updatedRoutine.length] = day;
-    await Preset.findByIdAndUpdate(id, { routine: updatedRoutine });
-    console.log(`Added day ${day.day} to ${updatedTemplate.name}`);
+    if (updatedTemplate.routine.length < 7) {
+      const day = {
+        day: updatedTemplate.routine.length + 1,
+        exercises: [],
+        id: nanoid(4),
+      };
+
+      const updatedRoutine = updatedTemplate.routine;
+      updatedRoutine[updatedRoutine.length] = day;
+      await Preset.findByIdAndUpdate(id, { routine: updatedRoutine });
+
+      console.log(`Added day ${day.day} to ${updatedTemplate.name}`);
+
+    } else {
+      console.log(`There are already 7 workout days`)
+      return `Maximum number of workouts exceeded`
+    }
   };
 
   // This component will evaluate if the template is mutable or not
@@ -61,6 +69,14 @@ export default async function TemplateDetail({ params }) {
             />
           )
         };
+        {/* 
+          List of session containers
+          Each session container is a workout day
+          Workout days may be removed from list/db
+          Rewrite the current session container component
+          SessionContainer is a client component
+          CRUD exercise data 
+        */}
         {
           template.mutable && template.routine.length < 7 && (
             <ClientButton
@@ -71,11 +87,6 @@ export default async function TemplateDetail({ params }) {
           )
         }
 
-        {/* {template.mutable ? (
-        <SessionList id={template._id} template={false} addNewExercise={addNewExercise} />
-        ) : (
-          <SessionList id={false} template={template} />
-          )} */}
       </section>
     </SWRProvider>
   );
