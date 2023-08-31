@@ -1,9 +1,12 @@
 import "./styles.css";
+import Link from "next/link";
 
 export default function Header() {
   return (
     <section className="header__container">
-      <h1>GYM:log</h1>
+      <Link href="/">
+        <h1>GYM:log</h1>
+      </Link>
     </section>
   );
 }

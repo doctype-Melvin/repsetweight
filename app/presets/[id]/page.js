@@ -29,16 +29,17 @@ export default async function TemplateDetail({ params }) {
 
   const handleAddDay = async () => {
     "use server";
+    const updatedTemplate = await getTemplate(id);
     const day = {
-      day: template.routine.length + 1,
+      day: updatedTemplateemplate.routine.length + 1,
       exercises: [],
       id: nanoid(4),
     };
 
-    const updatedRoutine = template.routine;
+    const updatedRoutine = updatedTemplate.routine;
     updatedRoutine[updatedRoutine.length] = day;
     await Preset.findByIdAndUpdate(id, { routine: updatedRoutine });
-    console.log(`Added day ${day.day} to ${template.name}`);
+    console.log(`Added day ${day.day} to ${updatedTemplate.name}`);
   };
 
   // This component will evaluate if the template is mutable or not
@@ -51,22 +52,22 @@ export default async function TemplateDetail({ params }) {
     <SWRProvider>
       <section className={styles.modify__template__view}>
         <TemplateHeader name={template.name} focus={template.focus} />
-        {!template.isCurrent && (
-          <ClientButton
-            textContent="Set Current"
-            id={params.id}
-            modifier="center"
-          />
-        )}
         {
-          template.mutable && template.routine.length < 7 ? (
+          !template.isCurrent && (
+            <ClientButton
+              textContent="Set Current"
+              id={params.id}
+              modifier="center"
+            />
+          )
+        };
+        {
+          template.mutable && template.routine.length < 7 && (
             <ClientButton
               textContent="Add Day"
               modifier="center"
               handler={handleAddDay}
             />
-          ) : (
-            <div>Just list all sessions here</div>
           )
         }
 
