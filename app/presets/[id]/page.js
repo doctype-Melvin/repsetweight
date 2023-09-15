@@ -27,27 +27,26 @@ export default async function TemplateDetail({ params }) {
       .then(fetchData => console.log(`template: ${fetchData.name}, new data: ${data.focus}`))
   }
 
-  // const handleAddDay = async () => {
-  //   "use server";
-  //   const updatedTemplate = await getTemplate(id);
+  const handleAddDay = async (id, updatedRoutineData) => {
+    "use server";
+    
+    // if (updatedTemplate.routine.length < 7) {
+    //   const day = {
+    //     day: updatedTemplate.routine.length + 1,
+    //     exercises: [],
+    //     id: nanoid(4),
+    //   };
 
-  //   if (updatedTemplate.routine.length < 7) {
-  //     const day = {
-  //       day: updatedTemplate.routine.length + 1,
-  //       exercises: [],
-  //       id: nanoid(4),
-  //     };
+    //   const updatedRoutine = updatedTemplate.routine;
+    //   updatedRoutine[updatedRoutine.length] = day;
+      await Preset.findByIdAndUpdate(id, { routine: updatedRoutineData });
 
-  //     const updatedRoutine = updatedTemplate.routine;
-  //     updatedRoutine[updatedRoutine.length] = day;
-  //     await Preset.findByIdAndUpdate(id, { routine: updatedRoutine });
+      console.log(`Added day new day to template`);
 
-  //     console.log(`Added day ${day.day} to ${updatedTemplate.name}`);
-
-  //   } else {
-  //     console.log(`There are already 7 workout days`)
-  //   }
-  // };
+    // } else {
+    //   console.log(`There are already 7 workout days`)
+    // }
+  };
 
   // This component will evaluate if the template is mutable or not
   // If it is immutable, the data is static and can be rendered as is
@@ -76,7 +75,7 @@ export default async function TemplateDetail({ params }) {
           SessionContainer is a client component
           CRUD exercise data 
         */}
-          <SessionList id={id} template={template} />
+          <SessionList id={id} template={template} addNewDay={handleAddDay}/>
       </section>
     </SWRProvider>
   );

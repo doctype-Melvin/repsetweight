@@ -5,9 +5,10 @@ import ClientButton from "../ClientButton";
 import SessionContainer from "../SessionContainer";
 import { useState } from "react";
 import useSWR from "swr";
+import { nanoid } from "nanoid";
 
 
-export default function SessionList({ id, template, addNewExercise }) {
+export default function SessionList({ id, template, addNewExercise, addNewDay }) {
   const { data, isLoading, mutate } = useSWR(id ? `/api/templates/${id}` : null);
 
   const addExercise = async (formData, dayId) => {
@@ -19,6 +20,24 @@ export default function SessionList({ id, template, addNewExercise }) {
     data.routine[currentIndex] = currentDay
     await addNewExercise(id, data)
     mutate({...data, data}, false)
+  }
+
+  const addDay = async (id) => {
+    const updatedRoutine = data.routine
+    if (updatedRoutine.length < 7) {
+      
+      const day = {
+        day: updatedRoutine.length + 1,
+        exercises: [],
+        id: nanoid(4),
+      };
+
+      updatedRoutine[updatedRoutine.length] = day;
+      data.routine = updatedRoutine;
+      console.log(data.routine)
+      await addNewDay(id, updatedRoutine)
+      mutate({...data, data}, false)
+    }
   }
 
 
@@ -46,7 +65,7 @@ export default function SessionList({ id, template, addNewExercise }) {
         <ClientButton
           textContent="Add Day"
           modifier="center"
-          handler={() => console.log("Add day here")}
+          handler={() => addDay(id)}
         />
       )}
     </ul>
