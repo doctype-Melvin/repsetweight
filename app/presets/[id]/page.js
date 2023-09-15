@@ -1,11 +1,9 @@
 import TemplateHeader from "@/components/TemplateHeader";
-import SessionContainer from "@/components/SessionContainer";
 import ClientButton from "@/components/ClientButton";
 import SessionList from "@/components/SessionList";
 import Preset from "@/database/models/Presets";
 import SWRProvider from "@/app/SWRProvider";
 import { getTemplate, getExercises } from "@/utils/helpers";
-import { nanoid } from "nanoid";
 import styles from "./styles.module.css";
 
 export default async function TemplateDetail({ params }) {
@@ -30,22 +28,9 @@ export default async function TemplateDetail({ params }) {
   const handleAddDay = async (id, updatedRoutineData) => {
     "use server";
     
-    // if (updatedTemplate.routine.length < 7) {
-    //   const day = {
-    //     day: updatedTemplate.routine.length + 1,
-    //     exercises: [],
-    //     id: nanoid(4),
-    //   };
-
-    //   const updatedRoutine = updatedTemplate.routine;
-    //   updatedRoutine[updatedRoutine.length] = day;
       await Preset.findByIdAndUpdate(id, { routine: updatedRoutineData });
 
       console.log(`Added day new day to template`);
-
-    // } else {
-    //   console.log(`There are already 7 workout days`)
-    // }
   };
 
   // This component will evaluate if the template is mutable or not

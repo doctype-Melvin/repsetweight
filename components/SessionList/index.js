@@ -3,7 +3,6 @@
 import "./styles.css";
 import ClientButton from "../ClientButton";
 import SessionContainer from "../SessionContainer";
-import { useState } from "react";
 import useSWR from "swr";
 import { nanoid } from "nanoid";
 
