@@ -25,4 +25,25 @@ export const getExercises = async () => {
   return response.json();
 };
 
+export const handleAddDay = async () => {
+  // "use server";
+  const updatedTemplate = await getTemplate(id);
+
+  if (updatedTemplate.routine.length < 7) {
+    const day = {
+      day: updatedTemplate.routine.length + 1,
+      exercises: [],
+      id: nanoid(4),
+    };
+
+    const updatedRoutine = updatedTemplate.routine;
+    updatedRoutine[updatedRoutine.length] = day;
+    await Preset.findByIdAndUpdate(id, { routine: updatedRoutine });
+
+    console.log(`Added day ${day.day} to ${updatedTemplate.name}`);
+
+  } else {
+    console.log(`There are already 7 workout days`)
+  }
+};
 

@@ -6,6 +6,7 @@ import SessionContainer from "../SessionContainer";
 import { useState } from "react";
 import useSWR from "swr";
 
+
 export default function SessionList({ id, template, addNewExercise }) {
   const { data, isLoading, mutate } = useSWR(id ? `/api/templates/${id}` : null);
 
@@ -19,6 +20,7 @@ export default function SessionList({ id, template, addNewExercise }) {
     await addNewExercise(id, data)
     mutate({...data, data}, false)
   }
+
 
   if (!template && !data && isLoading) return <div>Loading...</div>;
 
@@ -40,7 +42,7 @@ export default function SessionList({ id, template, addNewExercise }) {
               addExercise={addExercise}
             />
           ))}
-      {!template && (
+      {data && (
         <ClientButton
           textContent="Add Day"
           modifier="center"
