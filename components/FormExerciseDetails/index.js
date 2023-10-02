@@ -47,7 +47,7 @@ export default function FormExerciseDetails({ exercises, toggleForm, dayId, addE
     .slice(0, 5);
 
   return (
-    <section>
+    <section className="form-exercise-details-section">
       <form autoComplete="off" onSubmit={(event) => handleSubmit(event)}>
         <label htmlFor="name">Exercise</label>
         <input
