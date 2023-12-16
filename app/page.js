@@ -7,23 +7,10 @@ import LinkCard from "@/components/LinkCard";
 
 export default function Home() {
   return (
-    <section className={styles.page__container}>
-      {/* <TileElement /> */}
-      {/* <Link href="/presets" className={styles.link__styled__span}>
-        <LinkCard
-          linkTitle="All Templates"
-          icon={<Book />}
-          description="Explore the preset workout templates"
-        />
-      </Link>
-        */}
-      <Link href="/presets/new" className={styles.link__styled__span}>
-        <LinkCard
-          linkTitle="Customize"
-          icon={<Write />}
-          description="Create workout template"
-        />
-      </Link>
+    <section>
+      <div>Card 1</div>
+      <div>Card 2</div>
+      <div>Card 3</div>
     </section>
   );
 }
