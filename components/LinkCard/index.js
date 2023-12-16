@@ -1,11 +1,20 @@
+"use client";
+
 import "./styles.css";
+import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function LinkCard({ linkTitle, icon, description }) {
   return (
-    <section className="container__link">
-      <p className="link__title">{linkTitle}</p>
-      <div className="link__icon">{icon}</div>
-      <p className="link__description">{description}</p>
-    </section>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, transition: { duration: 1 } }}
+      whileHover={{ scale: 1.2, transition: { duration: 1 } }}
+      className="link__motion"
+    >
+      <Link href="/link" className="link__styled">
+        <div>{linkTitle}</div>
+      </Link>
+    </motion.div>
   );
 }
