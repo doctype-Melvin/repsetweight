@@ -32,6 +32,10 @@ body {
   background-color: var(--white);
 }
 
+main {
+  height: fit-content;
+}
+
 .back-link {
   color: var(--white);
 }
