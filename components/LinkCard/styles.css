@@ -3,9 +3,17 @@
   text-decoration: none;
   padding: 1rem;
   text-align: center;
+  height: 100%;
+}
+
+.link__styled > div {
+  height: 100%;
 }
 
 .link__motion {
   background-color: var(--grey);
-  margin: 1rem 0;
+}
+
+.link__motion:hover {
+  cursor: pointer;
 }

@@ -1,5 +1,5 @@
 :root {
-  --header-height: 190px;
+  --header-height: 50px;
   --navigation-height: 3rem;
   --grey: #e7e5e5;
   --lighter-shade: #eeeeee;
@@ -26,7 +26,7 @@ html,
 body {
   height: 100vh;
   width: 100vw;
-  padding: 0 0 var(--navigation-height) 0;
+  padding: 0;
   margin: 0;
   font-family: sans-serif;
   background-color: var(--white);
