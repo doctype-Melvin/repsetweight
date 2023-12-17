@@ -1,21 +1,22 @@
 import mongoose from "mongoose";
-import mysql from "serverless-mysql";
+const mysql = require("mysql2");
 
-const db = mysql({
-  config: {
-    host: process.env.MYSQL_HOST,
-    port: process.env.MYSQL_PORT,
-    database: process.env.MYSQL_DATABASE,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-  },
+const pool = mysql.createPool({
+  host: process.env.MYSQL_HOST,
+  port: process.env.MYSQL_PORT,
+  database: process.env.MYSQL_DATABASE,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
 });
 
-export async function queryAllTemplates({ query }) {
+const promisePool = pool.promise();
+
+export async function executeQuery({ query }) {
   try {
-    const results = await db.query(query);
-    await db.end();
-    console.info("results", results);
+    const [results] = await promisePool.query(query);
+
+    console.info("DB connection established");
+    console.info("Query results", results);
     return results;
   } catch (error) {
     console.error("error", error);

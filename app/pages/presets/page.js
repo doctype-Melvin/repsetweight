@@ -3,13 +3,13 @@ import Link from "next/link";
 import TemplateCard from "@/components/TemplateCard";
 import dbConnect from "@/database/connectDB";
 import styles from "./styles.module.css";
-import { queryAllTemplates } from "@/database/connectDB";
+import { executeQuery } from "@/database/connectDB";
 
-export default async function AllTemplates() {
+export default function AllTemplates() {
   // await dbConnect();
   // const allPresets = await Preset.find();
-  const allTemplates = await queryAllTemplates({
-    query: "SELECT * FROM templates",
+  const allTemplates = executeQuery({
+    query: "SELECT * FROM template",
   });
-  return <section>List all presets here</section>;
+  return allTemplates && <section>List all presets here</section>;
 }
