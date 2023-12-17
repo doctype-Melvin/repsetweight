@@ -8,6 +8,11 @@
   height: var(--header-height);
 }
 
+.header__container > a {
+  text-decoration: none;
+  color: var(--black);
+}
+
 .logo__container {
   margin: 0 1rem;
 }

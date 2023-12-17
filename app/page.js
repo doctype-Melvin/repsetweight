@@ -2,6 +2,7 @@
 
 import LinkCard from "@/components/LinkCard";
 import { styled } from "styled-components";
+import { preset } from "swr/_internal";
 
 const LinkSection = styled.section`
   display: grid;
@@ -23,7 +24,7 @@ export default function Home() {
     <LinkSection>
       <LinkCard linkTitle="Create Workout Template" />
       <LinkCard linkTitle="Log Workout" />
-      <LinkCard linkTitle="Browse Preset Templates" />
+      <LinkCard linkTitle="Browse Preset Templates" target="/presets" />
       <LinkCard linkTitle="Workout History & Charts" />
     </LinkSection>
   );

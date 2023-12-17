@@ -4,7 +4,7 @@ import "./styles.css";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-export default function LinkCard({ linkTitle, icon, description }) {
+export default function LinkCard({ linkTitle, icon, description, target }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -17,7 +17,7 @@ export default function LinkCard({ linkTitle, icon, description }) {
       }}
       className="link__motion"
     >
-      <Link href="/link" className="link__styled">
+      <Link href={`${target}`} className="link__styled">
         <div>{linkTitle}</div>
       </Link>
     </motion.div>
