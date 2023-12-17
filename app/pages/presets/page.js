@@ -6,10 +6,9 @@ import styles from "./styles.module.css";
 import { executeQuery } from "@/database/connectDB";
 
 export default function AllTemplates() {
-  // await dbConnect();
-  // const allPresets = await Preset.find();
   const allTemplates = executeQuery({
     query: "SELECT * FROM template",
   });
+
   return allTemplates && <section>List all presets here</section>;
 }
