@@ -17,7 +17,7 @@ export default function LinkCard({ linkTitle, icon, description, target }) {
       }}
       className="link__motion"
     >
-      <Link href={`${target}`} className="link__styled">
+      <Link href={`/pages/${target}`} className="link__styled">
         <div>{linkTitle}</div>
       </Link>
     </motion.div>
