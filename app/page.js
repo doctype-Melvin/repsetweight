@@ -22,10 +22,10 @@ const LinkSection = styled.section`
 export default function Home() {
   return (
     <LinkSection>
-      <LinkCard linkTitle="Create Workout Template" />
-      <LinkCard linkTitle="Log Workout" />
+      <LinkCard linkTitle="Create Workout Template" target="/presets/new" />
+      <LinkCard linkTitle="Log Workout" target="/logWorkout" />
       <LinkCard linkTitle="Browse Preset Templates" target="/presets" />
-      <LinkCard linkTitle="Workout History & Charts" />
+      <LinkCard linkTitle="Workout History & Charts" target="/logHistory" />
     </LinkSection>
   );
 }
