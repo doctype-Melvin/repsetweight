@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "frontend": "cd frontend && npm run dev",
+    "backend": "cd backend && npm run serverstart",
+    "dev": "npm run frontend & npm run backend"
   },
   "dependencies": {
     "debug": "~2.6.9",
