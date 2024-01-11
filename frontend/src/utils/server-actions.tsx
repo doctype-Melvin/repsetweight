@@ -2,7 +2,9 @@
 
 const baseUrl = "http://localhost:3030";
 
-export const fetchData = async (endpoint: string) => {
+// Make GET request to backend
+// endpoint = "/", "/templates", "/exercises", etc.
+export const getData = async (endpoint: string) => {
   try {
     const response = await fetch(`${baseUrl}${endpoint}`);
     const data = await response.json();
