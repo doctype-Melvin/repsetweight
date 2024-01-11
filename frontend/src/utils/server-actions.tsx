@@ -1,21 +1,15 @@
-"use client";
-import useSWR, { SWRConfig } from "swr";
+"use server";
 
-export default function SWRProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const fetcher = (api: string) =>
-    fetch(`http:localhost:3000${api}`).then((res) => res.json());
+const baseUrl = "http://localhost:3030";
 
-  return (
-    <SWRConfig
-      value={{
-        fetcher,
-      }}
-    >
-      {children}
-    </SWRConfig>
-  );
-}
+export const fetchData = async (endpoint: string) => {
+  try {
+    const response = await fetch(`${baseUrl}${endpoint}`);
+    const data = await response.json();
+    console.log(`successfull fetch at ${baseUrl}${endpoint}`);
+    return data;
+  } catch (error) {
+    console.log(`failed fetch at ${baseUrl}${endpoint}`);
+    return `failed fetch at ${baseUrl}${endpoint}`;
+  }
+};
