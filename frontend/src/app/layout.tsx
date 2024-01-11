@@ -1,6 +1,7 @@
 import "./styles/main.scss";
 import type { Metadata } from "next";
 import Header from "./components/Header";
+import Navigation from "./components/Navigation";
 
 export const metadata: Metadata = {
   title: "Light Weight Baby!",
@@ -15,8 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
-        {children}
+        <section className="app">
+          <Header />
+          <Navigation />
+          {children}
+        </section>
       </body>
     </html>
   );

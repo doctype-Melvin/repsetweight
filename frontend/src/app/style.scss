@@ -1,7 +1,11 @@
-$primary-color: #111427;
+.app {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.075fr 1fr 0.15fr;
+  height: 100%;
 
-body {
-  background-color: $primary-color;
-  color: #fff;
-  font-family: Roboto, sans-serif;
+  @media screen and (min-width: 768px) {
+    grid-template-columns: 0.25fr 1fr;
+    grid-template-rows: 0.1fr 1fr;
+  }
 }
