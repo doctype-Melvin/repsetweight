@@ -1,9 +1,9 @@
 var express = require("express");
 var router = express.Router();
 
+const testController = require("../controllers/testController");
+
 /* GET home page. */
-router.get("/", function (req, res, next) {
-  res.json({ msg: "This is the / route" });
-});
+router.get("/", testController.index);
 
 module.exports = router;
