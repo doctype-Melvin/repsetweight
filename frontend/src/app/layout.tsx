@@ -1,7 +1,7 @@
 import "./styles/main.scss";
 import type { Metadata } from "next";
-import Header from "./components/Header";
-import Navigation from "./components/Navigation";
+import Header from "../components/Header";
+import Navigation from "../components/Navigation";
 
 export const metadata: Metadata = {
   title: "Light Weight Baby!",
