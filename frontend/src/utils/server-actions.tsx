@@ -2,13 +2,13 @@
 
 const baseUrl = "http://localhost:3030";
 
-// Make GET request to backend
+// Send GET request to backend
 // endpoint = "/", "/templates", "/exercises", etc.
 export const getData = async (endpoint: string) => {
   try {
     const response = await fetch(`${baseUrl}${endpoint}`);
     const data = await response.json();
-    console.log(`successfull fetch at ${baseUrl}${endpoint}`);
+    console.log(`FE: successfull fetch at ${baseUrl}${endpoint}`);
     return data;
   } catch (error) {
     console.log(`failed fetch at ${baseUrl}${endpoint}`);
