@@ -4,6 +4,8 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const cors = require("cors");
+const passport = require("passport");
+const session = require("express-session");
 
 var indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth");
@@ -21,7 +23,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(express.urlencoded({ extended: false }));
+app.use(passport.initialize());
+app.use(
+  session({
+    secret: "kat",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.authenticate("session"));
 
 app.use("/", indexRouter);
 app.use("/auth", authRouter);

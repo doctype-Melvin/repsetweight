@@ -1,6 +1,7 @@
 const { sequelize } = require("../models/dbConnect");
 const asyncHandler = require("express-async-handler");
 const { models } = require("../models/dbConnect");
+const passport = require("passport");
 
 exports.form_get = asyncHandler(async (req, res) => {
   try {
@@ -31,29 +32,22 @@ exports.form_post = asyncHandler(async (req, res) => {
   }
 });
 
-// This just receives the request from login form
-// and checks if user exists
-// Just a test - please implement passport.js
-exports.login_post = asyncHandler(async (req, res) => {
-  try {
-    console.log("BE: Login Post", req.body);
-    const user = await models.user.findOne({
-      where: {
-        username: req.body.username,
-      },
-    });
+exports.login_get = asyncHandler(async (req, res, next) => {
+  res.json({ message: "Login Get", code: 200 });
+  next();
+});
 
+// Investigate why this works
+exports.login_post = asyncHandler(async (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      console.log("Auth Error", err);
+      return res.status(500).json({ message: "Auth Error", code: 500 });
+    }
     if (!user) {
-      res.json({ message: "User not found", code: 404 });
-      return;
+      console.log("Auth Error", err);
+      return res.status(401).json({ message: "Auth Error", code: 401 });
     }
-    if (user.password !== req.body.password) {
-      res.json({ message: "Wrong password", code: 401 });
-      return;
-    }
-    res.json({ message: "Login success", code: 200, user: user.toJSON() });
-  } catch (error) {
-    console.log("Unable to connect to the database:", error);
-    return;
-  }
+    return res.status(200).json({ message: "Auth Success", code: 200 });
+  })(req, res, next);
 });

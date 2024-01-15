@@ -9,7 +9,7 @@ export const getData = async (endpoint: string) => {
     const response = await fetch(`${baseUrl}${endpoint}`);
     const data = await response.json();
     console.log(`FE - successfull fetch at ${baseUrl}${endpoint}`);
-    console.log("FE - data:", data);
+    console.log("FE - getData:", data);
     return data;
   } catch (error) {
     console.log(`failed fetch at ${baseUrl}${endpoint}`);

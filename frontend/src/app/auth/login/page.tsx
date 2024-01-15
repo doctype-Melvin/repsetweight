@@ -11,7 +11,7 @@ export default async function Login() {
     };
 
     try {
-      console.log(rawFormData);
+      console.log("FE Form", rawFormData);
       const response = await fetch(`${baseUrl}/auth/login`, {
         method: "POST",
         body: JSON.stringify(rawFormData),
@@ -24,15 +24,11 @@ export default async function Login() {
         return;
       }
       const data = await response.json();
-      console.log(
-        `FE - Server Response at /auth/login:`,
-        data.message,
-        data.code
-      );
+      console.log(`FE - Server Response OK at /auth/login:`, data);
 
       return data;
     } catch (error) {
-      console.log(`FE - failed at POST /auth/login`);
+      console.log(`FE - failed at POST /auth/login`, error);
       return `failed fetch at ${baseUrl}/auth/login`;
     }
   };
