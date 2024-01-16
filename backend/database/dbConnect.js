@@ -1,7 +1,7 @@
 require("dotenv").config();
 const Sequelize = require("sequelize");
 const Exercise = require("./models/exercise");
-const SessionSets = require("./models/session_sets");
+const SessionSets = require("./models/session_set");
 const Session = require("./models/session");
 const TemplateExercise = require("./models/template_exercise");
 const Template = require("./models/template");
@@ -15,6 +15,9 @@ const sequelize = new Sequelize({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   logging: false,
+  dialectOptions: {
+    charset: "utf8",
+  },
 });
 
 const models = {
@@ -26,13 +29,14 @@ const models = {
   User: User(sequelize),
 };
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Connection has been established successfully.");
-  })
-  .catch((error) => {
-    console.error("Unable to connect to the database:", error);
-  });
+// Test db connection
+// sequelize
+//   .authenticate()
+//   .then(() => {
+//     console.log("Connection has been established successfully.");
+//   })
+//   .catch((error) => {
+//     console.error("Unable to connect to the database:", error);
+//   });
 
 module.exports = { sequelize, models };

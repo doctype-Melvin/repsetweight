@@ -1,5 +1,6 @@
 const sequelize = require("../database/dbConnect");
 const asyncHandler = require("express-async-handler");
+const passport = require("passport");
 
 exports.get_db = asyncHandler(async (req, res, next) => {
   try {
@@ -19,6 +20,8 @@ exports.get_login = asyncHandler(async (req, res, next) => {
 });
 
 exports.post_login = asyncHandler(async (req, res, next) => {
-  res.send("Authenticating User");
-  next();
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+  })(req, res, next);
 });

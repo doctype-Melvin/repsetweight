@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const port = 3000;
+
 const createError = require("http-errors");
 
 const indexRouter = require("./routes/index");
@@ -21,8 +21,8 @@ app.use("/api", indexRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
 
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+app.listen(3000, () => {
+  console.log(`Server listening at http://localhost:3000`);
 });
 
 module.exports = app;
