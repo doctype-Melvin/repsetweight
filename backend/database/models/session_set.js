@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
-const SessionSets = (sequelize) => {
-  sequelize.define("SessionSets", {
+module.exports = (sequelize) => {
+  const SessionSets = sequelize.define("SessionSets", {
     session_set_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -44,6 +44,5 @@ const SessionSets = (sequelize) => {
       allowNull: false,
     },
   });
+  return SessionSets;
 };
-
-module.exports = SessionSets;

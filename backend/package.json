@@ -2,11 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "Server for my app",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
-    "serverstart": "DEBUG=express-locallibrary-tutorial:* npm run devstart",
+    "serverstart": "DEBUG=backend:* npm run devstart",
     "jest": "jest --watchAll --detectOpenHandles",
     "test": "npm run jest && ./test/app.test.js"
   },

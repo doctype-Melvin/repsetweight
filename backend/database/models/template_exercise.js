@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
-const TemplateExercise = (sequelize) => {
-  sequelize.define("TemplateExercise", {
+module.exports = (sequelize) => {
+  const TemplateExercise = sequelize.define("TemplateExercise", {
     sets: {
       type: DataTypes.INTEGER,
       allowNull: true,
@@ -23,6 +23,5 @@ const TemplateExercise = (sequelize) => {
       allowNull: false,
     },
   });
+  return TemplateExercise;
 };
-
-module.exports = TemplateExercise;

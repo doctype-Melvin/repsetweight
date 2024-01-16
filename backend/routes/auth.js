@@ -24,6 +24,18 @@ passport.use(
   })
 );
 
+passport.serializeUser(function (user, done) {
+  process.nextTick(function () {
+    done(null, { username: user.username, id: user.user_id });
+  });
+});
+
+passport.deserializeUser(function (user, done) {
+  process.nextTick(function () {
+    done(null, user);
+  });
+});
+
 router.get("/", authController.get_db);
 router.get("/login", authController.get_login);
 router.post("/login", authController.post_login);

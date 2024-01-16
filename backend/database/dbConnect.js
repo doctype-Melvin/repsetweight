@@ -18,6 +18,9 @@ const sequelize = new Sequelize({
   dialectOptions: {
     charset: "utf8",
   },
+  define: {
+    timestamps: false,
+  },
 });
 
 const models = {

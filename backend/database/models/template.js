@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
-const Template = (sequelize) => {
-  sequelize.define("Template", {
+module.exports = (sequelize) => {
+  const Template = sequelize.define("Template", {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -40,6 +40,5 @@ const Template = (sequelize) => {
       allowNull: false,
     },
   });
+  return Template;
 };
-
-module.exports = Template;

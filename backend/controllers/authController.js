@@ -20,8 +20,20 @@ exports.get_login = asyncHandler(async (req, res, next) => {
 });
 
 exports.post_login = asyncHandler(async (req, res, next) => {
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login",
+  passport.authenticate("local", (err, user, info) => {
+    if (err || !user) {
+      return res.status(401).json({
+        message: "Incorrect username or password",
+      });
+    }
+
+    req.logIn(user, (err) => {
+      if (err) {
+        return next(err);
+      }
+      // Just testing res
+      // return res.status(200).json({ user: user });
+      return res.redirect("/");
+    });
   })(req, res, next);
 });
