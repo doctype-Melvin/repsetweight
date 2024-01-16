@@ -3,3 +3,5 @@ data
 dbMod*
 
 node_modules
+
+.env
