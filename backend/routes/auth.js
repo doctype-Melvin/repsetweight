@@ -39,5 +39,6 @@ passport.deserializeUser(function (user, done) {
 router.get("/", authController.get_db);
 router.get("/login", authController.get_login);
 router.post("/login", authController.post_login);
+router.post("/logout", authController.post_logout);
 
 module.exports = router;

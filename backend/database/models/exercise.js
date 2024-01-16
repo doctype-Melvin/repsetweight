@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
     exercise_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true,
+      primaryKey: true,
     },
     name: {
       type: DataTypes.STRING(128),

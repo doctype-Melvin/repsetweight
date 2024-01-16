@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
     session_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true,
+      primaryKey: true,
     },
     date: {
       type: DataTypes.DATEONLY,
@@ -18,10 +18,12 @@ module.exports = (sequelize) => {
     },
     templates_template_id: {
       type: DataTypes.INTEGER,
+      foreignKey: true,
       allowNull: false,
     },
     users_user_id: {
       type: DataTypes.INTEGER,
+      foreignKey: true,
       allowNull: false,
     },
   });

@@ -16,10 +16,13 @@ module.exports = (sequelize) => {
     },
     templates_template_id: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
       allowNull: false,
     },
     exercises_exercise_id: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
+      foreignKey: true,
       allowNull: false,
     },
   });

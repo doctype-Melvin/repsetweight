@@ -37,3 +37,12 @@ exports.post_login = asyncHandler(async (req, res, next) => {
     });
   })(req, res, next);
 });
+
+exports.post_logout = asyncHandler(async (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+});

@@ -4,6 +4,7 @@ module.exports = (sequelize) => {
   const SessionSets = sequelize.define("SessionSets", {
     session_set_id: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
       allowNull: false,
       unique: true,
     },
@@ -29,6 +30,7 @@ module.exports = (sequelize) => {
     },
     sessions_session_id: {
       type: DataTypes.INTEGER,
+      foreignKey: true,
       allowNull: false,
     },
     sessions_templates_template_id: {

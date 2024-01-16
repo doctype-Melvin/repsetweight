@@ -15,6 +15,13 @@ describe("Auth API", () => {
     expect(response.statusCode).toBe(401);
   });
 
+  it("should find a user", async () => {
+    const response = await api
+      .post("/api/users/find")
+      .send({ username: "demo", password: "demopass" });
+    expect(response.statusCode).toBe(200);
+  });
+
   it("should login users with the right credentials", async () => {
     const response = await api
       .post("/api/auth/login")
@@ -22,10 +29,8 @@ describe("Auth API", () => {
     expect(response.statusCode).toBe(302);
   });
 
-  it("should find a user", async () => {
-    const response = await api
-      .post("/api/users/find")
-      .send({ username: "demo", password: "demopass" });
-    expect(response.statusCode).toBe(200);
+  it("should logout users", async () => {
+    const response = await api.post("/api/auth/logout");
+    expect(response.statusCode).toBe(302);
   });
 });

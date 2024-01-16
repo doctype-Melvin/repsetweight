@@ -37,6 +37,7 @@ module.exports = (sequelize) => {
     },
     template_id: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
       allowNull: false,
     },
   });
