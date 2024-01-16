@@ -1,5 +1,11 @@
 require("dotenv").config();
 const Sequelize = require("sequelize");
+const Exercise = require("./models/exercise");
+const SessionSets = require("./models/session_sets");
+const Session = require("./models/session");
+const TemplateExercise = require("./models/template_exercise");
+const Template = require("./models/template");
+const User = require("./models/user");
 
 const sequelize = new Sequelize({
   database: process.env.DB_DATABASE,
@@ -11,6 +17,15 @@ const sequelize = new Sequelize({
   logging: false,
 });
 
+const models = {
+  Exercise: Exercise(sequelize),
+  SessionSets: SessionSets(sequelize),
+  Session: Session(sequelize),
+  TemplateExercise: TemplateExercise(sequelize),
+  Template: Template(sequelize),
+  User: User(sequelize),
+};
+
 sequelize
   .authenticate()
   .then(() => {
@@ -20,4 +35,4 @@ sequelize
     console.error("Unable to connect to the database:", error);
   });
 
-module.exports = sequelize;
+module.exports = { sequelize, models };
