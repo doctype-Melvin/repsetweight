@@ -3,6 +3,15 @@ const app = require("../app");
 
 require("dotenv").config();
 
+// Authorize test_user
+const auth = async (api) => {
+  const response = await api.post("/api/auth/login").send({
+    username: process.env.test_user,
+    password: process.env.test_password,
+  });
+  return response.statusCode;
+};
+
 describe("Auth API", () => {
   const api = supertest(app);
 
@@ -50,24 +59,18 @@ describe("Templates API", () => {
   });
 
   it("finds all templates for authorized users", async () => {
-    const auth = await api.post("/api/auth/login").send({
-      username: process.env.test_user,
-      password: process.env.test_password,
-    });
+    const login = auth(api);
 
-    if (auth.statusCode === 302) {
+    if (login === 302) {
       const response = await api.get("/api/templates/all");
       expect(response.statusCode).toBe(200);
     }
   });
 
   it("only allows logged in user to find a template by template id", async () => {
-    const auth = await api.post("/api/auth/login").send({
-      username: process.env.test_user,
-      password: process.env.test_password,
-    });
+    const login = auth(api);
 
-    if (auth.statusCode === 302) {
+    if (login === 302) {
       const response = await api.get("/api/templates/1");
       expect(response.statusCode).toBe(200);
     }
@@ -77,16 +80,15 @@ describe("Templates API", () => {
     const response = await api.get("/api/templates/1");
     expect(response.statusCode).toBe(401);
   });
+
+  it("allows logged in users to create templates", async () => {});
 });
 
 describe("Exercises API", () => {
   const api = supertest(app);
   it("needs authentication for protected route /api/exercises/all", async () => {
-    const auth = await api.post("/api/auth/login").send({
-      username: process.env.test_user,
-      password: process.env.test_password,
-    });
-    if (auth.statusCode === 302) {
+    const login = auth(api);
+    if (login === 302) {
       const response = await api.get("/api/exercises/all");
       expect(response.statusCode).toBe(200);
     }
