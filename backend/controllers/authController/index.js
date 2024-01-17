@@ -1,4 +1,4 @@
-const sequelize = require("../database/dbConnect");
+const sequelize = require("../../database/dbConnect");
 const asyncHandler = require("express-async-handler");
 const passport = require("passport");
 
@@ -32,8 +32,8 @@ exports.post_login = asyncHandler(async (req, res, next) => {
         return next(err);
       }
       // Just testing res
-      // return res.status(200).json({ user: user });
-      return res.redirect("/");
+      res.status(200).json({ user: "Authenticated" });
+      // return res.redirect("/");
     });
   })(req, res, next);
 });

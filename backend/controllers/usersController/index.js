@@ -1,4 +1,4 @@
-const { models, sequelize } = require("../database/dbConnect");
+const { models, sequelize } = require("../../database/dbConnect");
 const asyncHandler = require("express-async-handler");
 
 exports.find_user = asyncHandler(async (req, res, next) => {

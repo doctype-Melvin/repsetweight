@@ -6,7 +6,12 @@ const exercisesController = require("../controllers/exercisesController");
 
 router.get(
   "/all",
-  //   passport.authenticate("local", { session: true }),
+  (req, res, next) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    next();
+  },
   exercisesController.get_exercises
 );
 

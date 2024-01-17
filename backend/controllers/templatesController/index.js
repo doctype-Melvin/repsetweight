@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const { models, sequelize } = require("../database/dbConnect");
+const { models, sequelize } = require("../../database/dbConnect");
 
 exports.get_templates = asyncHandler(async (req, res, next) => {
   const allTemplates = await models.Template.findAll();
