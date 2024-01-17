@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const { models, sequelize } = require("../database/dbConnect");
+const { models } = require("../database/dbConnect");
 
 const authController = require("../controllers/authController");
 
