@@ -21,3 +21,8 @@ exports.get_template_detail = asyncHandler(async (req, res, next) => {
   }
   res.status(200).json({ data: template });
 });
+
+exports.post_template = asyncHandler(async (req, res, next) => {
+  console.log(req.body);
+  next();
+});

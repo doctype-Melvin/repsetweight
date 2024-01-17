@@ -5,4 +5,13 @@ const authCheck = (req, res, next) => {
   next();
 };
 
-module.exports = authCheck;
+const auth = async (api) => {
+  const response = await api.post("/api/auth/login").send({
+    username: process.env.test_user,
+    password: process.env.test_password,
+  });
+
+  return response;
+};
+
+module.exports = { authCheck, auth };
