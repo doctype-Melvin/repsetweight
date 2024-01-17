@@ -49,7 +49,7 @@ describe("Templates API", () => {
     expect(response.statusCode).toBe(401);
   });
 
-  it("should find all public templates", async () => {
+  it("finds all templates for authorized users", async () => {
     const auth = await api.post("/api/auth/login").send({
       username: process.env.test_user,
       password: process.env.test_password,
@@ -59,6 +59,23 @@ describe("Templates API", () => {
       const response = await api.get("/api/templates/all");
       expect(response.statusCode).toBe(200);
     }
+  });
+
+  it("only allows logged in user to find a template by template id", async () => {
+    const auth = await api.post("/api/auth/login").send({
+      username: process.env.test_user,
+      password: process.env.test_password,
+    });
+
+    if (auth.statusCode === 302) {
+      const response = await api.get("/api/templates/1");
+      expect(response.statusCode).toBe(200);
+    }
+  });
+
+  it("denies access to template detail for unauthorized users", async () => {
+    const response = await api.get("/api/templates/1");
+    expect(response.statusCode).toBe(401);
   });
 });
 
