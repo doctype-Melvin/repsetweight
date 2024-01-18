@@ -6,12 +6,12 @@ const app = require("../app");
 describe("Auth API", () => {
   const api = supertest(app);
 
-  it("should return 200 OK at get /auth/login", async () => {
+  it("should return 200 OK at GET /auth/login", async () => {
     const response = await api.get("/api/auth/login");
     expect(response.statusCode).toBe(200);
   });
 
-  it("should return 401 unauthorized at /auth/login", async () => {
+  it("should return 401 unauthorized at POST /auth/login", async () => {
     const response = await api.post("/api/auth/login");
     expect(response.statusCode).toBe(401);
   });
@@ -32,20 +32,20 @@ describe("Auth API", () => {
 
 describe("Users API", () => {
   const api = supertest(app);
-  it("should find a user", async () => {
+  it("Is a protected route", async () => {
     const response = await api.post("/api/users/find").send({
       username: process.env.test_user,
       password: process.env.test_password,
     });
 
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(401);
   });
 });
 
 describe("Templates API", () => {
   const api = supertest(app);
 
-  it("denies access for unauthorized users", async () => {
+  it("Is a protected route", async () => {
     const response = await api.get("/api/templates/all");
     expect(response.statusCode).toBe(401);
   });
@@ -55,7 +55,7 @@ describe("Templates API", () => {
     expect(response.statusCode).toBe(401);
   });
 
-  it("protects endpoint from unauthorized users", async () => {
+  it("protects templates/create from unauthorized users", async () => {
     const response = await api.post("/api/templates/create");
     expect(response.statusCode).toBe(401);
   });
@@ -64,7 +64,7 @@ describe("Templates API", () => {
 describe("Exercises API", () => {
   const api = supertest(app);
 
-  it("protects route /api/exercises/all from unauthorized users", async () => {
+  it("Is a protected route", async () => {
     const response = await api.get("/api/exercises/all");
     expect(response.statusCode).toBe(401);
   });
