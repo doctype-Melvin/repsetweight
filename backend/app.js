@@ -28,7 +28,8 @@ app.use(
     saveUninitialized: true,
   })
 );
-app.use(passport.authenticate("session"));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/api", indexRouter);
 

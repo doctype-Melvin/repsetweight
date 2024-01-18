@@ -23,6 +23,5 @@ exports.get_template_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.post_template = asyncHandler(async (req, res, next) => {
-  console.log(req.body);
   next();
 });

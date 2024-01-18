@@ -20,22 +20,25 @@ exports.get_login = asyncHandler(async (req, res, next) => {
 });
 
 exports.post_login = asyncHandler(async (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
-    if (err || !user) {
-      return res.status(401).json({
-        message: "Incorrect username or password",
-      });
-    }
-
-    req.logIn(user, (err) => {
-      if (err) {
-        return next(err);
-      }
-      // Just testing res
-      res.status(200).json({ user: "Authenticated" });
-      // return res.redirect("/");
-    });
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
   })(req, res, next);
+
+  // passport.authenticate("local", (err, user, info) => {
+  //   if (err || !user) {
+  //     return res.status(401).json({
+  //       message: "Incorrect username or password",
+  //     });
+  //   }
+
+  //   req.logIn(user, (err) => {
+  //     if (err) {
+  //       return next(err);
+  //     }
+  //     return res.redirect("/");
+  //   });
+  // })(req, res, next);
 });
 
 exports.post_logout = asyncHandler(async (req, res, next) => {

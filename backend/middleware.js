@@ -1,17 +1,21 @@
+const passport = require("passport");
+
 const authCheck = (req, res, next) => {
-  if (!req.isAuthenticated()) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
-  next();
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return res.status(500).json({ message: "Server Error" });
+    }
+    if (!user) {
+      return res.status(401).json({ message: "Not authorised" });
+    }
+    req.login(user, (err) => {
+      console.log("autchCheck", user);
+      if (err) {
+        return res.status(500).json({ message: "Server Error" });
+      }
+      next();
+    });
+  })(req, res, next);
 };
 
-const auth = async (api) => {
-  const response = await api.post("/api/auth/login").send({
-    username: process.env.test_user,
-    password: process.env.test_password,
-  });
-
-  return response;
-};
-
-module.exports = { authCheck, auth };
+module.exports = authCheck;

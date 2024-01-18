@@ -7,8 +7,7 @@
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
     "serverstart": "DEBUG=backend:* npm run devstart",
-    "jest": "jest --watchAll --detectOpenHandles",
-    "test": "npm run jest && ./test"
+    "test": "jest --watchAll --detectOpenHandles --verbose"
   },
   "author": "",
   "license": "ISC",
