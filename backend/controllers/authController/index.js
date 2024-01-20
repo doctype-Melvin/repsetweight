@@ -32,13 +32,14 @@ exports.post_login = asyncHandler(async (req, res, next) => {
       if (err) {
         return next(err);
       }
-      console.log("req.session", req.session);
+      // console.log("req.session", req.session);
       return res.status(200).json({ message: "Login successful" });
     });
   })(req, res, next);
 });
 
-exports.post_logout = asyncHandler(async (req, res, next) => {
+exports.get_logout = asyncHandler(async (req, res, next) => {
+  console.log("User logged out");
   req.logout((err) => {
     if (err) {
       return next(err);

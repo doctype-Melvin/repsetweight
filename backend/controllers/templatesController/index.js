@@ -13,7 +13,7 @@ exports.get_templates = asyncHandler(async (req, res, next) => {
 
 exports.get_template_detail = asyncHandler(async (req, res, next) => {
   const template = await models.Template.findOne({
-    where: { id: req.params.id },
+    where: { template_id: req.params.id },
   });
 
   if (!template) {
@@ -23,5 +23,5 @@ exports.get_template_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.post_template = asyncHandler(async (req, res, next) => {
-  next();
+  res.status(200).json({ message: "Post new template" });
 });

@@ -26,7 +26,6 @@ passport.use(
 );
 
 passport.serializeUser(function (user, done) {
-  console.log("serializeUser", user);
   done(null, { id: user.user_id });
 });
 
@@ -37,6 +36,6 @@ passport.deserializeUser(function (user, done) {
 router.get("/", authController.get_db);
 router.get("/login", authController.get_login);
 router.post("/login", authController.post_login);
-router.post("/logout", authController.post_logout);
+router.get("/logout", authController.get_logout);
 
 module.exports = router;
