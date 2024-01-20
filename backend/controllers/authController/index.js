@@ -1,7 +1,6 @@
 const sequelize = require("../../database/dbConnect");
 const asyncHandler = require("express-async-handler");
 const passport = require("passport");
-const authCheck = require("../../middleware");
 
 exports.get_db = asyncHandler(async (req, res, next) => {
   try {
