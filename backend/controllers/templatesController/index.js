@@ -1,8 +1,8 @@
 const asyncHandler = require("express-async-handler");
 const { models, sequelize } = require("../../database/dbConnect");
+const passport = require("passport");
 
 exports.get_templates = asyncHandler(async (req, res, next) => {
-  // Only find preset and user's private templates
   const allTemplates = await models.Template.findAll();
 
   if (!allTemplates) {

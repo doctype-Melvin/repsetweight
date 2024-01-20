@@ -5,6 +5,6 @@ const authCheck = require("../middleware");
 
 const exercisesController = require("../controllers/exercisesController");
 
-router.get("/all", authCheck, exercisesController.get_exercises);
+router.get("/all", exercisesController.get_exercises);
 
 module.exports = router;

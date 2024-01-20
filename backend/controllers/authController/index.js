@@ -1,6 +1,7 @@
 const sequelize = require("../../database/dbConnect");
 const asyncHandler = require("express-async-handler");
 const passport = require("passport");
+const authCheck = require("../../middleware");
 
 exports.get_db = asyncHandler(async (req, res, next) => {
   try {
@@ -20,25 +21,21 @@ exports.get_login = asyncHandler(async (req, res, next) => {
 });
 
 exports.post_login = asyncHandler(async (req, res, next) => {
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login",
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.status(401).json({ message: info.message });
+    }
+    req.logIn(user, (err) => {
+      if (err) {
+        return next(err);
+      }
+      console.log("req.session", req.session);
+      return res.status(200).json({ message: "Login successful" });
+    });
   })(req, res, next);
-
-  // passport.authenticate("local", (err, user, info) => {
-  //   if (err || !user) {
-  //     return res.status(401).json({
-  //       message: "Incorrect username or password",
-  //     });
-  //   }
-
-  //   req.logIn(user, (err) => {
-  //     if (err) {
-  //       return next(err);
-  //     }
-  //     return res.redirect("/");
-  //   });
-  // })(req, res, next);
 });
 
 exports.post_logout = asyncHandler(async (req, res, next) => {

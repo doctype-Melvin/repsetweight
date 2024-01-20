@@ -7,6 +7,6 @@ router.get("/", (req, res) => {
   res.send("Users API");
 });
 
-router.post("/find", authCheck, usersController.find_user);
+router.post("/find", usersController.find_user);
 
 module.exports = router;
