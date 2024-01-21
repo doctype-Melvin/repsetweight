@@ -8,6 +8,6 @@ router.get("/all", authCheck, templatesController.get_templates);
 
 router.get("/:id", authCheck, templatesController.get_template_detail);
 
-router.post("/create", authCheck, templatesController.post_template);
+router.post("/add", authCheck, templatesController.post_template);
 
 module.exports = router;

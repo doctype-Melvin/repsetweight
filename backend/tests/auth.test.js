@@ -3,6 +3,15 @@ const app = require("../app");
 const session = require("supertest-session");
 require("dotenv").config();
 
+describe("Connect to DB", () => {
+  const api = supertest(app);
+
+  it("connects to DB", async () => {
+    const response = await api.get("/api/auth/");
+    expect(response.status).toBe(200);
+  });
+});
+
 describe("Authorize users", () => {
   let api;
 
@@ -24,10 +33,8 @@ describe("Authorize users", () => {
     // All these endpoints use authCheck middleware
     const response = await api.get("/api/templates/all");
     expect(response.status).toBe(200);
-    const response2 = await api.get("/api/templates/1");
+    const response2 = await api.get("/api/exercises/all");
     expect(response2.status).toBe(200);
-    const response3 = await api.post("/api/templates/create");
-    expect(response3.status).toBe(200);
   });
 
   it("successfully logs user out", async () => {
@@ -49,7 +56,16 @@ describe("Protected routes", () => {
     expect(response.status).toBe(401);
     const response2 = await api.get("/api/templates/1");
     expect(response2.status).toBe(401);
-    const response3 = await api.post("/api/templates/create");
+    const response3 = await api.post("/api/templates/add");
+    expect(response3.status).toBe(401);
+  });
+
+  it("protects exercises", async () => {
+    const response = await api.get("/api/exercises/all");
+    expect(response.status).toBe(401);
+    const response2 = await api.get("/api/exercises/1");
+    expect(response2.status).toBe(401);
+    const response3 = await api.post("/api/exercises/add");
     expect(response3.status).toBe(401);
   });
 });
