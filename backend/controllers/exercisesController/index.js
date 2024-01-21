@@ -3,11 +3,12 @@ const { models, sequelize } = require("../../database/dbConnect");
 
 exports.get_exercises = asyncHandler(async (req, res, next) => {
   const allExercises = await models.Exercise.findAll();
-
+  const toJson = allExercises.map((exercise) => exercise.toJSON());
   if (!allExercises) {
     res.status(404).json({ message: "No exercises found" });
   }
-  res.status(200).json({ data: allExercises });
+
+  res.status(200).json({ data: toJson });
 });
 
 exports.get_exercise = asyncHandler(async (req, res, next) => {
@@ -15,11 +16,13 @@ exports.get_exercise = asyncHandler(async (req, res, next) => {
     where: { exercise_id: req.params.id },
   });
 
+  const toJson = exercise.toJSON();
+
   if (!exercise) {
     res.status(404).json({ message: "Exercise not found" });
   }
 
-  res.status(200).json({ data: exercise });
+  res.status(200).json({ data: toJson });
 });
 
 exports.add_exercise = asyncHandler(async (req, res, next) => {
