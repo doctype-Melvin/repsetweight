@@ -25,6 +25,10 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    user_added: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
   });
   return Exercise;
 };

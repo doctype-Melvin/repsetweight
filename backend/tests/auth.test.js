@@ -48,7 +48,7 @@ describe("Authorize users", () => {
   });
 });
 
-describe("Protected routes", () => {
+describe("Protects routes if user is not logged in", () => {
   const api = supertest(app);
 
   it("protects templates", async () => {
