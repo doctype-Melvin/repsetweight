@@ -13,8 +13,19 @@ jest.mock("../database/dbConnect", () => ({
   },
 }));
 
+jest.mock("../middleware", () => {
+  return jest.fn((req, res, next) => {
+    req.isAuthenticated = jest.fn(() => true);
+    next();
+  });
+});
+
 describe("CREATE functionality for different routes", () => {
-  const api = supertest(app);
+  let api;
+
+  beforeAll(async () => {
+    api = session(app);
+  });
 
   it("should create an exercise", async () => {
     const mockExercise = {
