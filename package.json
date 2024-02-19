@@ -5,8 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cd backend && npm run serverstart"
+    "start-backend": "cd backend && npm run serverstart",
+    "start-frontend": "cd frontend && npm run dev",
+    "dev": "npm-run-all --parallel start-backend start-frontend"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
 }
