@@ -31,8 +31,14 @@ passport.serializeUser(function (user, done) {
   done(null, { id: user.user_id });
 });
 
-passport.deserializeUser(function (user, done) {
-  done(null, user);
+// passport.deserializeUser(function (user, done) {
+//   done(null, user);
+// });
+passport.deserializeUser(function (id, done) {
+  models.User.findByPk(id).then((user) => {
+    done(null, user);
+  });
+  // done(null, user);
 });
 
 router.get("/", authController.get_db);
