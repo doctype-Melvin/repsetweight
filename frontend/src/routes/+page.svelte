@@ -1,2 +1,7 @@
-<h1>Lightweight!</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<section>
+    <p>
+        Your gym companion that helps you to track your workouts and progress.
+    </p>
+  
+    <a href="/auth">Login</a>
+</section>

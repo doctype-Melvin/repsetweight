@@ -10,13 +10,15 @@ passport.use(
   new LocalStrategy(function (username, password, done) {
     try {
       models.User.findOne({ where: { username: username } }).then((user) => {
-        const userObj = user.toJSON();
+        const userObj = user?.toJSON();
         if (!user) {
+          console.log("No user found");
           return done(null, false, { message: "Incorrect username." });
         }
         if (!(userObj.password === password)) {
           return done(null, false, { message: "Incorrect password." });
         }
+        console.log("Passport Success!", userObj);
         return done(null, userObj);
       });
     } catch (err) {

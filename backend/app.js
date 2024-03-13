@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
+const path = require("path");
 
 const createError = require("http-errors");
 
@@ -16,7 +17,15 @@ const passport = require("passport");
 
 const app = express();
 
-app.use(cors());
+// app.set("views", path.join(__dirname, "views"));
+// app.set("view engine", "pug");
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
