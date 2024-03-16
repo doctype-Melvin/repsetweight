@@ -19,7 +19,7 @@ export const actions = {
 				console.log('Failed log in');
 			} else {
 				console.log('Successfull log in');
-				redirect(308, '/login');
+				redirect(308, '/dashboard');
 			}
 		});
 	}

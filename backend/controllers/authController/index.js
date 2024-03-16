@@ -20,6 +20,8 @@ exports.get_login = asyncHandler(async (req, res, next) => {
   next();
 });
 
+// use req.login to login users and
+// establish a session
 exports.post_login = (req, res, next) => {
   passport.authenticate("local", (err, user) => {
     if (err) {

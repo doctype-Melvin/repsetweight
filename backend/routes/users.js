@@ -9,4 +9,6 @@ router.get("/", (req, res) => {
 
 router.post("/find", usersController.find_user);
 
+router.post("/get-user", usersController.get_user);
+
 module.exports = router;

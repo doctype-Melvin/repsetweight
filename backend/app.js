@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
-const path = require("path");
 
 const createError = require("http-errors");
 
@@ -16,9 +15,6 @@ const exercisesRouter = require("./routes/exercises");
 const passport = require("passport");
 
 const app = express();
-
-// app.set("views", path.join(__dirname, "views"));
-// app.set("view engine", "pug");
 
 app.use(
   cors({
