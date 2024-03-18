@@ -1,7 +1,6 @@
 <section>
-    <p>
-        Your gym companion that helps you to track your workouts and progress.
-    </p>
-  
-    <a href="/auth">Login</a>
+    <h1>Dashboard</h1>
+    <p>Welcome to the dashboard</p>
+    <a href="/exercises">View exercises</a>
+    <a href="/templates">View templates</a>
 </section>

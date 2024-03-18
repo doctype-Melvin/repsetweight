@@ -7,7 +7,6 @@ const createError = require("http-errors");
 
 const indexRouter = require("./routes/index");
 
-const authRouter = require("./routes/auth");
 const usersRouter = require("./routes/users");
 const templatesRouter = require("./routes/templates");
 const exercisesRouter = require("./routes/exercises");
@@ -38,7 +37,6 @@ app.use(passport.session());
 
 app.use("/api", indexRouter);
 
-app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/templates", templatesRouter);
 app.use("/api/exercises", exercisesRouter);
