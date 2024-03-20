@@ -3,12 +3,12 @@ const { models, sequelize } = require("../../database/dbConnect");
 
 exports.get_exercises = asyncHandler(async (req, res, next) => {
   const allExercises = await models.Exercise.findAll();
-  const toJson = allExercises.map((exercise) => exercise.toJSON());
+  const data = allExercises.map((exercise) => exercise.toJSON());
   if (!allExercises) {
     res.status(404).json({ message: "No exercises found" });
   }
 
-  res.status(200).json({ data: toJson });
+  res.status(200).json(data);
 });
 
 exports.get_exercise = asyncHandler(async (req, res, next) => {

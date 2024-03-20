@@ -4,7 +4,7 @@
 
 <h1>All Exercises</h1>
 <ul>
-    {#each data.result.data as exercise}
+    {#each data.exercises as exercise}
         <li><a href="/exercises/{exercise.exercise_id}">{exercise.name}</a></li>
     {/each}
 </ul>
