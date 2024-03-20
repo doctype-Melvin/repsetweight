@@ -3,5 +3,5 @@
     console.log(data)
 </script>
 
-<h1>{data.result.data.name}</h1>
+<h1>{data.template.name}</h1>
 <a href="/templates">Templates</a>

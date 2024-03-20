@@ -2,23 +2,23 @@ const asyncHandler = require("express-async-handler");
 const { models, sequelize } = require("../../database/dbConnect");
 
 exports.get_templates = asyncHandler(async (req, res, next) => {
-  const allTemplates = await models.Template.findAll();
+  const data = await models.Template.findAll();
 
-  if (!allTemplates) {
+  if (!data) {
     res.status(404).json({ message: "No templates found" });
   }
-  res.status(200).json({ data: allTemplates });
+  res.status(200).json(data);
 });
 
 exports.get_template_detail = asyncHandler(async (req, res, next) => {
-  const template = await models.Template.findOne({
+  const data = await models.Template.findOne({
     where: { template_id: req.params.id },
   });
 
-  if (!template) {
+  if (!data) {
     res.status(404).json({ message: "No template found" });
   }
-  res.status(200).json({ data: template });
+  res.status(200).json(data);
 });
 
 exports.post_template = asyncHandler(async (req, res, next) => {
