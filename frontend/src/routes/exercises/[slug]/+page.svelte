@@ -2,12 +2,12 @@
     export let data
 </script>
 
-<h1>{data.result.data.name}</h1>
+<h1>{data.exercise.name}</h1>
 
 <ul>
-        <li>Muscle: {data.result.data.target}</li>
-        <li>Category: {data.result.data.category}</li>
-        <li>Equipment: {data.result.data.equipment}</li>
+        <li>Muscle: {data.exercise.target}</li>
+        <li>Category: {data.exercise.category}</li>
+        <li>Equipment: {data.exercise.equipment}</li>
     
 </ul>
 <a href="/exercises">Exercises</a>

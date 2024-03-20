@@ -16,13 +16,13 @@ exports.get_exercise = asyncHandler(async (req, res, next) => {
     where: { exercise_id: req.params.id },
   });
 
-  const toJson = exercise.toJSON();
+  const data = exercise.toJSON();
 
   if (!exercise) {
     res.status(404).json({ message: "Exercise not found" });
   }
 
-  res.status(200).json({ data: toJson });
+  res.status(200).json(data);
 });
 
 exports.add_exercise = asyncHandler(async (req, res, next) => {
