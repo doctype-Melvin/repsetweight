@@ -4,6 +4,7 @@ const Exercise = require("./models/exercise");
 const SessionSets = require("./models/session_set");
 const Session = require("./models/session");
 const TemplateExercise = require("./models/template_exercise");
+const TemplateSession = require("./models/template_session");
 const Template = require("./models/template");
 const User = require("./models/user");
 
@@ -29,6 +30,7 @@ const models = {
   Session: Session(sequelize),
   TemplateExercise: TemplateExercise(sequelize),
   Template: Template(sequelize),
+  TemplateSession: TemplateSession(sequelize),
   User: User(sequelize),
 };
 
