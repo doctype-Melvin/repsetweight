@@ -1,15 +1,23 @@
 <script>
     export let data
-
+    console.log(data.templates, data.exercises)
 </script>
+<h1>Hi Melvin! Let's test the API endpoints!</h1>
 
-<section>
-    <h1>Dashboard</h1>
-    <p>Welcome to your dashboard</p>
-    <p>Your current template: <a href="/templates/{data.template.template_id}"><b>{data.template.name}</b></a></p>
-    
-    <button>Today's lift</button>
+<h2>List all the templates below here</h2>
 
-    <a href="/exercises">View exercises</a>
-    <a href="/templates">View templates</a>
-</section>
+<ul>
+  {#each data.templates as template}
+    <li>{template.name}</li>
+  {/each}
+</ul>
+
+<h2>List all the exercises below here</h2>
+
+<ul>
+    {#each data.exercises as exercise}
+        <li>{exercise.name}</li>
+    {/each}
+</ul>
+
+<!-- Work on API endpoints, create new routes and controllers -->

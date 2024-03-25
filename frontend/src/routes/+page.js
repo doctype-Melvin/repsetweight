@@ -1,13 +1,13 @@
-let activeTemplate = 2;
-
 export async function load({ fetch, params }) {
-	const responseTemplate = await fetch(
-		`http://localhost:3000/api/templates/detail/${activeTemplate}`
-	);
-	const template = await responseTemplate.json();
-	if (!template) {
-		throw new Error('Template not found');
-	}
+	const templateURL = `http://localhost:3000/api/templates/all`;
+	const exerciseURL = `http://localhost:3000/api/exercises/all`;
 
-	return { template };
+	try {
+		const responses = await Promise.all([fetch(templateURL), fetch(exerciseURL)]);
+		const [templates, exercises] = await Promise.all(responses.map(async (res) => res.json()));
+
+		return { templates, exercises };
+	} catch (error) {
+		console.error(error);
+	}
 }
