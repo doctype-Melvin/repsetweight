@@ -11,14 +11,6 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING(128),
       allowNull: true,
     },
-    focus: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    frequency: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     progression: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -35,7 +27,7 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
-    template_id: {
+    id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,

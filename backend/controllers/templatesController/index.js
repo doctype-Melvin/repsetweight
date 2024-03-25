@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const { models, sequelize } = require("../../database/dbConnect");
+const { lookUpExercise } = require("../../middleware");
 
 exports.get_templates = asyncHandler(async (req, res, next) => {
   const data = await models.Template.findAll();
@@ -26,13 +27,19 @@ exports.post_template = asyncHandler(async (req, res, next) => {
 });
 
 exports.get_sessions = asyncHandler(async (req, res, next) => {
-  console.log("express get session");
-  const data = await models.TemplateSession.findAll({
-    where: { template_id: req.params.id },
-  });
+  try {
+    const data = await models.TemplateSession.findAll({
+      where: { template_id: req.params.id },
+    });
 
-  if (!data) {
-    res.status(404).json({ message: "No sessions found" });
+    if (!data) {
+      res.status(404).json({ message: "No sessions found" });
+    } else {
+      const dataJSON = data.map((session) => session.toJSON());
+
+      res.status(200).json(dataJSON);
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching sessions" });
   }
-  res.status(200).json(data);
 });

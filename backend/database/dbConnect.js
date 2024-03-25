@@ -1,12 +1,12 @@
 require("dotenv").config();
 const Sequelize = require("sequelize");
-const Exercise = require("./models/exercise");
-const SessionSets = require("./models/session_set");
-const Session = require("./models/session");
-const TemplateExercise = require("./models/template_exercise");
-const TemplateSession = require("./models/template_session");
-const Template = require("./models/template");
-const User = require("./models/user");
+const Exercise = require("./models/exercises");
+const UserProgress = require("./models/user_exercise_progress");
+const Session = require("./models/sessions");
+const TemplateWorkout = require("./models/template_workouts");
+const Workout = require("./models/workouts");
+const Template = require("./models/templates");
+const User = require("./models/users");
 
 const sequelize = new Sequelize({
   database: process.env.DB_DATABASE,
@@ -26,11 +26,11 @@ const sequelize = new Sequelize({
 
 const models = {
   Exercise: Exercise(sequelize),
-  SessionSets: SessionSets(sequelize),
+  UserProgress: UserProgress(sequelize),
   Session: Session(sequelize),
-  TemplateExercise: TemplateExercise(sequelize),
+  TemplateWorkout: TemplateWorkout(sequelize),
   Template: Template(sequelize),
-  TemplateSession: TemplateSession(sequelize),
+  Workout: Workout(sequelize),
   User: User(sequelize),
 };
 
