@@ -13,7 +13,7 @@ exports.get_templates = asyncHandler(async (req, res, next) => {
 
 exports.get_template_detail = asyncHandler(async (req, res, next) => {
   const data = await models.Template.findOne({
-    where: { template_id: req.params.id },
+    where: { id: req.params.id },
   });
 
   if (!data) {

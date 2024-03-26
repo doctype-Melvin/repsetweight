@@ -1,6 +1,6 @@
 <script>
     export let data
-    console.log(data.templates, data.exercises)
+    
 </script>
 <h1>Hi Melvin! Let's test the API endpoints!</h1>
 
@@ -8,7 +8,11 @@
 
 <ul>
   {#each data.templates as template}
-    <li>{template.name}</li>
+    <li>
+      <a href={`templates/${template.id}`}>
+        {template.name}
+      </a>
+    </li>
   {/each}
 </ul>
 
@@ -16,8 +20,15 @@
 
 <ul>
     {#each data.exercises as exercise}
-        <li>{exercise.name}</li>
+        <li>
+          <a href={`/exercises/${exercise.id}`}>
+
+            {exercise.name}
+        </a>
+      </li>
     {/each}
 </ul>
 
-<!-- Work on API endpoints, create new routes and controllers -->
+<!-- Work on API endpoints, create new routes and controllers
+(sessions, workouts)
+-->

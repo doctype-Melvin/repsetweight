@@ -13,7 +13,7 @@ exports.get_exercises = asyncHandler(async (req, res, next) => {
 
 exports.get_exercise = asyncHandler(async (req, res, next) => {
   const exercise = await models.Exercise.findOne({
-    where: { exercise_id: req.params.id },
+    where: { id: req.params.id },
   });
 
   const data = exercise.toJSON();
