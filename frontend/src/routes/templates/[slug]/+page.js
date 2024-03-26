@@ -1,11 +1,11 @@
 export async function load({ fetch, params }) {
-	const response = await fetch(`http://localhost:3000/api/templates/detail/${params.slug}`);
-	const template = await response.json();
+	const responseTemplate = await fetch(`http://localhost:3000/api/templates/detail/${params.slug}`);
+	const template = await responseTemplate.json();
 
-	const workouts = await fetch(
+	const responseWorkouts = await fetch(
 		`http://localhost:3000/api/templates/detail/${params.slug}/workouts`
 	);
-	const workoutsJSON = await workouts.json();
+	const workouts = await responseWorkouts.json();
 
-	return { template, workoutsJSON };
+	return { template, workouts };
 }
