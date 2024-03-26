@@ -2,15 +2,25 @@ const { Sequelize, DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   const TemplateWorkout = sequelize.define(
-    "TemplateWorkouts",
+    "TemplateWorkout",
     {
       template_id: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        foreignKey: true,
+        allowNull: false,
+        references: {
+          model: "Template",
+          key: "id",
+        },
       },
       workout_id: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        foreignKey: true,
+        allowNull: false,
+        references: {
+          model: "Workout",
+          key: "id",
+        },
       },
     },
     {

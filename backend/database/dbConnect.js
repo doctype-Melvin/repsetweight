@@ -7,6 +7,8 @@ const TemplateWorkout = require("./models/template_workouts");
 const Workout = require("./models/workouts");
 const Template = require("./models/templates");
 const User = require("./models/users");
+const WorkoutExercise = require("./models/workout_exercises");
+const { associations } = require("./models/associations");
 
 const sequelize = new Sequelize({
   database: process.env.DB_DATABASE,
@@ -15,7 +17,7 @@ const sequelize = new Sequelize({
   dialect: "mysql",
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
-  logging: false,
+  logging: (msg) => console.log(msg),
   dialectOptions: {
     charset: "utf8",
   },
@@ -32,16 +34,9 @@ const models = {
   Template: Template(sequelize),
   Workout: Workout(sequelize),
   User: User(sequelize),
+  WorkoutExercise: WorkoutExercise(sequelize),
 };
 
-// Test db connection
-// sequelize
-//   .authenticate()
-//   .then(() => {
-//     console.log("Connection has been established successfully.");
-//   })
-//   .catch((error) => {
-//     console.error("Unable to connect to the database:", error);
-//   });
+associations(models);
 
 module.exports = { sequelize, models };

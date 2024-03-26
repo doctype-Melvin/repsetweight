@@ -9,6 +9,6 @@ router.get("/detail/:id", templatesController.get_template_detail);
 
 router.post("/add", templatesController.post_template);
 
-router.get("/template-sessions/:id", templatesController.get_sessions);
+router.get("/detail/:id/workouts", templatesController.get_workouts);
 
 module.exports = router;

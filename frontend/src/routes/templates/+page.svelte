@@ -6,7 +6,10 @@
 
 <ul>
     {#each data.templates as template}
-        <li><a href="/templates/{template.id}">{template.name}</a></li>
+        <li>
+            <a href="/templates/{template.id}">{template.name}</a>
+            <p>{template.description}</p>
+        </li>
     {/each}
 </ul>
 

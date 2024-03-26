@@ -1,8 +1,8 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  const WorkoutExercises = sequelize.define(
-    "WorkoutExercises",
+  const WorkoutExercise = sequelize.define(
+    "WorkoutExercise",
     {
       workout_id: {
         type: DataTypes.INTEGER,
@@ -17,6 +17,6 @@ module.exports = (sequelize) => {
       tableName: "workout_exercises",
     }
   );
-  return WorkoutExercises;
+  return WorkoutExercise;
   w;
 };
