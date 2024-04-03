@@ -10,6 +10,7 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const templatesRouter = require("./routes/templates");
 const exercisesRouter = require("./routes/exercises");
+const workoutsRouter = require("./routes/workouts");
 
 const passport = require("passport");
 
@@ -40,6 +41,7 @@ app.use("/api", indexRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/templates", templatesRouter);
 app.use("/api/exercises", exercisesRouter);
+app.use("/api/workouts", workoutsRouter);
 
 // app.listen(3000, () => {
 //   console.log(`Server listening at http://localhost:3000`);

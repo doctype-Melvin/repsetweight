@@ -7,5 +7,5 @@ export async function load({ fetch, params }) {
 	);
 	const workouts = await responseWorkouts.json();
 
-	return { template, workouts };
+	return { template };
 }

@@ -6,11 +6,21 @@ module.exports = (sequelize) => {
     {
       workout_id: {
         type: DataTypes.INTEGER,
+        foreignKey: true,
         allowNull: false,
+        references: {
+          model: "Workout",
+          key: "id",
+        },
       },
       exercise_id: {
         type: DataTypes.INTEGER,
+        foreignKey: true,
         allowNull: false,
+        references: {
+          model: "Exercise",
+          key: "id",
+        },
       },
     },
     {
@@ -18,5 +28,4 @@ module.exports = (sequelize) => {
     }
   );
   return WorkoutExercise;
-  w;
 };

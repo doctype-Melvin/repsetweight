@@ -1,21 +1,21 @@
 <script>
+	import { goto } from '$app/navigation';
+    import Workout from '$lib/components/Workout/index.svelte';
+
     export let data;
+    let { template } = data;
 </script>
 
-<h1>{data.template.name}</h1>
-<div>
-    <h2>Workouts</h2>
-    {#if data.workouts.length !== 0}
-    <ul>
-        {#each data.workouts as workout}
-        <li>
-            {workout.Workout.name}
-        </li>
+<h1>{template[0].Template.name ? template[0].Template.name : "Template"}</h1>
+
+    {#if template.length > 0}
+        {#each template as entry}
+            <Workout data={entry.Workout} />
         {/each}
-    </ul>
     {:else}
-    <p>This template has no workouts</p>
-    
+        <p>This template has no workouts</p>
     {/if}
-</div>
-<a href="/templates">Templates</a>
+    
+    
+
+<button type="button" on:click={() => goto(`/templates`)}>All Templates</button>

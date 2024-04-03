@@ -1,6 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const { models, sequelize } = require("../../database/dbConnect");
-const { lookUpExercise } = require("../../middleware");
+const { models } = require("../../database/dbConnect");
 
 exports.get_templates = asyncHandler(async (req, res, next) => {
   const data = await models.Template.findAll();
@@ -12,8 +11,26 @@ exports.get_templates = asyncHandler(async (req, res, next) => {
 });
 
 exports.get_template_detail = asyncHandler(async (req, res, next) => {
-  const data = await models.Template.findOne({
-    where: { id: req.params.id },
+  // Query all the template's associated data
+  // Send all data to the frontend and pass data as props
+  // Include the workout exercises also
+  const data = await models.TemplateWorkout.findAll({
+    include: [
+      {
+        model: models.Template,
+        attributes: ["id", "name"],
+      },
+      {
+        model: models.Workout,
+        attributes: ["id", "name"],
+        include: {
+          model: models.Exercise,
+          through: models.WorkoutExercise,
+          attributes: ["id", "name"],
+        },
+      },
+    ],
+    where: { template_id: req.params.id },
   });
 
   if (!data) {
@@ -27,13 +44,16 @@ exports.post_template = asyncHandler(async (req, res, next) => {
 });
 
 exports.get_workouts = asyncHandler(async (req, res, next) => {
-  console.log(req.params.id);
   try {
     const data = await models.TemplateWorkout.findAll({
       attributes: ["workout_id"],
       include: [
         {
           model: models.Workout,
+          attributes: ["id", "name"],
+        },
+        {
+          model: models.Template,
           attributes: ["id", "name"],
         },
       ],

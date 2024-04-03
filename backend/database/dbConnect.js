@@ -17,7 +17,8 @@ const sequelize = new Sequelize({
   dialect: "mysql",
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
-  logging: (msg) => console.log(msg),
+  // logging: (msg) => console.log(msg),
+  logging: false,
   dialectOptions: {
     charset: "utf8",
   },
@@ -27,6 +28,7 @@ const sequelize = new Sequelize({
 });
 
 const models = {
+  WorkoutExercise: WorkoutExercise(sequelize),
   Exercise: Exercise(sequelize),
   UserProgress: UserProgress(sequelize),
   Session: Session(sequelize),
@@ -34,7 +36,6 @@ const models = {
   Template: Template(sequelize),
   Workout: Workout(sequelize),
   User: User(sequelize),
-  WorkoutExercise: WorkoutExercise(sequelize),
 };
 
 associations(models);
