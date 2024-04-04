@@ -1,9 +1,12 @@
+<!-- Template Detail View -->
+
 <script>
 	import { goto } from '$app/navigation';
     import Workout from '$lib/components/Workout/index.svelte';
 
     export let data;
     let { template } = data;
+    
 </script>
 
 <h1>{template.length > 0 ? template[0].Template.name : "Template"}</h1>
@@ -16,6 +19,14 @@
         <p>This template has no workouts</p>
     {/if}
     
-    
+<section class="container-buttons">
+    <button type="button" on:click={() => goto(`/templates`)}>All Templates</button>
+    <button type="button" on:click={() => console.log(template[0].template_id)} disabled="{template.length === 0}">Set Active Template</button>
+</section>
 
-<button type="button" on:click={() => goto(`/templates`)}>All Templates</button>
+<style>
+    .container-buttons {
+        display: flex;
+        justify-content: space-between;
+    }
+</style>

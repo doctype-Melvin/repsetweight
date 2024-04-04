@@ -36,6 +36,7 @@ exports.get_template_detail = asyncHandler(async (req, res, next) => {
   if (!data) {
     res.status(404).json({ message: "No template found" });
   }
+
   res.status(200).json(data);
 });
 
