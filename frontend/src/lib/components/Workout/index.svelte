@@ -9,8 +9,7 @@
         {#each data.Exercises as exercise}
             <li>
                 <h4>{exercise.name}</h4>
-                <button type="button" on:click={() => console.log(exercise.id)}>Change</button>
-                <button type="button" on:click={() => console.log(exercise.id)}>Delete</button>
+                
             </li>
         {/each}
     </ul>
@@ -28,10 +27,8 @@
     }
 
     .exercise-list li {
-        margin-bottom: 1rem;
-        padding: 1rem;
         border: 1px solid #ccc;
-        border-radius: 5px;
+        border-radius: 15px;
         text-align: center;
     }
 </style>
