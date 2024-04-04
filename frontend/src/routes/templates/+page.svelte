@@ -1,4 +1,5 @@
 <script>
+	import { goto } from "$app/navigation";
     export let data;
     import Template from "$lib/components/Template/index.svelte";
 </script>
@@ -11,7 +12,7 @@
     {/each}
 </ul>
 
-<a href="/">Dashboard</a>
+<button type="button" on:click={() => goto('/')}>Dashboard</button>
 
 <style>
     ul {
