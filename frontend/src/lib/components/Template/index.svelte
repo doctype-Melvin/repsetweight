@@ -8,4 +8,3 @@
     <h1>{template.name}</h1>
     <p>{template.description}</p>
 </a>`
-<button type="button">Edit</button>

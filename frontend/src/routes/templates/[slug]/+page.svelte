@@ -6,7 +6,7 @@
     let { template } = data;
 </script>
 
-<h1>{template[0].Template.name ? template[0].Template.name : "Template"}</h1>
+<h1>{template.length > 0 ? template[0].Template.name : "Template"}</h1>
 
     {#if template.length > 0}
         {#each template as entry}
