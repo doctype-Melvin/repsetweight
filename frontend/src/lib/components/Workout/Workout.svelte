@@ -10,13 +10,7 @@
     <ul class="exercise-list">
         {#each workout.Exercises as exercise}
             <li>
-                <!--
-                    Exercise component needed
-                    Features: change, delete exercise thorugh
-                    pop up menu
-                 -->
-                <!-- <h4>{exercise.name}</h4> -->
-                <Exercise {exercise} />
+                <Exercise exercise={exercise} />
             </li>
         {/each}
     </ul>
