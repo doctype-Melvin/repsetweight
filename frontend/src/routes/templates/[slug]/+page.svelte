@@ -2,7 +2,7 @@
 
 <script>
 	import { goto } from '$app/navigation';
-    import Workout from '$lib/components/Workout/index.svelte';
+    import Workout from '$lib/components/Workout/Workout.svelte';
 
     export let data;
     let { template } = data;
@@ -13,7 +13,7 @@
 
     {#if template.length > 0}
         {#each template as entry}
-            <Workout data={entry.Workout} />
+            <Workout workout={entry.Workout} />
         {/each}
     {:else}
         <p>This template has no workouts</p>

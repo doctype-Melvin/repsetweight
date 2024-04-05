@@ -1,7 +1,8 @@
 <script>
+    // Template Overview
 	import { goto } from "$app/navigation";
     export let data;
-    import Template from "$lib/components/Template/index.svelte";
+    import Template from "$lib/components/Template/Template.svelte";
 </script>
 
 <h1>Templates</h1>

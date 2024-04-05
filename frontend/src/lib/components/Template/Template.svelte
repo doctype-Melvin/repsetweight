@@ -1,4 +1,5 @@
 <script>
+    // Template Component
     // @ts-nocheck
     export let template
 
