@@ -10,7 +10,7 @@
     <ul class="exercise-list">
         {#each workout.Exercises as exercise}
             <li>
-                <Exercise exercise={exercise} />
+                <Exercise exercise={exercise} workout={workout}/>
             </li>
         {/each}
     </ul>

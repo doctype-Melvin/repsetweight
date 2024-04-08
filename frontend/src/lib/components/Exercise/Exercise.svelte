@@ -6,6 +6,9 @@
     import Dropdown from "./Dropdown.svelte";
     import IconDotsVertical from "~icons/mdi/dots-vertical"
     
+    export let exercise;
+    export let workout;
+    
     const url = $page.url;
     const pathname = url.pathname
     const templateId = Number(pathname.split("/")[2]);    
@@ -18,7 +21,7 @@
 
     let showExerciseList = false;
     const changeExercise = (value) => {
-        console.log(value)
+        console.log("New Exercise ID", value, "Workout ID", workout.id, "Template ID", templateId)
         showExerciseList = !showExerciseList
     };
 
@@ -32,7 +35,6 @@
         console.log("Remove exercise from template")
     }
 
-    export let exercise;
 </script>
 
 <section class="container">
