@@ -27,9 +27,9 @@
 
     }
 
-    .exercise-list li {
+    /* .exercise-list li {
         border: 1px solid #ccc;
         border-radius: 15px;
         text-align: center;
-    }
+    } */
 </style>
