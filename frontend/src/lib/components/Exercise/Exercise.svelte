@@ -10,21 +10,25 @@
     let isDropdown = false;
     const toggleDropdown = () => isDropdown = !isDropdown;
 
+    let showExerciseSelection = false;
+
     export let exercise;
 </script>
 
 <section class="container">
     <h4>{exercise.name}</h4>
     <!-- Drop down to manage exercise -->
-    <button class="icon-button" type="button" on:click={toggleDropdown}>
-        <IconDotsVertical style="font-size:1.15rem" />
-    </button>
-    {#if isDropdown}
-        <div>
+    <div class="options-container">
+        <button class="icon-button" type="button" on:click={toggleDropdown}>
+            <IconDotsVertical style="font-size:1.15rem" />
+        </button>
+        {#if isDropdown}
+        <div class="dropdown">
             <button type="button">Edit</button>
             <button type="button">Delete</button>
         </div>
-    {/if}
+        {/if}
+    </div>
 </section>
 
 <style>
@@ -35,6 +39,23 @@
         border: 1px solid #ccc;
         border-radius: 15px;
         padding: 1rem;
+    }
+
+    .options-container {
+        position: relative;
+    }
+
+    .dropdown {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 15px;
+        padding: .5rem;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
     }
 
     .icon-button {

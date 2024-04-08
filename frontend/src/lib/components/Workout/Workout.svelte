@@ -24,12 +24,5 @@
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         gap: .5rem;
-
     }
-
-    /* .exercise-list li {
-        border: 1px solid #ccc;
-        border-radius: 15px;
-        text-align: center;
-    } */
 </style>
