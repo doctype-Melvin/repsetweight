@@ -17,7 +17,10 @@
     let exercises = getContext("exercises");
 
     let showExerciseList = false;
-    const toggleExerciseList = () => showExerciseList = !showExerciseList;
+    const changeExercise = (value) => {
+        console.log(value)
+        showExerciseList = !showExerciseList
+    };
 
     const changeToggle = () => {
         isDropdown = !isDropdown;
@@ -36,7 +39,7 @@
     {#if !showExerciseList}
     <h4>{exercise.name}</h4>
     {:else}
-    <Dropdown list={exercises} selected={toggleExerciseList} />
+    <Dropdown list={exercises} selected={changeExercise} />   
     {/if}
     <!-- Drop down to manage exercise -->
     <div class="options-container">

@@ -8,9 +8,9 @@
 
 <section>
     <a href="/">
-        Lightweight
-    </a>
+        <h1>Lightweight</h1>
         <p>❚█══█❚</p>
+    </a>
     <slot />
 </section>
 

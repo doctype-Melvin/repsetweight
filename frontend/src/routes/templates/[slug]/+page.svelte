@@ -9,7 +9,7 @@
     
 </script>
 
-<h1>{template.length > 0 ? template[0].Template.name : "Template"}</h1>
+<h1>{template.length > 0 ? template[0].Template.name : "No data"}</h1>
 
     {#if template.length > 0}
         {#each template as entry}
@@ -19,13 +19,13 @@
         <p>This template has no workouts</p>
     {/if}
     
-<section class="container-buttons">
+<section class="navigation-buttons">
     <button type="button" on:click={() => goto(`/templates`)}>All Templates</button>
     <button type="button" on:click={() => console.log(template[0].template_id)} disabled="{template.length === 0}">Set Active Template</button>
 </section>
 
 <style>
-    .container-buttons {
+    .navigation-buttons {
         display: flex;
         justify-content: space-between;
     }
