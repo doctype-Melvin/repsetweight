@@ -1,22 +1,43 @@
 <script>
     // Exercise Component
     // @ts-nocheck
+    import { getContext } from "svelte";
     import { page } from "$app/stores";
+    import Dropdown from "./Dropdown.svelte";
     import IconDotsVertical from "~icons/mdi/dots-vertical"
+    
     const url = $page.url;
     const pathname = url.pathname
     const templateId = Number(pathname.split("/")[2]);    
-
+    
     let isDropdown = false;
     const toggleDropdown = () => isDropdown = !isDropdown;
+    
+    // List of exercises from context
+    let exercises = getContext("exercises");
 
-    let showExerciseSelection = false;
+    let showExerciseList = false;
+    const toggleExerciseList = () => showExerciseList = !showExerciseList;
+
+    const changeToggle = () => {
+        isDropdown = !isDropdown;
+        showExerciseList = !showExerciseList;
+    }
+
+    const deleteToggle = () => {
+        isDropdown = !isDropdown;
+        console.log("Remove exercise from template")
+    }
 
     export let exercise;
 </script>
 
 <section class="container">
+    {#if !showExerciseList}
     <h4>{exercise.name}</h4>
+    {:else}
+    <Dropdown list={exercises} selected={toggleExerciseList} />
+    {/if}
     <!-- Drop down to manage exercise -->
     <div class="options-container">
         <button class="icon-button" type="button" on:click={toggleDropdown}>
@@ -24,8 +45,8 @@
         </button>
         {#if isDropdown}
         <div class="dropdown">
-            <button type="button">Edit</button>
-            <button type="button">Delete</button>
+            <button type="button" on:click={changeToggle}>Change</button>
+            <button type="button" on:click={deleteToggle}>Delete</button>
         </div>
         {/if}
     </div>
