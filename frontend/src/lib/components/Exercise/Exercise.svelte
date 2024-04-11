@@ -40,8 +40,6 @@
         console.log("Delete Exercise ID", value, "Workout ID", workout.id, "Template ID", templateId)
     };
     
-
-
 </script>
 
 <section class="container">
@@ -50,7 +48,8 @@
     {:else}
     <Dropdown list={exercises} selected={changeExercise} />   
     {/if}
-    <!-- Drop down to manage exercise -->
+    
+    <!-- Context menu with Change and Delete buttons -->
     <div class="options-container">
         <button class="icon-button" type="button" on:click={toggleDropdown}>
             <IconDotsVertical style="font-size:1.15rem" />

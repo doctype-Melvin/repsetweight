@@ -1,5 +1,5 @@
 <script>
-    import { setContext } from "svelte";
+    
     import { templatesData, exercisesData } from "$lib/stores.js";
     export let data
 
