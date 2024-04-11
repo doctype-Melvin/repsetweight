@@ -2,7 +2,9 @@
     // Workout Component
     // @ts-nocheck
     import Exercise from '$lib/components/Exercise/Exercise.svelte';
+    
     export let workout;
+    
 </script>
 
 

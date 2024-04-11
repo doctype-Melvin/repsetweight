@@ -4,3 +4,4 @@ import { writable } from 'svelte/store';
 // layout and respective components
 export const templatesData = writable(null);
 export const exercisesData = writable(null);
+export const workoutData = writable(null);

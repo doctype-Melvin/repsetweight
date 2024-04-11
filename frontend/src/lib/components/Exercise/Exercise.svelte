@@ -33,16 +33,16 @@
 
     const changeExercise = (value) => {
         console.log("Replace Exercise ID", exercise.id ,"New Exercise ID", value, "Workout ID", workout.id, "Template ID", templateId)
+        const replaceAtIndex = workout.exercises.findIndex(item => item.id === exercise.id );
         const newExercise = exercises.find(exercise => exercise.id === Number(value));
-        console.log("New Exercise", newExercise.name)
+        
         showExerciseList = !showExerciseList
     };
-
+    
     const deleteExercise = (value) => {
         console.log("Delete Exercise ID", value, "Workout ID", workout.id, "Template ID", templateId)
-    };
-
-    console.log(workout.exercises)
+    };  
+    
     
 </script>
 
