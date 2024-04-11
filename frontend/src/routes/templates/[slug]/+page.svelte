@@ -6,7 +6,12 @@
 
     export let data;
     let { template } = data;
-    
+    // Set the store with an array
+    // of template workout objects
+    // for optimstic updates
+    // Please check where to fetch data and where to store/derive it
+    // Backend code needs to handle client side changes
+    console.log(template)
 </script>
 
 <h1>{template.length > 0 ? template[0].template.name : "No data"}</h1>
