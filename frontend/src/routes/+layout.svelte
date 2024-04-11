@@ -1,6 +1,6 @@
 <script>
     import { setContext } from "svelte";
-
+    
     export let data
 
     setContext("exercises", data.exercises)
@@ -9,8 +9,8 @@
 <section>
     <a href="/">
         <h1>Lightweight</h1>
-        <p>❚█══█❚</p>
     </a>
+    
     <slot />
 </section>
 
@@ -26,7 +26,8 @@
         
     }
 
-    a, p {
+
+    a {
         text-align: center;
     }
 </style>
