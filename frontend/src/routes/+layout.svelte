@@ -1,9 +1,12 @@
 <script>
     import { setContext } from "svelte";
-    
+    import { templatesData, exercisesData } from "$lib/stores.js";
     export let data
 
-    setContext("exercises", data.exercises)
+    $: templatesData.set(data.templates)
+    $: exercisesData.set(data.exercises)
+
+    
 </script>
 
 <section>

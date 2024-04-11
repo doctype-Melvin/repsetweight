@@ -1,14 +1,19 @@
 <script>
     // Template Overview
+    // @ts-nocheck
+
 	import { goto } from "$app/navigation";
-    export let data;
+    import { templatesData } from "$lib/stores.js";
     import Template from "$lib/components/Template/Template.svelte";
+
+    const templatesStore = $templatesData
+    
 </script>
 
 <h1>Templates</h1>
 
 <ul>
-    {#each data.templates as template}
+    {#each templatesStore as template}
         <Template {template} />
     {/each}
 </ul>
