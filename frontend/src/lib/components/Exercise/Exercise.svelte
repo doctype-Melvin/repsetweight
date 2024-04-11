@@ -1,10 +1,10 @@
 <script>
     // Exercise Component
     // @ts-nocheck
-    import { getContext } from "svelte";
     import { page } from "$app/stores";
     import Dropdown from "./Dropdown.svelte";
     import IconDotsVertical from "~icons/mdi/dots-vertical"
+    import { exercisesData } from "$lib/stores.js";
     
     export let exercise;
     export let workout;
@@ -13,27 +13,34 @@
     const pathname = url.pathname
     const templateId = Number(pathname.split("/")[2]);    
     
+    // List of exercises from store
+    const exercises = $exercisesData;
+
     let isDropdown = false;
+    let showExerciseList = false;
+    
     const toggleDropdown = () => isDropdown = !isDropdown;
     
-    // List of exercises from context
-    let exercises = getContext("exercises");
-
-    let showExerciseList = false;
-    const changeExercise = (value) => {
-        console.log("New Exercise ID", value, "Workout ID", workout.id, "Template ID", templateId)
-        showExerciseList = !showExerciseList
-    };
-
-    const changeToggle = () => {
+    const changeAction = () => {
         isDropdown = !isDropdown;
         showExerciseList = !showExerciseList;
     }
 
-    const deleteToggle = () => {
+    const deleteAction = () => {
         isDropdown = !isDropdown;
-        console.log("Remove exercise from template")
+        deleteExercise(exercise.id);
     }
+
+    const changeExercise = (value) => {
+        console.log("Replace Exercise ID", exercise.id ,"New Exercise ID", value, "Workout ID", workout.id, "Template ID", templateId)
+        showExerciseList = !showExerciseList
+    };
+
+    const deleteExercise = (value) => {
+        console.log("Delete Exercise ID", value, "Workout ID", workout.id, "Template ID", templateId)
+    };
+    
+
 
 </script>
 
@@ -50,8 +57,8 @@
         </button>
         {#if isDropdown}
         <div class="dropdown">
-            <button type="button" on:click={changeToggle}>Change</button>
-            <button type="button" on:click={deleteToggle}>Delete</button>
+            <button type="button" on:click={changeAction}>Change</button>
+            <button type="button" on:click={deleteAction}>Delete</button>
         </div>
         {/if}
     </div>
