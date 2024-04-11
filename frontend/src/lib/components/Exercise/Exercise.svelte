@@ -42,7 +42,7 @@
         console.log("Delete Exercise ID", value, "Workout ID", workout.id, "Template ID", templateId)
     };
 
-    console.log(workout.Exercises)
+    console.log(workout.exercises)
     
 </script>
 

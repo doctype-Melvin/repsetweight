@@ -8,7 +8,7 @@
 
 <h3> {workout.name}</h3>
     <ul class="exercise-list">
-        {#each workout.Exercises as exercise}
+        {#each workout.exercises as exercise}
             <li>
                 <Exercise exercise={exercise} workout={workout}/>
             </li>

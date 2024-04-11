@@ -2,7 +2,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   const UserExerciseProgress = sequelize.define(
-    "UserExerciseProgress",
+    "userExerciseProgress",
     {
       id: {
         type: DataTypes.INTEGER,

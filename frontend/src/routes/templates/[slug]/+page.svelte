@@ -9,11 +9,11 @@
     
 </script>
 
-<h1>{template.length > 0 ? template[0].Template.name : "No data"}</h1>
+<h1>{template.length > 0 ? template[0].template.name : "No data"}</h1>
 
     {#if template.length > 0}
         {#each template as entry}
-            <Workout workout={entry.Workout} />
+            <Workout workout={entry.workout} />
         {/each}
     {:else}
         <p>This template has no workouts</p>

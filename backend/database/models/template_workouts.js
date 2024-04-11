@@ -2,7 +2,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   const TemplateWorkout = sequelize.define(
-    "TemplateWorkout",
+    "templateWorkout",
     {
       template_id: {
         type: DataTypes.INTEGER,

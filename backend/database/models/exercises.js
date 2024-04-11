@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  const Exercise = sequelize.define("Exercise", {
+  const Exercise = sequelize.define("exercise", {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
