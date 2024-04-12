@@ -38,7 +38,7 @@ exports.get_template_detail = asyncHandler(async (req, res, next) => {
   }
 
   // Here the data is put into an easy to consume
-  // format. The template is reduced to a sindle object
+  // format. The template is reduced to a single object
   // that holds template details and puts the workouts
   // into an array of objects.
   const formattedData = {
