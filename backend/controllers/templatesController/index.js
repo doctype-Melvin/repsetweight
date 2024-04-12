@@ -37,14 +37,10 @@ exports.get_template_detail = asyncHandler(async (req, res, next) => {
     res.status(404).json({ message: "No template found" });
   }
 
-  // const formattedData = data.map((item) => {
-  //   return {
-  //     id: item.template.id,
-  //     name: item.template.name,
-  //     workouts: item.workout,
-  //   };
-  // });
-
+  // Here the data is put into an easy to consume
+  // format. The template is reduced to a sindle object
+  // that holds template details and puts the workouts
+  // into an array of objects.
   const formattedData = {
     id: data[0].template.id,
     name: data[0].template.name,
