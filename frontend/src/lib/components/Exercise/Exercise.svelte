@@ -32,11 +32,28 @@
     }
 
     const changeExercise = (value) => {
-        console.log("Replace Exercise ID", exercise.id ,"New Exercise ID", value, "Workout ID", workout.id, "Template ID", templateId)
+        // findIndex can lead to interesting behavior
+        // if there is a duplicate exercise in the list
+        // it will replace the first one it finds
+        // leading to unwanted exercise order
         const replaceAtIndex = workout.exercises.findIndex(item => item.id === exercise.id );
         const newExercise = exercises.find(exercise => exercise.id === Number(value));
-        workoutData.update(value => value += 1)
-        console.log(workoutData)
+        
+        const modifiedWorkout = [...$workoutData].find((entry) => entry.id === workout.id);
+        modifiedWorkout.exercises[replaceAtIndex] = {
+            id: newExercise.id,
+            name: newExercise.name,
+        };
+
+        workoutData.update((workouts) => {
+            return workouts.map((workout) => {
+                if (workout.id === modifiedWorkout.id) {
+                    return modifiedWorkout;
+                }
+                return workout;
+            });
+        })
+        
         showExerciseList = !showExerciseList
     };
     

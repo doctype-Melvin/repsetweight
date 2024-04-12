@@ -12,15 +12,14 @@
     // for optimstic updates
     // Please check where to fetch data and where to store/derive it
     // Backend code needs to handle client side changes
-    $: workoutData.set(1);
-    console.log("New Data", template);
+    $: workoutData.set(template.workouts);
     
 </script>
 
 <h1>{template.name !== "" ? template.name : "No data"}</h1>
 
     {#if template.workouts.length > 0}
-        {#each template.workouts as workout}
+        {#each $workoutData as workout}
             <Workout workout={workout} />
         {/each}
     {:else}
