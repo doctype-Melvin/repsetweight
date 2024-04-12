@@ -37,7 +37,27 @@ exports.get_template_detail = asyncHandler(async (req, res, next) => {
     res.status(404).json({ message: "No template found" });
   }
 
-  res.status(200).json(data);
+  // const formattedData = data.map((item) => {
+  //   return {
+  //     id: item.template.id,
+  //     name: item.template.name,
+  //     workouts: item.workout,
+  //   };
+  // });
+
+  const formattedData = {
+    id: data[0].template.id,
+    name: data[0].template.name,
+    workouts: data.map((workout) => {
+      return {
+        id: workout.workout.id,
+        name: workout.workout.name,
+        exercises: workout.workout.exercises,
+      };
+    }),
+  };
+
+  res.status(200).json(formattedData);
 });
 
 exports.post_template = asyncHandler(async (req, res, next) => {

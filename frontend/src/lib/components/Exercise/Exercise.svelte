@@ -4,7 +4,7 @@
     import { page } from "$app/stores";
     import Dropdown from "./Dropdown.svelte";
     import IconDotsVertical from "~icons/mdi/dots-vertical"
-    import { exercisesData } from "$lib/stores.js";
+    import { exercisesData, workoutData } from "$lib/stores.js";
     
     export let exercise;
     export let workout;
@@ -35,7 +35,8 @@
         console.log("Replace Exercise ID", exercise.id ,"New Exercise ID", value, "Workout ID", workout.id, "Template ID", templateId)
         const replaceAtIndex = workout.exercises.findIndex(item => item.id === exercise.id );
         const newExercise = exercises.find(exercise => exercise.id === Number(value));
-        
+        workoutData.update(value => value += 1)
+        console.log(workoutData)
         showExerciseList = !showExerciseList
     };
     
