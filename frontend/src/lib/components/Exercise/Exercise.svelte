@@ -54,6 +54,11 @@
             });
         })
         
+        // Write backend code to process the changes
+        // and update the database
+        // How do we handle this in Sveltekit?
+        // Where does the fetch function live? (route?)
+
         showExerciseList = !showExerciseList
     };
     
