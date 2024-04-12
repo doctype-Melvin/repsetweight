@@ -17,11 +17,11 @@
     
 </script>
 
-<!-- <h1>{template.length > 0 ? template[0].template.name : "No data"}</h1>
+<h1>{template.name !== "" ? template.name : "No data"}</h1>
 
-    {#if template.length > 0}
-        {#each template as entry}
-            <Workout workout={entry.workout} />
+    {#if template.workouts.length > 0}
+        {#each template.workouts as workout}
+            <Workout workout={workout} />
         {/each}
     {:else}
         <p>This template has no workouts</p>
@@ -29,8 +29,8 @@
     
 <section class="navigation-buttons">
     <button type="button" on:click={() => goto(`/templates`)}>All Templates</button>
-    <button type="button" on:click={() => console.log(template[0].template_id)} disabled="{template.length === 0}">Set Active Template</button>
-</section> -->
+    <button type="button" on:click={() => console.log(template.id)} disabled="{template.length === 0}">Set Active Template</button>
+</section>
 
 <style>
     .navigation-buttons {
