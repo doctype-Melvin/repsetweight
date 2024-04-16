@@ -32,6 +32,11 @@
         deleteExercise(exercise.id);
     }
 
+    const addExercise = (value) => {
+        console.log("Add Exercise button", value)
+        showExerciseList = !showExerciseList
+    }
+
     const changeExercise = (value) => {
         // value = new exercise id
         // findIndex can lead to interesting behavior
@@ -57,10 +62,6 @@
             });
         })
         
-        // Write backend code to process the changes
-        // and update the database
-        // How do we handle this in Sveltekit?
-        // Where does the fetch function live? (route?)
         updateWorkoutExercise(value, exercise.id, workout.id);
         showExerciseList = !showExerciseList
     };
@@ -71,6 +72,7 @@
 </script>
 
 {#if exercise.id !== 0}
+<!-- render exercise components - exercise.id === 0 is reserved for the add exercise button -->
 <section class="container">
     {#if !showExerciseList}
     <h4>{exercise.name}</h4>
@@ -92,7 +94,13 @@
     </div>
 </section>
 {:else}
-<button class="add-button" type="button">Add Exercise</button>
+<!-- render add exercise button -->
+<!-- allow for rendering of exercises list -->
+{#if !showExerciseList}
+<button class="add-button" type="button" on:click={changeAction}>Add Exercise</button>
+{:else}
+<Dropdown list={exercises} selected={addExercise} />
+{/if}
 {/if}
 
 <style>
@@ -137,5 +145,16 @@
         padding: 1rem;
         border-radius: 25px;
         font-size: 1rem;
+    }
+
+    .add-button:hover {
+        background-color: #f0f0f0;
+        cursor: pointer;
+    }
+
+    .add-button:active {
+        background-color: #405fc6;
+        color: #fff;
+        transition: .2s;
     }
 </style>
