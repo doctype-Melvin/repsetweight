@@ -1,14 +1,3 @@
-<script>
-    
-    import { templatesData, exercisesData } from "$lib/stores.js";
-    export let data
-
-    $: templatesData.set(data.templates)
-    $: exercisesData.set(data.exercises)
-
-    
-</script>
-
 <section>
     <a href="/">
         <h1>Lightweight</h1>

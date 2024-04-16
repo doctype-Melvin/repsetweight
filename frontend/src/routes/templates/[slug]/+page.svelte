@@ -7,11 +7,6 @@
     export let data;
     let { template } = data
     
-    // Set the store with an array
-    // of template workout objects
-    // for optimstic updates
-    // Please check where to fetch data and where to store/derive it
-    // Backend code needs to handle client side changes
     $: workoutData.set(template.workouts);
     
 </script>

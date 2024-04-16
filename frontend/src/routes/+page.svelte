@@ -1,10 +1,15 @@
 <script>
     // @ts-nocheck
     import { goto } from "$app/navigation";
+    import { templatesData, exercisesData } from "$lib/stores.js";
     export let data
+    
+    $: templatesData.set(data.templates)
+    $: exercisesData.set(data.exercises)
+    
     let { user } = data.user
     const activeTemplate = data.templates.find(template => template.id === user.active_template)
-    console.log("Home Page", data)
+    
 </script>
 
 <p>logged in as: {user.username}</p>
