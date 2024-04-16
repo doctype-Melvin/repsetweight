@@ -5,7 +5,7 @@
     import Dropdown from "./Dropdown.svelte";
     import IconDotsVertical from "~icons/mdi/dots-vertical"
     import { exercisesData, workoutData } from "$lib/stores.js";
-    import { updateWorkoutExercise } from "$lib/dataProcessing";
+    import { updateWorkoutExercise, addWorkoutExercise, deleteWorkoutExercise } from "$lib/dataProcessing";
     
     export let exercise;
     export let workout;
@@ -33,7 +33,23 @@
     }
 
     const addExercise = (value) => {
-        console.log("Add Exercise button", value)
+        const extendedWorkout = [...$workoutData].find(entry => entry.id === workout.id);
+        const newExercise = exercises.find(exercise => exercise.id === Number(value));
+        extendedWorkout.exercises.push({
+            id: newExercise.id,
+            name: newExercise.name,
+        });
+        
+        workoutData.update((workouts) => {
+            return workouts.map((workout) => {
+                if (workout.id === extendedWorkout.id) {
+                    return extendedWorkout;
+                }
+                return workout;
+            });
+        })
+        
+        addWorkoutExercise(value, workout.id);
         showExerciseList = !showExerciseList
     }
 
@@ -67,7 +83,20 @@
     };
     
     const deleteExercise = (value) => {
-        console.log("Delete Exercise ID", value, "Workout ID", workout.id, "Template ID", templateId)
+        const modifiedWorkout = [...$workoutData].find((entry) => entry.id === workout.id);
+        const index = modifiedWorkout.exercises.findIndex(item => item.id === Number(value));
+        modifiedWorkout.exercises.splice(index, 1);
+        
+        workoutData.update((workouts) => {
+            return workouts.map((workout) => {
+                if (workout.id === modifiedWorkout.id) {
+                    return modifiedWorkout;
+                }
+                return workout;
+            });
+        });
+
+        deleteWorkoutExercise(value, workout.id);
     };      
 </script>
 
@@ -94,8 +123,8 @@
     </div>
 </section>
 {:else}
-<!-- render add exercise button -->
-<!-- allow for rendering of exercises list -->
+<!-- render 'add exercise' button -->
+<!-- allow for rendering of exercises list to choose from -->
 {#if !showExerciseList}
 <button class="add-button" type="button" on:click={changeAction}>Add Exercise</button>
 {:else}
