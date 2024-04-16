@@ -15,6 +15,9 @@
                 <Exercise exercise={exercise} workout={workout}/>
             </li>
         {/each}
+        <li>
+            <Exercise exercise={{id: 0, name: "Add Exercise Button"}} workout={workout} />
+        </li>
     </ul>
 
 
@@ -24,7 +27,8 @@
         list-style-type: none;
         padding: 0;
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        align-items: center;
         gap: .5rem;
     }
 </style>

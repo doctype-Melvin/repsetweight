@@ -5,7 +5,7 @@
     import Dropdown from "./Dropdown.svelte";
     import IconDotsVertical from "~icons/mdi/dots-vertical"
     import { exercisesData, workoutData } from "$lib/stores.js";
-    import { updateWorkoutExercise } from "$lib/dataProcessing";
+    import { updateWorkoutExercise, addWorkoutExercise, deleteWorkoutExercise } from "$lib/dataProcessing";
     
     export let exercise;
     export let workout;
@@ -30,6 +30,27 @@
     const deleteAction = () => {
         isDropdown = !isDropdown;
         deleteExercise(exercise.id);
+    }
+
+    const addExercise = (value) => {
+        const extendedWorkout = [...$workoutData].find(entry => entry.id === workout.id);
+        const newExercise = exercises.find(exercise => exercise.id === Number(value));
+        extendedWorkout.exercises.push({
+            id: newExercise.id,
+            name: newExercise.name,
+        });
+        
+        workoutData.update((workouts) => {
+            return workouts.map((workout) => {
+                if (workout.id === extendedWorkout.id) {
+                    return extendedWorkout;
+                }
+                return workout;
+            });
+        })
+        
+        addWorkoutExercise(value, workout.id);
+        showExerciseList = !showExerciseList
     }
 
     const changeExercise = (value) => {
@@ -57,19 +78,30 @@
             });
         })
         
-        // Write backend code to process the changes
-        // and update the database
-        // How do we handle this in Sveltekit?
-        // Where does the fetch function live? (route?)
         updateWorkoutExercise(value, exercise.id, workout.id);
         showExerciseList = !showExerciseList
     };
     
     const deleteExercise = (value) => {
-        console.log("Delete Exercise ID", value, "Workout ID", workout.id, "Template ID", templateId)
+        const modifiedWorkout = [...$workoutData].find((entry) => entry.id === workout.id);
+        const index = modifiedWorkout.exercises.findIndex(item => item.id === Number(value));
+        modifiedWorkout.exercises.splice(index, 1);
+        
+        workoutData.update((workouts) => {
+            return workouts.map((workout) => {
+                if (workout.id === modifiedWorkout.id) {
+                    return modifiedWorkout;
+                }
+                return workout;
+            });
+        });
+
+        deleteWorkoutExercise(value, workout.id);
     };      
 </script>
 
+{#if exercise.id !== 0}
+<!-- render exercise components - exercise.id === 0 is reserved for the add exercise button -->
 <section class="container">
     {#if !showExerciseList}
     <h4>{exercise.name}</h4>
@@ -90,6 +122,15 @@
         {/if}
     </div>
 </section>
+{:else}
+<!-- render 'add exercise' button -->
+<!-- allow for rendering of exercises list to choose from -->
+{#if !showExerciseList}
+<button class="add-button" type="button" on:click={changeAction}>Add Exercise</button>
+{:else}
+<Dropdown list={exercises} selected={addExercise} />
+{/if}
+{/if}
 
 <style>
     .container {
@@ -123,5 +164,26 @@
         border: none;
         cursor: pointer;
         padding: 0;
+    }
+
+    .add-button{
+        display: block;
+        margin: 0 auto;
+        background-color: transparent;
+        border: solid 1px #ccc;
+        padding: 1rem;
+        border-radius: 25px;
+        font-size: 1rem;
+    }
+
+    .add-button:hover {
+        background-color: #f0f0f0;
+        cursor: pointer;
+    }
+
+    .add-button:active {
+        background-color: #405fc6;
+        color: #fff;
+        transition: .2s;
     }
 </style>
