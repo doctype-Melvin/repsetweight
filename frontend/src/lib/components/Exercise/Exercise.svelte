@@ -5,6 +5,7 @@
     import Dropdown from "./Dropdown.svelte";
     import IconDotsVertical from "~icons/mdi/dots-vertical"
     import { exercisesData, workoutData } from "$lib/stores.js";
+    import { updateWorkoutExercise } from "$lib/dataProcessing";
     
     export let exercise;
     export let workout;
@@ -32,10 +33,12 @@
     }
 
     const changeExercise = (value) => {
+        // value = new exercise id
         // findIndex can lead to interesting behavior
         // if there is a duplicate exercise in the list
         // it will replace the first one it finds
         // leading to unwanted exercise order
+
         const replaceAtIndex = workout.exercises.findIndex(item => item.id === exercise.id );
         const newExercise = exercises.find(exercise => exercise.id === Number(value));
         
@@ -58,15 +61,13 @@
         // and update the database
         // How do we handle this in Sveltekit?
         // Where does the fetch function live? (route?)
-
+        updateWorkoutExercise(value, exercise.id, workout.id);
         showExerciseList = !showExerciseList
     };
     
     const deleteExercise = (value) => {
         console.log("Delete Exercise ID", value, "Workout ID", workout.id, "Template ID", templateId)
-    };  
-    
-    
+    };      
 </script>
 
 <section class="container">
