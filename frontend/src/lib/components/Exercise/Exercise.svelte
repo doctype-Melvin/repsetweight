@@ -70,6 +70,7 @@
     };      
 </script>
 
+{#if exercise.id !== 0}
 <section class="container">
     {#if !showExerciseList}
     <h4>{exercise.name}</h4>
@@ -90,6 +91,9 @@
         {/if}
     </div>
 </section>
+{:else}
+<button class="add-button" type="button">Add Exercise</button>
+{/if}
 
 <style>
     .container {
@@ -123,5 +127,15 @@
         border: none;
         cursor: pointer;
         padding: 0;
+    }
+
+    .add-button{
+        display: block;
+        margin: 0 auto;
+        background-color: transparent;
+        border: solid 1px #ccc;
+        padding: 1rem;
+        border-radius: 25px;
+        font-size: 1rem;
     }
 </style>
