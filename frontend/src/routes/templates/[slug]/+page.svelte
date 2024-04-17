@@ -3,10 +3,12 @@
 <script>
 	import { goto } from '$app/navigation';
     import Workout from '$lib/components/Workout/Workout.svelte';
-    import { workoutData } from '$lib/stores.js';
+    import { workoutData, exercisesData } from '$lib/stores.js';
     export let data;
     let { template } = data
-    
+    let { exercises } = data
+
+    $: exercisesData.set(exercises);
     $: workoutData.set(template.workouts);
     
 </script>
