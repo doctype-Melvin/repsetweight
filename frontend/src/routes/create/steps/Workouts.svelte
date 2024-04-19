@@ -1,9 +1,8 @@
 <script>
     // @ts-nocheck
-    import { page } from '$app/stores';
-    import { goto } from '$app/navigation';
     import { exercisesData } from '$lib/stores';
     import Dropdown from '$lib/components/Exercise/Dropdown.svelte';
+    import Workout from '$lib/components/Workout/Workout.svelte';
 
     export let nextStep
 
@@ -21,36 +20,44 @@
 
     console.log(`%c User Template`, "color: #3CDD14", userTemplate)
 
-    const workout = {
-        name: '',
-        exercises: []
-    }
+    let workoutName = '';
+     
 
     const selectedExercise = (value) => {
         console.log(`%c Selected Exercise`, "color: #3CDD14", value)
         const exercise = exercises.find(exercise => exercise.id === Number(value));
-        userTemplate.workouts = [...userTemplate.workouts, exercise]
+        
         console.log(`%c Selected Exercise`, "color: #3CDD14", userTemplate.workouts)
     }
 
     const addWorkout = (event) => {
         event.preventDefault();
-        console.log(`%c Workout`, "color: #3CDD14", workout)
+        userTemplate.workouts = [...userTemplate.workouts, {
+            name: workoutName,
+            exercises: []
+        }]
+        workoutName = '';
     }
 
     const handleInput = (event) => {
-        event.target.id === 'workout' ? workout.name = event.target.value : null;
+        event.target.id === 'workout' ? workoutName = event.target.value : null;
     }
 </script>
 
 <form>
     <legend>Step 2: Workouts</legend>
     <label for="workout">Workout</label>
-    <input type="text" id="workout" on:input={handleInput} placeholder="Upper, Lower, Push..." required>
+    <input type="text" id="workout" value={workoutName} on:input={handleInput} placeholder="Upper, Lower, Push..." required>
     <button type="button" on:click={addWorkout}>Add</button>
 </form>
 
-<Dropdown list={exercises} selected={selectedExercise}/>
+{#if userTemplate.workouts.length > 0}
+    {#each userTemplate.workouts as workout}
+        <Workout {workout}/>
+    {/each}
+{/if}
+
+<!-- <Dropdown list={exercises} selected={selectedExercise}/> -->
 
 <section>
     <button type="button" on:click={() => nextStep('info')}>Back</button>

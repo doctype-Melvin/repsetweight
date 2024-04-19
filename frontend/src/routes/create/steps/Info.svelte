@@ -31,9 +31,7 @@
         console.log(`%c Info Input values`, "color: orange", userTemplate.name, userTemplate.description, )
         writeToLocalStorage('template', userTemplate);
         nextStep('workouts');
-    }
-
-    
+    }    
 </script>
 
 <section>
@@ -46,6 +44,6 @@
         <button type="button" on:click={() => nextStep('info')}>Back</button>
         <button type="submit">Next</button>
     </form>
-    
+
 </section>
 
