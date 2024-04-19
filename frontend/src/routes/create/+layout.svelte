@@ -21,3 +21,5 @@
     {:else if currentStep === 'workouts'}
         <Workouts nextStep={nextStep} />
     {/if}
+    
+    <slot />

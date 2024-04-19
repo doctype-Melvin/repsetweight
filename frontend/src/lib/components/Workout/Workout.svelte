@@ -10,17 +10,17 @@
 
 <h3> {workout.name}</h3>
     <ul class="exercise-list">
+        {#if workout.exercises.length > 0}
         {#each workout.exercises as exercise}
             <li>
                 <Exercise exercise={exercise} workout={workout}/>
             </li>
         {/each}
+        {/if}
         <li>
             <Exercise exercise={{id: 0, name: "Add Exercise Button"}} workout={workout} />
         </li>
     </ul>
-
-
 
 <style>
     .exercise-list {
