@@ -4,7 +4,7 @@
     import { page } from "$app/stores";
     import Dropdown from "./Dropdown.svelte";
     import IconDotsVertical from "~icons/mdi/dots-vertical"
-    import { exercisesData, workoutData, createMode, userTemplateData } from "$lib/stores.js";
+    import { exercisesData, workoutData, userTemplateData } from "$lib/stores.js";
     import { updateWorkoutExercise, addWorkoutExercise, deleteWorkoutExercise } from "$lib/dataProcessing";
     
     export let exercise;
@@ -36,8 +36,8 @@
     }
 
     const addExercise = (value) => {
+        // Update the preset workout
         if (!$userTemplateData) {
-          
             const extendedWorkout = [...$workoutData].find(entry => entry.id === workout.id);
             const newExercise = exercises.find(exercise => exercise.id === Number(value));
             extendedWorkout.exercises.push({
@@ -56,7 +56,8 @@
             
             addWorkoutExercise(value, workout.id);
         } else {
-            addExerciseToLocalStorage(value);
+            // Add exercise to user generated workout
+            addToUserWorkout(value);
         }
         showExerciseList = !showExerciseList
     }
@@ -89,7 +90,7 @@
             
             updateWorkoutExercise(value, exercise.id, workout.id);
         } else {
-            console.log('Change Exercise Fn', value)
+            changeInUserWorkout(value)
         }
         showExerciseList = !showExerciseList
     };
@@ -111,8 +112,9 @@
         deleteWorkoutExercise(value, workout.id);
     };
 
-    // Handle exercises in local storage
-    const addExerciseToLocalStorage = (value) => {
+    // Handle user created workout modifications
+    // Add, change and delete exercises from user created workouts
+    const addToUserWorkout = (value) => {
         const newExercise = exercises.find(exercise => exercise.id === Number(value));
         workout.exercises = [...workout.exercises, {
             id: newExercise.id,
@@ -134,10 +136,33 @@
         });
 
         localStorage.setItem('template', JSON.stringify($userTemplateData));
-        console.log('%c Template Data', 'color: hotpink', $userTemplateData)
-        
-        // Add exercise to template saved in localstorage or store
     }
+
+    const changeInUserWorkout = (value) => {
+        const newExercise = exercises.find(exercise => exercise.id === Number(value));
+        const index = workout.exercises.findIndex(item => item.id === exercise.id);
+        workout.exercises[index] = {
+            id: newExercise.id,
+            name: newExercise.name,
+        }
+        userTemplateData.update((template) => {
+            return {
+                ...template,
+                workouts: template.workouts.map((entry) => {
+                    if (entry.name === workout.name) {
+                        return {
+                            ...entry,
+                            exercises: workout.exercises
+                        }
+                    }
+                    return entry;
+                })
+            }
+        });
+
+        localStorage.setItem('template', JSON.stringify($userTemplateData));
+    }
+
 </script>
 
 {#if exercise.id !== 0}

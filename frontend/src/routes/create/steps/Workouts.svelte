@@ -5,7 +5,7 @@
     import Workout from '$lib/components/Workout/Workout.svelte';
 
     export let nextStep
-    const createMode = true;
+    
     const exercises = $exercisesData;
 
     // This component should expand the 
