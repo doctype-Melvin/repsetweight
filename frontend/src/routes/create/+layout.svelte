@@ -3,6 +3,19 @@
     import { page } from '$app/stores';
     import Info from './steps/Info.svelte';
     import Workouts from './steps/Workouts.svelte';
+    import { createMode, userTemplateData } from '$lib/stores';
+	import { onMount } from 'svelte';
+
+    console.log('Initial app state', $createMode)
+    createMode.set(true);
+
+    const previousTemplate = localStorage.getItem('template');
+    
+    onMount(() => {
+        if (previousTemplate) {
+            userTemplateData.set(JSON.parse(previousTemplate))
+        } 
+    })
     
     export let currentStep = 'info';
 

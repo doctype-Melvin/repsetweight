@@ -4,15 +4,18 @@
     import { page } from "$app/stores";
     import Dropdown from "./Dropdown.svelte";
     import IconDotsVertical from "~icons/mdi/dots-vertical"
-    import { exercisesData, workoutData } from "$lib/stores.js";
+    import { exercisesData, workoutData, createMode, userTemplateData } from "$lib/stores.js";
     import { updateWorkoutExercise, addWorkoutExercise, deleteWorkoutExercise } from "$lib/dataProcessing";
     
     export let exercise;
     export let workout;
     
+    
     const url = $page.url;
     const pathname = url.pathname
-    const templateId = Number(pathname.split("/")[2]);    
+    const templateId = Number(pathname.split("/")[2]);
+
+    $: workout.exercises;
     
     // List of exercises from store
     const exercises = $exercisesData;
@@ -33,23 +36,28 @@
     }
 
     const addExercise = (value) => {
-        const extendedWorkout = [...$workoutData].find(entry => entry.id === workout.id);
-        const newExercise = exercises.find(exercise => exercise.id === Number(value));
-        extendedWorkout.exercises.push({
-            id: newExercise.id,
-            name: newExercise.name,
-        });
-        
-        workoutData.update((workouts) => {
-            return workouts.map((workout) => {
-                if (workout.id === extendedWorkout.id) {
-                    return extendedWorkout;
-                }
-                return workout;
+        if (!$userTemplateData) {
+          
+            const extendedWorkout = [...$workoutData].find(entry => entry.id === workout.id);
+            const newExercise = exercises.find(exercise => exercise.id === Number(value));
+            extendedWorkout.exercises.push({
+                id: newExercise.id,
+                name: newExercise.name,
             });
-        })
-        
-        addWorkoutExercise(value, workout.id);
+            
+            workoutData.update((workouts) => {
+                return workouts.map((workout) => {
+                    if (workout.id === extendedWorkout.id) {
+                        return extendedWorkout;
+                    }
+                    return workout;
+                });
+            })
+            
+            addWorkoutExercise(value, workout.id);
+        } else {
+            addExerciseToLocalStorage(value);
+        }
         showExerciseList = !showExerciseList
     }
 
@@ -59,26 +67,30 @@
         // if there is a duplicate exercise in the list
         // it will replace the first one it finds
         // leading to unwanted exercise order
+        if (!$userTemplateData) {
 
-        const replaceAtIndex = workout.exercises.findIndex(item => item.id === exercise.id );
-        const newExercise = exercises.find(exercise => exercise.id === Number(value));
-        
-        const modifiedWorkout = [...$workoutData].find((entry) => entry.id === workout.id);
-        modifiedWorkout.exercises[replaceAtIndex] = {
-            id: newExercise.id,
-            name: newExercise.name,
-        };
-
-        workoutData.update((workouts) => {
-            return workouts.map((workout) => {
-                if (workout.id === modifiedWorkout.id) {
-                    return modifiedWorkout;
-                }
-                return workout;
-            });
-        })
-        
-        updateWorkoutExercise(value, exercise.id, workout.id);
+            const replaceAtIndex = workout.exercises.findIndex(item => item.id === exercise.id );
+            const newExercise = exercises.find(exercise => exercise.id === Number(value));
+            
+            const modifiedWorkout = [...$workoutData].find((entry) => entry.id === workout.id);
+            modifiedWorkout.exercises[replaceAtIndex] = {
+                id: newExercise.id,
+                name: newExercise.name,
+            };
+            
+            workoutData.update((workouts) => {
+                return workouts.map((workout) => {
+                    if (workout.id === modifiedWorkout.id) {
+                        return modifiedWorkout;
+                    }
+                    return workout;
+                });
+            })
+            
+            updateWorkoutExercise(value, exercise.id, workout.id);
+        } else {
+            console.log('Change Exercise Fn', value)
+        }
         showExerciseList = !showExerciseList
     };
     
@@ -97,7 +109,34 @@
         });
 
         deleteWorkoutExercise(value, workout.id);
-    };      
+    };
+
+    // Handle exercises in local storage
+    const addExerciseToLocalStorage = (value) => {
+        const newExercise = exercises.find(exercise => exercise.id === Number(value));
+        workout.exercises = [...workout.exercises, {
+            id: newExercise.id,
+            name: newExercise.name,
+        }];
+        userTemplateData.update((template) => {
+            return {
+                ...template,
+                workouts: template.workouts.map((entry) => {
+                    if (entry.name === workout.name) {
+                        return {
+                            ...entry,
+                            exercises: workout.exercises
+                        }
+                    }
+                    return entry;
+                })
+            }
+        });
+        console.log('%c In reactive store', 'color: hotpink', workout.exercises)
+        console.log('%c Template Data', 'color: hotpink', $userTemplateData)
+        console.log('%c Local Storage', 'color: hotpink', JSON.parse(localStorage.getItem('template')))
+        // Add exercise to template saved in localstorage or store
+    }
 </script>
 
 {#if exercise.id !== 0}
@@ -124,7 +163,7 @@
 </section>
 {:else}
 <!-- render 'add exercise' button -->
-<!-- allow for rendering of exercises list to choose from -->
+<!-- show exercises list -->
 {#if !showExerciseList}
 <button class="add-button" type="button" on:click={changeAction}>Add Exercise</button>
 {:else}
