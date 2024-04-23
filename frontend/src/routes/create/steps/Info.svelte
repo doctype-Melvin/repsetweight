@@ -1,6 +1,7 @@
 <script>
     // @ts-nocheck
     import { page } from '$app/stores';
+    import { goto } from '$app/navigation';
     import { userTemplateData } from '$lib/stores';
 
     let name = '';
@@ -44,7 +45,7 @@
         <input type="text" id="name" on:input={setInputValue} value={$userTemplateData ? $userTemplateData.name : ''} required>
         <label for="description">Description</label>
         <input type="text" id="description" on:input={setInputValue}>
-        <button type="button" on:click={() => nextStep('info')}>Back</button>
+        <button type="button" on:click={() => goto(`/templates`)}>Back</button>
         <button type="submit">Next</button>
     </form>
 

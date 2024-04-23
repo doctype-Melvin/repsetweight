@@ -50,5 +50,5 @@
 
 <section>
     <button type="button" on:click={() => nextStep('info')}>Back</button>
-    <button type="button" on:click={() => console.log('summary')}>Next</button>
+    <button type="button" on:click={() => nextStep('')}>Next</button>
 </section>
