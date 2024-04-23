@@ -12,8 +12,8 @@
     
     
     const url = $page.url;
-    const pathname = url.pathname
-    const templateId = Number(pathname.split("/")[2]);
+    const pathname = url.pathname.split('/').pop()
+    
 
     $: workout.exercises;
     
@@ -37,7 +37,7 @@
 
     const addExercise = (value) => {
         // Update the preset workout
-        if (!$userTemplateData) {
+        if (pathname !== 'create') {
             const extendedWorkout = [...$workoutData].find(entry => entry.id === workout.id);
             const newExercise = exercises.find(exercise => exercise.id === Number(value));
             extendedWorkout.exercises.push({
@@ -68,7 +68,7 @@
         // if there is a duplicate exercise in the list
         // it will replace the first one it finds
         // leading to unwanted exercise order
-        if (!$userTemplateData) {
+        if (pathname !== 'create') {
 
             const replaceAtIndex = workout.exercises.findIndex(item => item.id === exercise.id );
             const newExercise = exercises.find(exercise => exercise.id === Number(value));
@@ -96,20 +96,25 @@
     };
     
     const deleteExercise = (value) => {
-        const modifiedWorkout = [...$workoutData].find((entry) => entry.id === workout.id);
-        const index = modifiedWorkout.exercises.findIndex(item => item.id === Number(value));
-        modifiedWorkout.exercises.splice(index, 1);
-        
-        workoutData.update((workouts) => {
-            return workouts.map((workout) => {
-                if (workout.id === modifiedWorkout.id) {
-                    return modifiedWorkout;
-                }
-                return workout;
+        if (pathname !== 'create') {
+            
+            const modifiedWorkout = [...$workoutData].find((entry) => entry.id === workout.id);
+            const index = modifiedWorkout.exercises.findIndex(item => item.id === Number(value));
+            modifiedWorkout.exercises.splice(index, 1);
+            
+            workoutData.update((workouts) => {
+                return workouts.map((workout) => {
+                    if (workout.id === modifiedWorkout.id) {
+                        return modifiedWorkout;
+                    }
+                    return workout;
+                });
             });
-        });
-
-        deleteWorkoutExercise(value, workout.id);
+            
+            deleteWorkoutExercise(value, workout.id);
+        } else {
+            deleteFromUserWorkout(value);
+        }
     };
 
     // Handle user created workout modifications
@@ -145,6 +150,28 @@
             id: newExercise.id,
             name: newExercise.name,
         }
+        userTemplateData.update((template) => {
+            return {
+                ...template,
+                workouts: template.workouts.map((entry) => {
+                    if (entry.name === workout.name) {
+                        return {
+                            ...entry,
+                            exercises: workout.exercises
+                        }
+                    }
+                    return entry;
+                })
+            }
+        });
+
+        localStorage.setItem('template', JSON.stringify($userTemplateData));
+    }
+
+    const deleteFromUserWorkout = (value) => {
+        
+        const index = workout.exercises.findIndex(item => item.id === Number(value));
+        workout.exercises.splice(index, 1);
         userTemplateData.update((template) => {
             return {
                 ...template,
