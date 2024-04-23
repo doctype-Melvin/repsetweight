@@ -13,11 +13,8 @@
     // Create workouts seperately and store them
 
     // const userTemplate = JSON.parse(localStorage.getItem('template'));
-    $: userTemplate = $userTemplateData;
-
+    $: userTemplate = $userTemplateData ? $userTemplateData : JSON.parse(localStorage.getItem('template'));
     $: userTemplate.workouts;
-
-    console.log(`%c Local Storage User Template`, "color: #3CDD14", userTemplate)
 
     let workoutName = '';
      
@@ -27,7 +24,7 @@
             name: workoutName,
             exercises: []
         }]
-        console.log(`%c User Template`, "color: #3CDD14", userTemplate)
+        
         userTemplateData.set(userTemplate)
         localStorage.setItem('template', JSON.stringify(userTemplate));
         workoutName = '';

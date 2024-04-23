@@ -12,8 +12,6 @@
         workouts: []
     }
 
-    
-
     // Component creates the userTemplate in localStorage
     // Component should check if there's already data stored
     // If there is, it should load the data into the form
@@ -22,8 +20,8 @@
     export let nextStep;
 
     const writeToLocalStorage = (key, value) => {
-        localStorage.setItem(key, JSON.stringify(value))
         userTemplateData.set(value);
+        localStorage.setItem(key, JSON.stringify(value))
     }
     
     const setInputValue = (event) => {
@@ -32,7 +30,6 @@
 
     const saveFormData = (event) => {
         event.preventDefault();
-        // console.log(`%c Info Input values`, "color: orange", userTemplate.name, userTemplate.description, )
         if (!$userTemplateData) {
             writeToLocalStorage('template', userTemplate);
         }

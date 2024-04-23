@@ -132,9 +132,10 @@
                 })
             }
         });
-        console.log('%c In reactive store', 'color: hotpink', workout.exercises)
+
+        localStorage.setItem('template', JSON.stringify($userTemplateData));
         console.log('%c Template Data', 'color: hotpink', $userTemplateData)
-        console.log('%c Local Storage', 'color: hotpink', JSON.parse(localStorage.getItem('template')))
+        
         // Add exercise to template saved in localstorage or store
     }
 </script>
