@@ -1,37 +1,31 @@
 <script>
     // @ts-nocheck
-    import { exercisesData, userTemplateData } from '$lib/stores';
-    import Dropdown from '$lib/components/Exercise/Dropdown.svelte';
+    import { userTemplateData } from '$lib/stores';
     import Workout from '$lib/components/Workout/Workout.svelte';
 
     export let nextStep
-    
-    const exercises = $exercisesData;
 
-    // This component should expand the 
-    // object stored in localStorage
-    // Create workouts seperately and store them
-
-    // const userTemplate = JSON.parse(localStorage.getItem('template'));
     $: userTemplate = $userTemplateData ? $userTemplateData : JSON.parse(localStorage.getItem('template'));
     $: userTemplate.workouts;
 
     let workoutName = '';
+    let workoutDescription = '';
      
     const addWorkout = (event) => {
         event.preventDefault();
-        userTemplate.workouts = [...userTemplate.workouts, {
-            name: workoutName,
-            exercises: []
-        }]
+        
+        userTemplate.workouts = [...userTemplate.workouts, {name: workoutName, description: workoutDescription, exercises: []}];
+        
+        console.log('%c User Template', 'color: orange', userTemplate)
         
         userTemplateData.set(userTemplate)
         localStorage.setItem('template', JSON.stringify(userTemplate));
         workoutName = '';
+        workoutDescription = '';
     }
 
     const handleInput = (event) => {
-        event.target.id === 'workout' ? workoutName = event.target.value : null;
+        event.target.id === 'workout' ? workoutName = event.target.value : workoutDescription = event.target.value;
     }
 </script>
 
@@ -39,6 +33,8 @@
     <legend>Step 2: Workouts</legend>
     <label for="workout">Workout</label>
     <input type="text" id="workout" value={workoutName} on:input={handleInput} placeholder="Upper, Lower, Push..." required>
+    <label for="description">Description</label>
+    <input type="text" id="description" value={workoutDescription} on:input={handleInput} placeholder="Strength, Hypertrophy, Endurance...">
     <button type="button" on:click={addWorkout}>Add</button>
 </form>
 
