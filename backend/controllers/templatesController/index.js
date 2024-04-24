@@ -57,7 +57,8 @@ exports.get_template_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.post_template = asyncHandler(async (req, res, next) => {
-  res.status(200).json({ message: "Post new template" });
+  console.log(req.body);
+  res.status(200).json({ message: "User template received" });
 });
 
 exports.get_workouts = asyncHandler(async (req, res, next) => {

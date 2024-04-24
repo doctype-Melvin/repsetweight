@@ -2,8 +2,8 @@
     // @ts-nocheck
     import { userTemplateData } from "$lib/stores";
     import { goto } from "$app/navigation";
-    
-    
+    import { submitUserTemplate } from "$lib/dataProcessing";
+
     export let nextStep
 
 
@@ -28,7 +28,7 @@
 </section>
 <section>
     <button type="button" on:click={nextStep('workouts')}>Back</button>
-    <button type="button" on:click={() => console.log($userTemplateData)}>Submit</button>
+    <button type="button" on:click={() => submitUserTemplate($userTemplateData)}>Submit</button>
     <button type="button" on:click={leaveCreate}>Cancel</button>
 </section>
 
