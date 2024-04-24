@@ -27,7 +27,7 @@
 </script>
 
 
-<h1>Compose your own template</h1>
+<p style="text-align: center;">Compose your own template</p>
     
     {#if currentStep === 'info'}
         <Info nextStep={nextStep}/>

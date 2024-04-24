@@ -4,6 +4,7 @@
     import { goto } from '$app/navigation';
     import { userTemplateData } from '$lib/stores';
 
+
     let name = '';
     let description = '';
 
@@ -35,7 +36,13 @@
             writeToLocalStorage('template', userTemplate);
         }
         nextStep('workouts');
-    }    
+    }
+
+    const leaveCreate = () => {
+        localStorage.removeItem('template');
+        userTemplateData.set(null);
+        goto(`/templates`);
+    }
 </script>
 
 <section>
@@ -44,8 +51,8 @@
         <label for="name">Name</label>
         <input type="text" id="name" on:input={setInputValue} value={$userTemplateData ? $userTemplateData.name : ''} required>
         <label for="description">Description</label>
-        <input type="text" id="description" on:input={setInputValue}>
-        <button type="button" on:click={() => goto(`/templates`)}>Back</button>
+        <input type="text" id="description" on:input={setInputValue} value={$userTemplateData ? $userTemplateData.description : ''}>
+        <button type="button" on:click={leaveCreate}>Back</button>
         <button type="submit">Next</button>
     </form>
 
