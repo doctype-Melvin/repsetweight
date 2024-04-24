@@ -6,14 +6,15 @@
 
     export let nextStep
 
-
     const leaveCreate = () => {
         localStorage.removeItem('template');
         userTemplateData.set(null);
         goto(`/templates`);
     }
+    
 </script>
 <section>
+    {#if $userTemplateData}
     <h2>Summary</h2>
     <p>Template Name: {$userTemplateData.name}</p>
     <p>{$userTemplateData.description}</p>
@@ -25,6 +26,9 @@
             {/each}
         </ul>
     {/each}
+    {:else}
+    <p>Whoopsies... no data</p>
+    {/if}
 </section>
 <section>
     <button type="button" on:click={nextStep('workouts')}>Back</button>
