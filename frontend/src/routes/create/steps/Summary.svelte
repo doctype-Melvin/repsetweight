@@ -12,6 +12,13 @@
         goto(`/templates`);
     }
     
+    const submitAction = (data) => {
+        submitUserTemplate(data);
+        userTemplateData.set(null);
+        localStorage.clear();
+        goto(`/templates`);
+    }
+
 </script>
 <section>
     {#if $userTemplateData}
@@ -32,7 +39,7 @@
 </section>
 <section>
     <button type="button" on:click={nextStep('workouts')}>Back</button>
-    <button type="button" on:click={() => submitUserTemplate($userTemplateData)}>Submit</button>
+    <button type="button" on:click={() => submitAction($userTemplateData)}>Submit</button>
     <button type="button" on:click={leaveCreate}>Cancel</button>
 </section>
 

@@ -11,4 +11,6 @@ router.get("/detail/:id/workouts", templatesController.get_workouts);
 
 router.post("/add", templatesController.post_template);
 
+router.delete("/delete/:id", templatesController.delete_template);
+
 module.exports = router;

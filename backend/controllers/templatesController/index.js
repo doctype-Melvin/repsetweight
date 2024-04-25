@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const { models } = require("../../database/dbConnect");
+const { models, sequelize } = require("../../database/dbConnect");
 
 exports.get_templates = asyncHandler(async (req, res, next) => {
   const data = await models.Template.findAll();
@@ -89,6 +89,48 @@ exports.post_template = asyncHandler(async (req, res, next) => {
   });
 
   res.status(200).json({ message: "Successfully created user template" });
+});
+
+exports.delete_template = asyncHandler(async (req, res, next) => {
+  const transaction = await sequelize.transaction();
+
+  try {
+    const template = await models.Template.findByPk(req.params.id, {
+      transaction,
+    });
+    if (!template) {
+      res.status(404).json({ message: "No template found" });
+    }
+
+    const workouts = await models.TemplateWorkout.findAll({
+      where: { template_id: req.params.id },
+      transaction,
+    });
+
+    for (const workout of workouts) {
+      await models.WorkoutExercise.destroy({
+        where: { workout_id: workout.workout_id },
+        transaction,
+      });
+      await models.TemplateWorkout.destroy({
+        where: { template_id: req.params.id },
+        transaction,
+      });
+      await models.Workout.destroy({
+        where: { id: workout.workout_id },
+        transaction,
+      });
+    }
+
+    await template.destroy({ transaction });
+
+    await transaction.commit();
+
+    res.status(200).json({ message: "Successfully deleted template" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: "Error fetching template" });
+  }
 });
 
 exports.get_workouts = asyncHandler(async (req, res, next) => {

@@ -66,4 +66,22 @@ export const submitUserTemplate = async (templateData) => {
 		console.log(response.message);
 		return;
 	});
+	localStorage.clear();
+};
+
+export const deleteUserTemplate = async (templateID) => {
+	await fetch(`http://localhost:3000/api/templates/delete/${templateID}`, {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).then(async (res) => {
+		if (!res.ok) {
+			console.log('Error deleting template');
+			return;
+		}
+		const response = await res.json();
+		console.log(response.message);
+		return;
+	});
 };
