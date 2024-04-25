@@ -57,12 +57,13 @@ export const submitUserTemplate = async (templateData) => {
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify(templateData)
-	}).then((res) => {
+	}).then(async (res) => {
 		if (!res.ok) {
 			console.log('Error submitting template');
 			return;
 		}
-		console.log('Template submitted');
+		const response = await res.json();
+		console.log(response.message);
 		return;
 	});
 };

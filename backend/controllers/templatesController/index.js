@@ -57,8 +57,38 @@ exports.get_template_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.post_template = asyncHandler(async (req, res, next) => {
-  console.log(req.body);
-  res.status(200).json({ message: "User template received" });
+  const { name, description, workouts } = req.body;
+  const userTemplate = await models.Template.create({
+    name,
+    description,
+    user_generated: 1,
+    adjustable: 1,
+  });
+
+  const userWorkouts = workouts.map(async (workout) => {
+    const userWorkout = await models.Workout.create({
+      name: workout.name,
+      description: workout.description,
+    });
+    return { id: userWorkout.id, exercises: workout.exercises };
+  });
+
+  const workoutsData = await Promise.all(userWorkouts);
+  const userTemplateWorkouts = workoutsData.map(async (workout) => {
+    const userTemplateWorkout = await models.TemplateWorkout.create({
+      template_id: userTemplate.id,
+      workout_id: workout.id,
+    });
+
+    const userWorkoutExercises = workout.exercises.map(async (exercise) => {
+      const userWorkoutExercise = await models.WorkoutExercise.create({
+        workout_id: workout.id,
+        exercise_id: exercise.id,
+      });
+    });
+  });
+
+  res.status(200).json({ message: "Successfully created user template" });
 });
 
 exports.get_workouts = asyncHandler(async (req, res, next) => {
