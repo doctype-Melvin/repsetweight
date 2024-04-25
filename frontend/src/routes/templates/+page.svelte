@@ -6,14 +6,16 @@
     import { templatesData } from "$lib/stores.js";
     import Template from "$lib/components/Template/Template.svelte";
 
-    const templatesStore = $templatesData
-    
+    export let data
+    let { templates } = data
+    templatesData.set(templates)
+        
 </script>
 
 <h1>Templates</h1>
 
 <ul>
-    {#each templatesStore as template}
+    {#each $templatesData as template}
         <Template {template} />
     {/each}
 </ul>

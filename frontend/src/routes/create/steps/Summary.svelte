@@ -1,19 +1,15 @@
 <script>
     // @ts-nocheck
-    import { userTemplateData } from "$lib/stores";
+    import { userTemplateData, templatesData } from "$lib/stores";
     import { goto } from "$app/navigation";
     import { submitUserTemplate } from "$lib/dataProcessing";
 
     export let nextStep
-
-    const leaveCreate = () => {
-        localStorage.removeItem('template');
-        userTemplateData.set(null);
-        goto(`/templates`);
-    }
     
-    const submitAction = (data) => {
-        submitUserTemplate(data);
+    const submitAction = async (data) => {
+        if (data) {
+            const response = await submitUserTemplate(data);
+        }
         userTemplateData.set(null);
         localStorage.clear();
         goto(`/templates`);
@@ -40,7 +36,7 @@
 <section>
     <button type="button" on:click={nextStep('workouts')}>Back</button>
     <button type="button" on:click={() => submitAction($userTemplateData)}>Submit</button>
-    <button type="button" on:click={leaveCreate}>Cancel</button>
+    <button type="button" on:click={() => submitAction(null)}>Cancel</button>
 </section>
 
 <style>

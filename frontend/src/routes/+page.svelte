@@ -4,8 +4,8 @@
     import { templatesData, exercisesData } from "$lib/stores.js";
     export let data
     
-    $: templatesData.set(data.templates)
-    $: exercisesData.set(data.exercises)
+    templatesData.set(data.templates)
+    exercisesData.set(data.exercises)
     
     let { user } = data.user
     const activeTemplate = data.templates.find(template => template.id === user.active_template)

@@ -63,7 +63,7 @@ export const submitUserTemplate = async (templateData) => {
 			return;
 		}
 		const response = await res.json();
-		console.log(response.message);
+		console.log(response);
 		return;
 	});
 	localStorage.clear();

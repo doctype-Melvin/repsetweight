@@ -33,14 +33,15 @@ exports.get_template_detail = asyncHandler(async (req, res, next) => {
     where: { template_id: req.params.id },
   });
 
-  if (!data) {
-    res.status(404).json({ message: "No template found" });
+  if (data.length === 0) {
+    return res.status(404).json({ message: "No template found" });
   }
 
   // Here the data is put into an easy to consume
   // format. The template is reduced to a single object
   // that holds template details and puts the workouts
   // into an array of objects.
+
   const formattedData = {
     id: data[0].template.id,
     name: data[0].template.name,
@@ -65,6 +66,8 @@ exports.post_template = asyncHandler(async (req, res, next) => {
     adjustable: 1,
   });
 
+  const templateToJSON = userTemplate.toJSON();
+
   const userWorkouts = workouts.map(async (workout) => {
     const userWorkout = await models.Workout.create({
       name: workout.name,
@@ -88,7 +91,7 @@ exports.post_template = asyncHandler(async (req, res, next) => {
     });
   });
 
-  res.status(200).json({ message: "Successfully created user template" });
+  res.status(200).json({ templateToJSON });
 });
 
 exports.delete_template = asyncHandler(async (req, res, next) => {
@@ -129,6 +132,7 @@ exports.delete_template = asyncHandler(async (req, res, next) => {
     res.status(200).json({ message: "Successfully deleted template" });
   } catch (error) {
     console.log(error.message);
+    await transaction.rollback();
     res.status(500).json({ message: "Error fetching template" });
   }
 });

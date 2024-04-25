@@ -15,9 +15,7 @@
         event.preventDefault();
         
         userTemplate.workouts = [...userTemplate.workouts, {name: workoutName, description: workoutDescription, exercises: []}];
-        
-        console.log('%c User Template', 'color: orange', userTemplate)
-        
+                
         userTemplateData.set(userTemplate)
         localStorage.setItem('template', JSON.stringify(userTemplate));
         workoutName = '';
