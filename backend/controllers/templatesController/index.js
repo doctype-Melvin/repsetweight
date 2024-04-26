@@ -37,8 +37,8 @@ exports.get_template_detail = asyncHandler(async (req, res, next) => {
     return res.status(404).json({ message: "No template found" });
   }
 
-  // Here the data is put into an easy to consume
-  // format. The template is reduced to a single object
+  // Here the data is formatted for easy consumption.
+  // The template is reduced to a single object
   // that holds template details and puts the workouts
   // into an array of objects.
 
@@ -61,6 +61,8 @@ exports.post_template = asyncHandler(async (req, res, next) => {
   const { name, description, workouts } = req.body;
   const transaction = await sequelize.transaction();
   try {
+    //  First create the template
+    // to retreive the id
     const userTemplate = await models.Template.create(
       {
         name,
@@ -71,9 +73,9 @@ exports.post_template = asyncHandler(async (req, res, next) => {
       { transaction }
     );
 
-    const templateToJSON = userTemplate.toJSON();
-
-    const userWorkouts = workouts.map(async (workout) => {
+    // Create the workouts
+    for (const workout of workouts) {
+      // Set the workout name and description
       const userWorkout = await models.Workout.create(
         {
           name: workout.name,
@@ -81,29 +83,27 @@ exports.post_template = asyncHandler(async (req, res, next) => {
         },
         { transaction }
       );
-      return { id: userWorkout.id, exercises: workout.exercises };
-    });
-
-    const workoutsData = await Promise.all(userWorkouts);
-    const userTemplateWorkouts = workoutsData.map(async (workout) => {
-      const userTemplateWorkout = await models.TemplateWorkout.create(
+      // Create rows in junction table
+      // to link the workout to the template
+      await models.TemplateWorkout.create(
         {
           template_id: userTemplate.id,
-          workout_id: workout.id,
+          workout_id: userWorkout.id,
         },
-        transaction
+        { transaction }
       );
-
-      const userWorkoutExercises = workout.exercises.map(async (exercise) => {
-        const userWorkoutExercise = await models.WorkoutExercise.create(
+      // Create rows in junction table
+      // to link the exercises to the workout
+      for (const exercise of workout.exercises) {
+        await models.WorkoutExercise.create(
           {
-            workout_id: workout.id,
+            workout_id: userWorkout.id,
             exercise_id: exercise.id,
           },
-          transaction
+          { transaction }
         );
-      });
-    });
+      }
+    }
     await transaction.commit();
     res.status(200).json({ message: "Your template is now ready!" });
   } catch (error) {
