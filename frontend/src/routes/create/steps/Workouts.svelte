@@ -13,7 +13,7 @@
      
     const addWorkout = (event) => {
         event.preventDefault();
-        
+        if (!workoutName) return;
         userTemplate.workouts = [...userTemplate.workouts, {name: workoutName, description: workoutDescription, exercises: []}];
                 
         userTemplateData.set(userTemplate)

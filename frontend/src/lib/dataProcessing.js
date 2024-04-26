@@ -8,10 +8,10 @@ export const updateWorkoutExercise = async (insertExercise, removeExercise, work
 		body: JSON.stringify({ insertExercise, removeExercise })
 	}).then((res) => {
 		if (!res.ok) {
-			console.log('Error updating workout');
+			console.log(res.status);
 			return;
 		}
-		console.log('Workout updated');
+		console.log(res.status);
 		return;
 	});
 };

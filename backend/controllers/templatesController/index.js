@@ -59,39 +59,57 @@ exports.get_template_detail = asyncHandler(async (req, res, next) => {
 
 exports.post_template = asyncHandler(async (req, res, next) => {
   const { name, description, workouts } = req.body;
-  const userTemplate = await models.Template.create({
-    name,
-    description,
-    user_generated: 1,
-    adjustable: 1,
-  });
+  const transaction = await sequelize.transaction();
+  try {
+    const userTemplate = await models.Template.create(
+      {
+        name,
+        description,
+        user_generated: 1,
+        adjustable: 1,
+      },
+      { transaction }
+    );
 
-  const templateToJSON = userTemplate.toJSON();
+    const templateToJSON = userTemplate.toJSON();
 
-  const userWorkouts = workouts.map(async (workout) => {
-    const userWorkout = await models.Workout.create({
-      name: workout.name,
-      description: workout.description,
+    const userWorkouts = workouts.map(async (workout) => {
+      const userWorkout = await models.Workout.create(
+        {
+          name: workout.name,
+          description: workout.description,
+        },
+        { transaction }
+      );
+      return { id: userWorkout.id, exercises: workout.exercises };
     });
-    return { id: userWorkout.id, exercises: workout.exercises };
-  });
 
-  const workoutsData = await Promise.all(userWorkouts);
-  const userTemplateWorkouts = workoutsData.map(async (workout) => {
-    const userTemplateWorkout = await models.TemplateWorkout.create({
-      template_id: userTemplate.id,
-      workout_id: workout.id,
-    });
+    const workoutsData = await Promise.all(userWorkouts);
+    const userTemplateWorkouts = workoutsData.map(async (workout) => {
+      const userTemplateWorkout = await models.TemplateWorkout.create(
+        {
+          template_id: userTemplate.id,
+          workout_id: workout.id,
+        },
+        transaction
+      );
 
-    const userWorkoutExercises = workout.exercises.map(async (exercise) => {
-      const userWorkoutExercise = await models.WorkoutExercise.create({
-        workout_id: workout.id,
-        exercise_id: exercise.id,
+      const userWorkoutExercises = workout.exercises.map(async (exercise) => {
+        const userWorkoutExercise = await models.WorkoutExercise.create(
+          {
+            workout_id: workout.id,
+            exercise_id: exercise.id,
+          },
+          transaction
+        );
       });
     });
-  });
-
-  res.status(200).json({ templateToJSON });
+    await transaction.commit();
+    res.status(200).json({ message: "Your template is now ready!" });
+  } catch (error) {
+    await transaction.rollback();
+    res.status(500).json({ message: "Error creating template" });
+  }
 });
 
 exports.delete_template = asyncHandler(async (req, res, next) => {
@@ -110,6 +128,8 @@ exports.delete_template = asyncHandler(async (req, res, next) => {
       transaction,
     });
 
+    // Delete parts of the template sequentially
+    // to avoid foreign key constraints
     for (const workout of workouts) {
       await models.WorkoutExercise.destroy({
         where: { workout_id: workout.workout_id },
