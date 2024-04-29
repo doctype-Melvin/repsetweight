@@ -51,22 +51,26 @@ export const deleteWorkoutExercise = async (exerciseID, workoutID) => {
 };
 
 export const submitUserTemplate = async (templateData) => {
-	await fetch('http://localhost:3000/api/templates/add', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(templateData)
-	}).then(async (res) => {
-		if (!res.ok) {
-			console.log('Error submitting template');
+	try {
+		const result = await fetch('http://localhost:3000/api/templates/add', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(templateData)
+		});
+
+		if (!result.ok) {
+			console.log('%c Error submitting template', 'color: red;');
 			return;
 		}
-		const response = await res.json();
-		console.log(response);
-		return;
-	});
-	localStorage.clear();
+
+		const response = await result.json();
+
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 export const deleteUserTemplate = async (templateID) => {

@@ -1,6 +1,6 @@
 <script>
     // @ts-nocheck
-    import { userTemplateData, templatesData } from "$lib/stores";
+    import { userTemplateData } from "$lib/stores";
     import { goto } from "$app/navigation";
     import { submitUserTemplate } from "$lib/dataProcessing";
 
@@ -8,11 +8,23 @@
     
     const submitAction = async (data) => {
         if (data) {
-            const response = await submitUserTemplate(data);
+                const result = await submitUserTemplate(data)
+                                    
+                if (!result) {
+                    console.error("%c Error submitting template", "color: red");
+                     return;
+                 }
+                userTemplateData.set(null);
+                localStorage.clear();
+                goto(`/templates/${result.id}`);
+                return;
+           
+        } else {
+            userTemplateData.set(null);
+            localStorage.clear();
+            goto(`/templates`);
+            return;
         }
-        userTemplateData.set(null);
-        localStorage.clear();
-        goto(`/templates`);
     }
 
 </script>

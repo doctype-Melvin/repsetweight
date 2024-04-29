@@ -105,7 +105,9 @@ exports.post_template = asyncHandler(async (req, res, next) => {
       }
     }
     await transaction.commit();
-    res.status(200).json({ message: "Your template is now ready!" });
+    res
+      .status(200)
+      .json({ message: "Your template is now ready!", id: userTemplate.id });
   } catch (error) {
     await transaction.rollback();
     res.status(500).json({ message: "Error creating template" });
