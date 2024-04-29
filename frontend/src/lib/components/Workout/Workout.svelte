@@ -12,7 +12,35 @@
 
 <h3> {workout.name}</h3>
 
-    <ul class="exercise-list">
+    <table>
+        <thead>
+            <tr>
+                <th>Exercise</th>
+                <th>Reps</th>
+                <th>Sets</th>
+                <th>Weight</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {#if workout.exercises.length > 0}
+            {#each workout.exercises as exercise}
+            <tr>
+                <td>{exercise.name}</td>
+                <td>10</td>
+                <td>3</td>
+                <td>100</td>
+                <td>
+                    <button type="button">Edit</button>
+                    <button type="button">Delete</button>
+                </td>
+            </tr>
+            {/each}
+            {/if}
+            <button type="button">Add Exercise</button>
+    </table>
+
+    <!-- <ul class="exercise-list">
         {#if workout.exercises.length > 0}
         {#each workout.exercises as exercise}
             <li>
@@ -24,14 +52,13 @@
         <li>
             <Exercise exercise={{id: 0, name: "Add Exercise Button"}} workout={workout}  />
         </li>
-    </ul>
+    </ul> -->
 
 <style>
     .exercise-list {
         list-style-type: none;
         padding: 0;
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
         align-items: center;
         gap: .5rem;
     }

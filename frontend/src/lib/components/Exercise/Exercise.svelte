@@ -201,6 +201,11 @@
     <Dropdown list={exercises} selected={changeExercise} />   
     {/if}
     
+    <div class="scheme">
+        <p>Reps: 10</p>
+        <p>Sets: 5</p>
+        <p>Weight: 100</p>
+    </div>
     <!-- Context menu with Change and Delete buttons -->
     <div class="options-container">
         <button class="icon-button" type="button" on:click={toggleDropdown}>
@@ -226,12 +231,14 @@
 
 <style>
     .container {
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: .5fr 1fr .15fr;
         align-items: center;
-        border: 1px solid #ccc;
-        border-radius: 15px;
-        padding: 1rem;
+    }
+
+    .scheme {
+        display: flex;
+        gap: .25rem;
     }
 
     .options-container {
