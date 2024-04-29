@@ -4,11 +4,17 @@
     import Exercise from '$lib/components/Exercise/Exercise.svelte';
     
     export let workout;
-    
-    
+    export let showVariables;
+    console.log('workout comp', showVariables)
 
 </script>
 
+<!-- If in showVariables mode, the component only
+renders exercises and allows for 
+changing/deleting a given exercise.
+If not in showVariables mode, the component renders exercise
+variables such as reps, sets, and weight.
+-->
 
 <h3> {workout.name}</h3>
 
@@ -16,9 +22,11 @@
         <thead>
             <tr>
                 <th>Exercise</th>
+                {#if showVariables}
                 <th>Reps</th>
                 <th>Sets</th>
                 <th>Weight</th>
+                {/if}
                 <th>Actions</th>
             </tr>
         </thead>
@@ -27,12 +35,13 @@
             {#each workout.exercises as exercise}
             <tr>
                 <td>{exercise.name}</td>
+                {#if showVariables}
                 <td>10</td>
                 <td>3</td>
                 <td>100</td>
+                {/if}
                 <td>
                     <button type="button">Edit</button>
-                    <button type="button">Delete</button>
                 </td>
             </tr>
             {/each}

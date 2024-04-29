@@ -1,5 +1,8 @@
 import { writable } from 'svelte/store';
 
+// Store for user data
+export const userData = writable();
+
 // Store for user created template data
 export const userTemplateData = writable();
 
