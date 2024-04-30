@@ -32,7 +32,7 @@ exports.get_user = asyncHandler(async (req, res, next) => {
       });
     }
     // req.user = user;
-    return res.status(200).json({ user });
+    return res.status(200).json(user);
   } catch (err) {
     console.log("Couldn't find user", err);
     return res.status(500).json({

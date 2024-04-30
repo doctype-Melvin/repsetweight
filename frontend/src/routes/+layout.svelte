@@ -1,3 +1,15 @@
+<script>
+    import { templatesData, exercisesData, userData } from "$lib/stores.js";
+
+    export let data
+
+    templatesData.set(data.templates)
+    exercisesData.set(data.exercises)
+    userData.set(data.user)
+
+</script>
+
+
 <section>
     <a href="/">
         <h1>Lightweight</h1>
