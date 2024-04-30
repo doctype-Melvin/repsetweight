@@ -8,7 +8,7 @@
     
     export let data;
     let { template } = data
-    let { exercises } = data
+    
     
     const templateID = Number($page.url.pathname.split('/')[2]);
     
@@ -18,7 +18,6 @@
             return (templateID === $userData.active_template);
     }
 
-    $: exercisesData.set(exercises);
     $: workoutData.set(template.workouts);
 </script>
 

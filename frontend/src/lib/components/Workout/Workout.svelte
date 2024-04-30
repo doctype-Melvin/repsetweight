@@ -1,18 +1,16 @@
 <script>
     // Workout Component
     // @ts-nocheck
-    import Exercise from '$lib/components/Exercise/Exercise.svelte';
     
     export let workout;
     export let showVariables;
 
 </script>
 
-<!-- If in showVariables mode, the component only
-renders exercises and allows for 
-changing/deleting a given exercise.
-If not in showVariables mode, the component renders exercise
-variables such as reps, sets, and weight.
+<!-- 
+    Component only renders
+    exercise variables if the
+    template is the active template
 -->
 
 <h3> {workout.name}</h3>
@@ -55,20 +53,6 @@ variables such as reps, sets, and weight.
             {/if}
             <button type="button">Add Exercise</button>
     </table>
-
-    <!-- <ul class="exercise-list">
-        {#if workout.exercises.length > 0}
-        {#each workout.exercises as exercise}
-            <li>
-                <Exercise exercise={exercise} workout={workout} />
-            </li>
-    
-        {/each}
-        {/if}
-        <li>
-            <Exercise exercise={{id: 0, name: "Add Exercise Button"}} workout={workout}  />
-        </li>
-    </ul> -->
 
 <style>
     .exercise-list {
