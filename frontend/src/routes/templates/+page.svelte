@@ -12,13 +12,10 @@
 </script>
 
 {#if userTempaltes.length > 0}
-<h2>Your Templates</h2>
-<Collapsible templates={userTempaltes} />
+<Collapsible templates={userTempaltes} header='Your Templates'/>
 {/if}
    
-
-<h2>Preset Templates</h2>
-<Collapsible templates={presetTemplates} />
+<Collapsible templates={presetTemplates} header='Presets'/>
 
 
 
