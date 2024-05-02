@@ -1,30 +1,30 @@
-<script lang="js">
+<script>
+    //@ts-nocheck
     // Template Overview
-
-
 	import { goto } from "$app/navigation";
     import { templatesData } from "$lib/stores.js";
-    import Template from "$lib/components/Template/Template.svelte";
+    import Collapsible from "$lib/components/Collapsible/Collapsible.svelte";
+    
 
-   
-        
+    let userTempaltes = $templatesData.filter(item => item.user_generated === true)
+    let presetTemplates = $templatesData.filter(item => item.user_generated === false)
+    
 </script>
 
-<h1>Templates</h1>
+{#if userTempaltes.length > 0}
+<h2>Your Templates</h2>
+<Collapsible templates={userTempaltes} />
+{/if}
+   
 
-<ul>
-    {#each $templatesData as template}
-        <Template {template} />
-    {/each}
-</ul>
+<h2>Preset Templates</h2>
+<Collapsible templates={presetTemplates} />
+
+
 
 <button type="button" on:click={() => goto('/create')}>Create Template</button>
 <button type="button" on:click={() => goto('/')}>Dashboard</button>
 
 <style>
-    ul {
-        list-style: none;
-        padding: 0;
-        display: grid;
-    }
+   
 </style>
