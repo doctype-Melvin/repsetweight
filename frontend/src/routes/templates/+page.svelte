@@ -1,14 +1,12 @@
-<script>
+<script lang="js">
     // Template Overview
-    // @ts-nocheck
+
 
 	import { goto } from "$app/navigation";
     import { templatesData } from "$lib/stores.js";
     import Template from "$lib/components/Template/Template.svelte";
 
-    export let data
-    let { templates } = data
-    templatesData.set(templates)
+   
         
 </script>
 
