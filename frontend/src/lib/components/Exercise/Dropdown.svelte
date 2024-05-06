@@ -2,7 +2,6 @@
     // @ts-nocheck
     export let list
     export let selected
-    
 </script>
 
 <select on:change={(event) => selected(event.target.value)}>

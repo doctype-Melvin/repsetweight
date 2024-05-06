@@ -21,7 +21,6 @@
     const toggleChangeExercise = () => changeExercise.update(value => !value);
     
     const addExercise = (exerciseID) => {
-        
         const newExercise = $exercisesData.find((exercise) => exercise.id === Number(exerciseID));
 		workout.exercises = [
 			...workout.exercises,
@@ -51,6 +50,33 @@
         toggleDropdown()
     }
 
+    const swapExercise = (oldID, newID) => {
+        const newExercise = $exercisesData.find((exercise) => exercise.id === Number(newID));
+        const index = workout.exercises.findIndex(item => item.id === Number(oldID));
+        workout.exercises[index] = {
+            id: newExercise.id,
+            name: newExercise.name
+        }
+        
+        userTemplateData.update((template) => {
+            return {
+                ...template,
+                workouts: template.workouts.map((entry) => {
+                    if (entry.name === workout.name) {
+                        return {
+                            ...entry,
+                            exercises: workout.exercises
+                        }
+                    }
+                    return entry;
+                })
+            }
+        });
+
+        localStorage.setItem('template', JSON.stringify($userTemplateData));
+
+    }
+
 </script>
 
 <h3> {workout.name}</h3>
@@ -72,7 +98,7 @@
             {#each workout.exercises as exercise}
             <tr>
                 <td>
-                    <Exercise workout={workout} exercise={exercise} />
+                    <Exercise workout={workout} exercise={exercise} swapFunction={swapExercise}/>
                 </td>
                 {#if showVariables}
                 <td>

@@ -9,6 +9,8 @@
     
     export let exercise;
     export let workout;
+
+    export let swapFunction
     
     
     const url = $page.url;
@@ -22,10 +24,15 @@
 
     let showExerciseList = writable(false);
     const toggleExerciseList = () => showExerciseList.update(boolean => !boolean);
-    
-    const changeAction = () => {
-        showExerciseList = !showExerciseList;
-    }
+
+    const getExerciseId = (id) => {
+        if (id) {
+            swapFunction(exercise.id, id)
+            toggleExerciseList()
+            return
+        }
+        return
+    }    
 
     const deleteAction = () => {
         deleteExercise(exercise.id);
@@ -186,18 +193,13 @@
         localStorage.setItem('template', JSON.stringify($userTemplateData));
     }
 
-const dummyFn = () => {
-    console.info('Change Exercise')
-    toggleExerciseList()
-    }
-    
 </script>
 
 <section class="container">
     {#if !$showExerciseList}
     <button on:click={toggleExerciseList}>{exercise.name}</button>
     {:else}
-    <Dropdown list={exercises} selected={dummyFn} />
+    <Dropdown list={exercises} selected={getExerciseId} />
     <button on:click={toggleExerciseList}>Cancel</button>
     {/if}    
 </section>
