@@ -1,9 +1,25 @@
 <script>
     // Workout Component
     // @ts-nocheck
-    
+
+    import { writable } from "svelte/store";
+    import { exercisesData } from "$lib/stores";
+    import Dropdown from "../Exercise/Dropdown.svelte";
+    import Exercise from "../Exercise/Exercise.svelte";
+	import RepSelect from "../Exercise/RepSelect.svelte";
+    import SetSelect from "../Exercise/SetSelect.svelte";
+    import WeightInput from "../Exercise/WeightInput.svelte";
     export let workout;
     export let showVariables;
+    let showDropdown = writable(false);
+    let changeExercise = writable(false);
+
+    const toggleDropdown = () => showDropdown.update(value => !value);
+    const toggleChangeExercise = () => changeExercise.update(value => !value);
+    const tempFn = (value) => {
+        console.info(value)
+        toggleChangeExercise()
+    }
 
 </script>
 
@@ -31,15 +47,30 @@
             {#if workout.exercises.length > 0}
             {#each workout.exercises as exercise}
             <tr>
+                <td>
+                    <Exercise workout={workout} exercise={exercise} />
+                </td>
                 <!-- Dropdown to select exercise -->
-                <td>{exercise.name}</td>
+                <!-- {#if $changeExercise}
+                <td>
+                    <Dropdown list={$exercisesData} selected={tempFn} />
+                </td>
+                {:else}
+                <td on:click={toggleChangeExercise}>{exercise.name}</td>
+                {/if} -->
                 {#if showVariables}
                 <!-- Numbers dropdown -->
-                <td>10</td>
+                <td>
+                    <RepSelect />
+                </td>
                 <!-- Numbers dropdown -->
-                <td>3</td>
+                <td>
+                    <SetSelect />
+                </td>
                 <!-- Number input field -->
-                <td>100</td>
+                <td>
+                    <WeightInput />
+                </td>
                 {/if}
                 <td>
                     <!-- Toggle edit view for selected exercise -->
@@ -51,8 +82,11 @@
             </tr>
             {/each}
             {/if}
-            <button type="button">Add Exercise</button>
-    </table>
+        </table>
+        {#if $showDropdown}
+        <Dropdown list={$exercisesData} selected={tempFn} />
+        {/if}
+        <button type="button" on:click={toggleDropdown}>{$showDropdown ? 'Cancel' : 'Add Exercise'}</button>
 
 <style>
     .exercise-list {

@@ -3,7 +3,7 @@
     // @ts-nocheck
     import { page } from "$app/stores";
     import Dropdown from "./Dropdown.svelte";
-    import IconDotsVertical from "~icons/mdi/dots-vertical"
+    import { writable } from "svelte/store";
     import { exercisesData, workoutData, userTemplateData } from "$lib/stores.js";
     import { updateWorkoutExercise, addWorkoutExercise, deleteWorkoutExercise } from "$lib/dataProcessing";
     
@@ -20,18 +20,14 @@
     // List of exercises from store
     const exercises = $exercisesData;
 
-    let isDropdown = false;
-    let showExerciseList = false;
-    
-    const toggleDropdown = () => isDropdown = !isDropdown;
+    let showExerciseList = writable(false);
+    const toggleExerciseList = () => showExerciseList.update(boolean => !boolean);
     
     const changeAction = () => {
-        isDropdown = !isDropdown;
         showExerciseList = !showExerciseList;
     }
 
     const deleteAction = () => {
-        isDropdown = !isDropdown;
         deleteExercise(exercise.id);
     }
 
@@ -192,97 +188,16 @@
 
 </script>
 
-{#if exercise.id !== 0}
-<!-- render exercise components - exercise.id === 0 is reserved for the add exercise button -->
 <section class="container">
-    {#if !showExerciseList}
-    <h4>{exercise.name}</h4>
+    {#if !$showExerciseList}
+    <button on:click={toggleExerciseList}>{exercise.name}</button>
     {:else}
-    <Dropdown list={exercises} selected={changeExercise} />   
-    {/if}
-    
-    <div class="scheme">
-        <p>Reps: 10</p>
-        <p>Sets: 5</p>
-        <p>Weight: 100</p>
-    </div>
-    <!-- Context menu with Change and Delete buttons -->
-    <div class="options-container">
-        <button class="icon-button" type="button" on:click={toggleDropdown}>
-            <IconDotsVertical style="font-size:1.15rem" />
-        </button>
-        {#if isDropdown}
-        <div class="dropdown">
-            <button type="button" on:click={changeAction}>Change</button>
-            <button type="button" on:click={deleteAction}>Delete</button>
-        </div>
-        {/if}
-    </div>
+    <Dropdown list={exercises} selected={toggleExerciseList} />   
+    {/if}    
 </section>
-{:else}
-<!-- render 'add exercise' button -->
-<!-- show exercises list -->
-{#if !showExerciseList}
-<button class="add-button" type="button" on:click={changeAction}>Add Exercise</button>
-{:else}
-<Dropdown list={exercises} selected={addExercise} />
-{/if}
-{/if}
 
 <style>
     .container {
-        display: grid;
-        grid-template-columns: .5fr 1fr .15fr;
-        align-items: center;
-    }
-
-    .scheme {
-        display: flex;
-        gap: .25rem;
-    }
-
-    .options-container {
-        position: relative;
-    }
-
-    .dropdown {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 15px;
-        padding: .5rem;
-        display: flex;
-        flex-direction: column;
-        gap: .5rem;
-    }
-
-    .icon-button {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        padding: 0;
-    }
-
-    .add-button{
-        display: block;
-        margin: 0 auto;
-        background-color: transparent;
-        border: solid 1px #ccc;
-        padding: 1rem;
-        border-radius: 25px;
-        font-size: 1rem;
-    }
-
-    .add-button:hover {
-        background-color: #f0f0f0;
-        cursor: pointer;
-    }
-
-    .add-button:active {
-        background-color: #405fc6;
-        color: #fff;
-        transition: .2s;
-    }
+        text-align: center;
+    }  
 </style>
