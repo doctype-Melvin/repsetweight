@@ -186,13 +186,19 @@
         localStorage.setItem('template', JSON.stringify($userTemplateData));
     }
 
+const dummyFn = () => {
+    console.info('Change Exercise')
+    toggleExerciseList()
+    }
+    
 </script>
 
 <section class="container">
     {#if !$showExerciseList}
     <button on:click={toggleExerciseList}>{exercise.name}</button>
     {:else}
-    <Dropdown list={exercises} selected={toggleExerciseList} />   
+    <Dropdown list={exercises} selected={dummyFn} />
+    <button on:click={toggleExerciseList}>Cancel</button>
     {/if}    
 </section>
 

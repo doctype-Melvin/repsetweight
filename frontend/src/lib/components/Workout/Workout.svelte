@@ -3,22 +3,52 @@
     // @ts-nocheck
 
     import { writable } from "svelte/store";
-    import { exercisesData } from "$lib/stores";
+    import { exercisesData, userTemplateData } from "$lib/stores";
     import Dropdown from "../Exercise/Dropdown.svelte";
     import Exercise from "../Exercise/Exercise.svelte";
 	import RepSelect from "../Exercise/RepSelect.svelte";
     import SetSelect from "../Exercise/SetSelect.svelte";
     import WeightInput from "../Exercise/WeightInput.svelte";
+    
+    
     export let workout;
     export let showVariables;
+    
     let showDropdown = writable(false);
     let changeExercise = writable(false);
 
     const toggleDropdown = () => showDropdown.update(value => !value);
     const toggleChangeExercise = () => changeExercise.update(value => !value);
-    const tempFn = (value) => {
-        console.info(value)
+    
+    const addExercise = (exerciseID) => {
+        
+        const newExercise = $exercisesData.find((exercise) => exercise.id === Number(exerciseID));
+		workout.exercises = [
+			...workout.exercises,
+			{
+				id: newExercise.id,
+				name: newExercise.name
+			}
+		];
+
+        userTemplateData.update((template) => {
+            return {
+                ...template,
+                workouts: template.workouts.map((entry) => {
+                    if (entry.name === workout.name) {
+                        return {
+                            ...entry,
+                            exercises: workout.exercises
+                        }
+                    }
+                    return entry;
+                })
+            }
+        });
+
+        localStorage.setItem('template', JSON.stringify($userTemplateData));
         toggleChangeExercise()
+        toggleDropdown()
     }
 
 </script>
@@ -63,7 +93,7 @@
             {/if}
         </table>
         {#if $showDropdown}
-        <Dropdown list={$exercisesData} selected={tempFn} />
+        <Dropdown list={$exercisesData} selected={addExercise} />
         {/if}
         <button type="button" on:click={toggleDropdown}>{$showDropdown ? 'Cancel' : 'Add Exercise'}</button>
 

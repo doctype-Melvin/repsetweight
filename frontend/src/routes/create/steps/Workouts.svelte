@@ -38,7 +38,7 @@
 
 {#if userTemplate.workouts.length > 0}
     {#each userTemplate.workouts as workout}
-        <Workout {workout} />
+        <Workout {workout} showVariables={false}/>
     {/each}
 {/if}
 
