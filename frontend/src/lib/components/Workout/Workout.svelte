@@ -89,11 +89,5 @@
         <button type="button" on:click={toggleDropdown}>{$showDropdown ? 'Cancel' : 'Add Exercise'}</button>
 
 <style>
-    .exercise-list {
-        list-style-type: none;
-        padding: 0;
-        display: grid;
-        align-items: center;
-        gap: .5rem;
-    }
+  
 </style>
