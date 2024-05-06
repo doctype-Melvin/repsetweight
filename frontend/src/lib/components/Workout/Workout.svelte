@@ -23,12 +23,6 @@
 
 </script>
 
-<!-- 
-    Component only renders
-    exercise variables if the
-    template is the active template
--->
-
 <h3> {workout.name}</h3>
 
     <table>
@@ -50,33 +44,18 @@
                 <td>
                     <Exercise workout={workout} exercise={exercise} />
                 </td>
-                <!-- Dropdown to select exercise -->
-                <!-- {#if $changeExercise}
-                <td>
-                    <Dropdown list={$exercisesData} selected={tempFn} />
-                </td>
-                {:else}
-                <td on:click={toggleChangeExercise}>{exercise.name}</td>
-                {/if} -->
                 {#if showVariables}
-                <!-- Numbers dropdown -->
                 <td>
                     <RepSelect />
                 </td>
-                <!-- Numbers dropdown -->
                 <td>
                     <SetSelect />
                 </td>
-                <!-- Number input field -->
                 <td>
                     <WeightInput />
                 </td>
                 {/if}
                 <td>
-                    <!-- Toggle edit view for selected exercise -->
-                    <!-- When in edit view
-                    change the above table data to select dropdown -->
-                    <!-- Add 'save' and 'cancel' in edit view -->
                     <button type="button">Edit</button>
                 </td>
             </tr>
