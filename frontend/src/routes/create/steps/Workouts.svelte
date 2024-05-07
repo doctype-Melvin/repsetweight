@@ -3,7 +3,7 @@
     import { userTemplateData } from '$lib/stores';
     import Workout from '$lib/components/Workout/Workout.svelte';
 
-    export let nextStep
+    export let nextStep 
 
     $: userTemplate = $userTemplateData ? $userTemplateData : JSON.parse(localStorage.getItem('template'));
     $: userTemplate.workouts;
@@ -38,7 +38,7 @@
 
 {#if userTemplate.workouts.length > 0}
     {#each userTemplate.workouts as workout}
-        <Workout {workout} showVariables={false}/>
+        <Workout {workout} showVariables={true}/>
     {/each}
 {/if}
 

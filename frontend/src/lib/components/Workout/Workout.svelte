@@ -13,13 +13,15 @@
     
     export let workout;
     export let showVariables;
+
+    let isDelete = writable(false);
+
+    const toggleDelete = () => isDelete.update(value => !value);
     
     let showDropdown = writable(false);
-    let changeExercise = writable(false);
-
-    const toggleDropdown = () => showDropdown.update(value => !value);
-    const toggleChangeExercise = () => changeExercise.update(value => !value);
     
+    const toggleDropdown = () => showDropdown.update(value => !value);
+        
     const addExercise = (exerciseID) => {
         const newExercise = $exercisesData.find((exercise) => exercise.id === Number(exerciseID));
 		workout.exercises = [
@@ -46,11 +48,11 @@
         });
 
         localStorage.setItem('template', JSON.stringify($userTemplateData));
-        toggleChangeExercise()
+    
         toggleDropdown()
     }
 
-    const swapExercise = (oldID, newID) => {
+    const changeExercise = (oldID, newID) => {
         const newExercise = $exercisesData.find((exercise) => exercise.id === Number(newID));
         const index = workout.exercises.findIndex(item => item.id === Number(oldID));
         workout.exercises[index] = {
@@ -74,7 +76,18 @@
         });
 
         localStorage.setItem('template', JSON.stringify($userTemplateData));
+    }
 
+    const setReps = (value) => {
+        console.log('Reps:', value);
+    }
+
+    const setSets = (value) => {
+        console.log('Sets:', value);
+    }
+
+    const setWeight = (value) => {
+        console.log('Weight:', value);
     }
 
 </script>
@@ -90,7 +103,7 @@
                 <th>Sets</th>
                 <th>Weight</th>
                 {/if}
-                <th>Actions</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -98,21 +111,25 @@
             {#each workout.exercises as exercise}
             <tr>
                 <td>
-                    <Exercise workout={workout} exercise={exercise} swapFunction={swapExercise}/>
+                    <Exercise workout={workout} exercise={exercise} swapFunction={changeExercise}/>
                 </td>
                 {#if showVariables}
                 <td>
-                    <RepSelect />
+                    <RepSelect setter={setReps}/>
                 </td>
                 <td>
-                    <SetSelect />
+                    <SetSelect setter={setSets}/>
                 </td>
                 <td>
-                    <WeightInput />
+                    <WeightInput setter={setWeight}/>
                 </td>
                 {/if}
                 <td>
-                    <button type="button">Edit</button>
+                    {#if $isDelete}
+                    <button type="button" on:click={() => console.log(exercise.id)}>&#x2714;</button>
+                    {:else}
+                    <button type="button" on:click={toggleDelete}>Delete</button>
+                    {/if}
                 </td>
             </tr>
             {/each}
