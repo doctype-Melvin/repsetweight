@@ -27,9 +27,8 @@
 
     const getExerciseId = (id) => {
         if (id) {
-            swapFunction(exercise.id, id)
+            swapFunction(exercise.uid, id)
             toggleExerciseList()
-            return
         }
         return
     }    

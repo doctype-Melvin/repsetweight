@@ -1,7 +1,7 @@
 <script>
     // Workout Component
     // @ts-nocheck
-
+    import { nanoid } from "nanoid";
     import { writable } from "svelte/store";
     import { exercisesData, userTemplateData } from "$lib/stores";
     import Dropdown from "../Exercise/Dropdown.svelte";
@@ -19,13 +19,25 @@
     
     const toggleDropdown = () => showDropdown.update(value => !value);
         
+    // How to prevent duplicate exercises from being added to the workout?
+    // Example: Bench press 2 sets of 6 reps
+    // followed by Bench press back-off sets
+    // Add unique ID to each exercise
+
+
     const addExercise = (exerciseID) => {
         const newExercise = $exercisesData.find((exercise) => exercise.id === Number(exerciseID));
 		workout.exercises = [
 			...workout.exercises,
 			{
 				id: newExercise.id,
-				name: newExercise.name
+				name: newExercise.name,
+                uid: nanoid(7),
+                variables: {
+                    reps: 0,
+                    sets: 0,
+                    weight: 0
+                }
 			}
 		];
 
@@ -51,17 +63,23 @@
 
     const changeExercise = (oldID, newID) => {
         const newExercise = $exercisesData.find((exercise) => exercise.id === Number(newID));
-        const index = workout.exercises.findIndex(item => item.id === Number(oldID));
+        const index = workout.exercises.findIndex(item => item.uid === oldID);
         workout.exercises[index] = {
             id: newExercise.id,
-            name: newExercise.name
+            name: newExercise.name,
+            uid: nanoid(7),
+            variables: {
+                reps: 0,
+                sets: 0,
+                weight: 0
+            }
         }
         
         userTemplateData.update((template) => {
             return {
                 ...template,
                 workouts: template.workouts.map((entry) => {
-                    if (entry.name === workout.name) {
+                    if (entry.wid === workout.wid) {
                         return {
                             ...entry,
                             exercises: workout.exercises
@@ -75,26 +93,14 @@
         localStorage.setItem('template', JSON.stringify($userTemplateData));
     }
 
-    const setReps = (number) => {
-        console.log('Reps:', number);
-    }
-
-    const setSets = (number) => {
-        console.log('Sets:', number);
-    }
-
-    const setWeight = (number) => {
-        console.log('Weight:', number);
-    }
-
     const removeExercise = (id) => {
-        const index = workout.exercises.findIndex(item => item.id === Number(id));
+        const index = workout.exercises.findIndex(item => item.uid === id);
         workout.exercises.splice(index, 1);
         userTemplateData.update((template) => {
             return {
                 ...template,
                 workouts: template.workouts.map((entry) => {
-                    if (entry.name === workout.name) {
+                    if (entry.wid === workout.wid) {
                         return {
                             ...entry,
                             exercises: workout.exercises
@@ -107,6 +113,103 @@
         
         localStorage.setItem('template', JSON.stringify($userTemplateData));
     }
+
+    
+    const setReps = (number, exerciseID, workoutID) => {
+        const workoutExerciseReps = $userTemplateData.workouts.find((workout) => workout.wid === workoutID).exercises
+        .find(exercise => exercise.uid === exerciseID).variables;
+        workoutExerciseReps.reps = Number(number);
+
+        userTemplateData.update(template => {
+            return {
+                ...template,
+                workouts: template.workouts.map(entry => {
+                    if (entry.wid === workoutID) {
+                        return {
+                            ...entry,
+                            exercises: entry.exercises.map(exercise => {
+                                if (exercise.uid === exerciseID) {
+                                    return {
+                                        ...exercise,
+                                        variables: workoutExerciseReps
+                                    }
+                                }
+                                return exercise
+                            })
+                        }
+                    }
+                    return entry
+                })
+            }
+        })
+        localStorage.setItem('template', JSON.stringify($userTemplateData));
+    }
+
+    const setSets = (number, exerciseID, workoutID) => {
+        
+        const workoutExerciseSets = $userTemplateData.workouts.find((workout) => workout.wid === workoutID).exercises
+        .find(exercise => exercise.uid === exerciseID).variables;
+        workoutExerciseSets.sets = Number(number);
+        
+        userTemplateData.update(template => {
+            return {
+                ...template,
+                workouts: template.workouts.map(entry => {
+                    if (entry.wid === workoutID) {
+                        return {
+                            ...entry,
+                            exercises: entry.exercises.map(exercise => {
+                                if (exercise.uid === exerciseID) {
+                                    return {
+                                        ...exercise,
+                                        variables: workoutExerciseSets
+                                    }
+                                }
+                                return exercise
+                            })
+                        }
+                    }
+                    return entry;
+                })
+            }
+        })
+        localStorage.setItem('template', JSON.stringify($userTemplateData));
+    }
+
+    const setWeight = (number, exerciseID, workoutID) => {
+        
+        const workoutExerciseWeight = $userTemplateData.workouts.find((workout) => workout.wid === workoutID).exercises
+        .find(exercise => exercise.uid === exerciseID).variables;
+        workoutExerciseWeight.weight = Number(number);
+        
+        userTemplateData.update(template => {
+            return {
+                ...template,
+                workouts: template.workouts.map(entry => {
+                    if (entry.wid === workoutID) {
+                        return {
+                            ...entry,
+                            exercises: entry.exercises.map(exercise => {
+                                if (exercise.uid === exerciseID) {
+                                    return {
+                                        ...exercise,
+                                        variables: workoutExerciseWeight
+                                    }
+                                }
+                                return exercise
+                            })
+                        }
+                    }
+                    return entry;
+                })
+            }
+        })
+        localStorage.setItem('template', JSON.stringify($userTemplateData));
+    }
+
+    
+
+    console.info('User Template data', $userTemplateData)
 
 </script>
 
@@ -128,21 +231,21 @@
             {#each workout.exercises as exercise}
             <tr>
                 <td>
-                    <Exercise workout={workout} exercise={exercise} swapFunction={changeExercise}/>
+                    <Exercise workout={workout} exercise={exercise} swapFunction={changeExercise} />
                 </td>
                 {#if showVariables}
                 <td>
-                    <RepSelect setter={setReps}/>
+                    <RepSelect setter={setReps} exerciseID={exercise.uid} workoutID={workout.wid} repValue={exercise.variables.reps}/>
                 </td>
                 <td>
-                    <SetSelect setter={setSets}/>
+                    <SetSelect setter={setSets} exerciseID={exercise.uid} workoutID={workout.wid} setsValue={exercise.variables.sets}/>
                 </td>
                 <td>
-                    <WeightInput setter={setWeight}/>
+                    <WeightInput setter={setWeight} exerciseID={exercise.uid} workoutID={workout.wid} weightValue={exercise.variables.weight}/>
                 </td>
                 {/if}
                 <td>
-                    <DeleteButton removeExercise={removeExercise} exerciseId={exercise.id}/>
+                    <DeleteButton removeExercise={removeExercise} exerciseId={exercise.uid} />
                 </td>
             </tr>
             {/each}

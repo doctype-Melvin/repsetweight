@@ -6,20 +6,22 @@
     export let nextStep 
 
     $: userTemplate = $userTemplateData ? $userTemplateData : JSON.parse(localStorage.getItem('template'));
-    $: userTemplate.workouts;
+    $: workouts = [...userTemplate.workouts];
 
     let workoutName = '';
     let workoutDescription = '';
+    let workoutID = 0;
      
     const addWorkout = (event) => {
         event.preventDefault();
         if (!workoutName) return;
-        userTemplate.workouts = [...userTemplate.workouts, {name: workoutName, description: workoutDescription, exercises: []}];
+        userTemplate.workouts = [...userTemplate.workouts, {name: workoutName, description: workoutDescription, wid: `${workoutID}`, exercises: []}];
                 
         userTemplateData.set(userTemplate)
         localStorage.setItem('template', JSON.stringify(userTemplate));
         workoutName = '';
         workoutDescription = '';
+        workoutID++;
     }
 
     const handleInput = (event) => {
@@ -36,8 +38,8 @@
     <button type="button" on:click={addWorkout}>Add</button>
 </form>
 
-{#if userTemplate.workouts.length > 0}
-    {#each userTemplate.workouts as workout}
+{#if workouts.length > 0}
+    {#each workouts as workout}
         <Workout {workout} showVariables={true}/>
     {/each}
 {/if}
