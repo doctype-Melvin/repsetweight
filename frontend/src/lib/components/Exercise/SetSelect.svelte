@@ -38,6 +38,7 @@
 
 {#if $isInput}
 <select on:change={(event) => inputHandler(event.target.value)}>
+    <option value="0">-</option>
     {#each Array.from({ length: 10 }, (_, i) => i + 1) as number}
     <option value={number}>{number}</option>
     {/each}

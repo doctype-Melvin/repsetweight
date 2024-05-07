@@ -61,18 +61,15 @@
         toggleDropdown()
     }
 
-    const changeExercise = (oldID, newID) => {
+    const changeExercise = (previousUID, newID) => {
         const newExercise = $exercisesData.find((exercise) => exercise.id === Number(newID));
-        const index = workout.exercises.findIndex(item => item.uid === oldID);
+        const index = workout.exercises.findIndex(item => item.uid === previousUID);
+        const previousExercise = workout.exercises[index];   
         workout.exercises[index] = {
             id: newExercise.id,
             name: newExercise.name,
             uid: nanoid(7),
-            variables: {
-                reps: 0,
-                sets: 0,
-                weight: 0
-            }
+            variables: previousExercise.variables
         }
         
         userTemplateData.update((template) => {
