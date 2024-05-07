@@ -210,7 +210,15 @@
 
 </script>
 
-<h3>{workout.name}</h3>
+<div class="header-workout">
+    <div class="meta-workout">
+        <h3>{workout.name}</h3>
+        {#if workout.description}
+        <p>{workout.description}</p>
+        {/if}
+    </div>
+        <button type="button">Delete</button>
+</div>
     <table>
         <thead>
             <tr>
@@ -254,5 +262,9 @@
         <button type="button" on:click={toggleDropdown}>{$showDropdown ? 'Cancel' : 'Add Exercise'}</button>
 
 <style>
-  
+  .header-workout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 </style>
