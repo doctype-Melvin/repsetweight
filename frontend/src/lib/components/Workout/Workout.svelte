@@ -9,15 +9,12 @@
 	import RepSelect from "../Exercise/RepSelect.svelte";
     import SetSelect from "../Exercise/SetSelect.svelte";
     import WeightInput from "../Exercise/WeightInput.svelte";
+    import DeleteButton from "../Exercise/DeleteButton.svelte";
     
     
     export let workout;
     export let showVariables;
 
-    let isDelete = writable(false);
-
-    const toggleDelete = () => isDelete.update(value => !value);
-    
     let showDropdown = writable(false);
     
     const toggleDropdown = () => showDropdown.update(value => !value);
@@ -78,22 +75,42 @@
         localStorage.setItem('template', JSON.stringify($userTemplateData));
     }
 
-    const setReps = (value) => {
-        console.log('Reps:', value);
+    const setReps = (number) => {
+        console.log('Reps:', number);
     }
 
-    const setSets = (value) => {
-        console.log('Sets:', value);
+    const setSets = (number) => {
+        console.log('Sets:', number);
     }
 
-    const setWeight = (value) => {
-        console.log('Weight:', value);
+    const setWeight = (number) => {
+        console.log('Weight:', number);
+    }
+
+    const removeExercise = (id) => {
+        const index = workout.exercises.findIndex(item => item.id === Number(id));
+        workout.exercises.splice(index, 1);
+        userTemplateData.update((template) => {
+            return {
+                ...template,
+                workouts: template.workouts.map((entry) => {
+                    if (entry.name === workout.name) {
+                        return {
+                            ...entry,
+                            exercises: workout.exercises
+                        }
+                    }
+                    return entry;
+                })
+            }
+        });
+        
+        localStorage.setItem('template', JSON.stringify($userTemplateData));
     }
 
 </script>
 
-<h3> {workout.name}</h3>
-
+<h3>{workout.name}</h3>
     <table>
         <thead>
             <tr>
@@ -125,11 +142,7 @@
                 </td>
                 {/if}
                 <td>
-                    {#if $isDelete}
-                    <button type="button" on:click={() => console.log(exercise.id)}>&#x2714;</button>
-                    {:else}
-                    <button type="button" on:click={toggleDelete}>Delete</button>
-                    {/if}
+                    <DeleteButton removeExercise={removeExercise} exerciseId={exercise.id}/>
                 </td>
             </tr>
             {/each}
