@@ -39,19 +39,6 @@
         toggleInput();
     }
 
-    // const handleWindowClick = (event) => {
-    //     if ($isInput && event.target.nodeName === 'P') {
-    //         console.log('Return', event.target.nodeName)
-    //     } else {
-    //         toggleInput()
-    //     }
-    // }
-
-    // onMount(() => {
-    //     window.addEventListener('click', handleWindowClick);
-    //     return () => window.removeEventListener('click', handleWindowClick);
-    // });
-
 </script>
 
 <div>
