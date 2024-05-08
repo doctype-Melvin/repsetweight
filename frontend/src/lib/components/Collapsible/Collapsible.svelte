@@ -1,10 +1,11 @@
 <script>
     // @ts-nocheck
-    import Template from "../Template/Template.svelte";
-    import Icon from '@iconify/svelte';
     import { writable } from "svelte/store";
+    import Template from "../Template/Template.svelte";
+    import InputContent from "../InputContent/InputContent.svelte";
+    import Icon from '@iconify/svelte';
 
-    export let templates
+    export let templates = undefined
     export let header
 
     const expanded = writable(false);
@@ -12,22 +13,36 @@
     function toggle() {
         expanded.update(value => !value);
     }
+
 </script>
 
 <div class="collapsible">
-    
+        {#if header.name}
+        <InputContent content={header.name} type="" wid={header.wid} />
+        {:else}
         <h3>{header}</h3>
+        {/if}
         <button type="button" on:click={() => toggle()}>
             <Icon icon="mdi:menu-swap" style="cursor: pointer;" />
         </button>
-    
-    <ul class="collapsible-content {$expanded ? 'expanded' : 'collapsed'}">
-       {#each templates as template}
-        <li>
-           <Template {template} />
-        </li>
-        {/each}
-    </ul>
+        {#if templates}
+        <ul class="collapsible-content {$expanded ? 'expanded' : 'collapsed'}">
+            {#each templates as template}
+            <li>
+                <Template {template} />
+            </li>
+            {/each}
+        </ul>
+        {:else}
+        <div class="collapsible-content {$expanded ? 'expanded' : 'collapsed'}">
+            {#if header.description}
+            <!-- <p>{header.description}</p> -->
+            <InputContent content={header.description} type="description" wid={header.wid} />
+            {/if}
+            <slot />
+    </div>
+    {/if}
+
 </div>
 
 <style>

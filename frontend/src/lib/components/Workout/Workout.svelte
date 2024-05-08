@@ -19,12 +19,6 @@
     
     const toggleDropdown = () => showDropdown.update(value => !value);
         
-    // How to prevent duplicate exercises from being added to the workout?
-    // Example: Bench press 2 sets of 6 reps
-    // followed by Bench press back-off sets
-    // Add unique ID to each exercise
-
-
     const addExercise = (exerciseID) => {
         const newExercise = $exercisesData.find((exercise) => exercise.id === Number(exerciseID));
 		workout.exercises = [
@@ -204,24 +198,45 @@
         localStorage.setItem('template', JSON.stringify($userTemplateData));
     }
 
+    const copyWorkout = (workoutID) => {
+        const workoutToCopy = $userTemplateData.workouts.find(workout => workout.wid === workoutID);
+        const newWorkout = {
+            name: workoutToCopy.name,
+            description: workoutToCopy.description,
+            wid: nanoid(7),
+            exercises: workoutToCopy.exercises
+        }
+        userTemplateData.update(template => {
+            return {
+                ...template,
+                workouts: [...template.workouts, newWorkout]
+            }
+        })
+
+        localStorage.setItem('template', JSON.stringify($userTemplateData));
+    }
+
+    const deleteWorkout = (workoutID) => {
+        const index = $userTemplateData.workouts.findIndex(workout => workout.wid === workoutID);
+        $userTemplateData.workouts.splice(index, 1);
+        userTemplateData.set($userTemplateData);
+        localStorage.setItem('template', JSON.stringify($userTemplateData));
+    }
+
     
 
-    console.info('User Template data', $userTemplateData)
+    console.info('User Template data', $userTemplateData)    
 
 </script>
 
 <div class="header-workout">
-    <div class="meta-workout">
-        <h3>{workout.name}</h3>
-        {#if workout.description}
-        <p>{workout.description}</p>
-        {/if}
-    </div>
-        <button type="button">Delete</button>
+    <button type="button" on:click={() => copyWorkout(workout.wid)}>Copy</button>
+    <button type="button" on:click={() => deleteWorkout(workout.wid)}>Delete</button>
 </div>
     <table>
         <thead>
             <tr>
+                {#if workout.exercises.length > 0}
                 <th>Exercise</th>
                 {#if showVariables}
                 <th>Reps</th>
@@ -229,6 +244,7 @@
                 <th>Weight</th>
                 {/if}
                 <th></th>
+                {/if}
             </tr>
         </thead>
         <tbody>

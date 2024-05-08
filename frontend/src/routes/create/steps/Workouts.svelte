@@ -2,6 +2,7 @@
     // @ts-nocheck
     import { userTemplateData } from '$lib/stores';
     import Workout from '$lib/components/Workout/Workout.svelte';
+    import Collapsible from '$lib/components/Collapsible/Collapsible.svelte';
 
     export let nextStep 
 
@@ -40,7 +41,9 @@
 
 {#if workouts.length > 0}
     {#each workouts as workout}
+    <Collapsible header={workout}>
         <Workout {workout} showVariables={true}/>
+    </Collapsible>
     {/each}
 {/if}
 
