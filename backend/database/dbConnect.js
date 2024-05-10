@@ -8,6 +8,7 @@ const Workout = require("./models/workouts");
 const Template = require("./models/templates");
 const User = require("./models/users");
 const WorkoutExercise = require("./models/workout_exercises");
+const ExerciseBaseline = require("./models/exercise_baseline");
 const { associations } = require("./models/associations");
 
 const sequelize = new Sequelize({
@@ -28,6 +29,7 @@ const sequelize = new Sequelize({
 });
 
 const models = {
+  ExerciseBaseline: ExerciseBaseline(sequelize),
   WorkoutExercise: WorkoutExercise(sequelize),
   Exercise: Exercise(sequelize),
   UserProgress: UserProgress(sequelize),

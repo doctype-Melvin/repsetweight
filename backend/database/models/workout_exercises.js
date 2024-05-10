@@ -22,6 +22,10 @@ module.exports = (sequelize) => {
           key: "id",
         },
       },
+      uid: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
     {
       tableName: "workout_exercises",

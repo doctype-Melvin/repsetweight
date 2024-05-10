@@ -99,10 +99,22 @@ exports.post_template = asyncHandler(async (req, res, next) => {
       // Create rows in junction table
       // to link the exercises to the workout
       for (const exercise of workout.exercises) {
-        await models.WorkoutExercise.create(
+        // console.log("Create Exercise", exercise);
+        const exerciseBaseline = await models.WorkoutExercise.create(
           {
             workout_id: userWorkout.id,
             exercise_id: exercise.id,
+            uid: exercise.uid,
+          },
+          { transaction }
+        );
+
+        await models.ExerciseBaseline.create(
+          {
+            exercise_uid: exerciseBaseline.uid,
+            reps: exercise.variables.reps,
+            sets: exercise.variables.sets,
+            weight: exercise.variables.weight,
           },
           { transaction }
         );
@@ -115,7 +127,8 @@ exports.post_template = asyncHandler(async (req, res, next) => {
       .json({ message: "Your template is now ready!", id: userTemplate.id });
   } catch (error) {
     await transaction.rollback();
-    res.status(500).json({ message: "Error creating template" });
+    console.log(error);
+    res.status(500).json({ message: error.message });
   }
 });
 

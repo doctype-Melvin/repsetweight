@@ -62,7 +62,8 @@ export const submitUserTemplate = async (templateData) => {
 		});
 
 		if (!result.ok) {
-			console.log('%c Error submitting template', 'color: red;');
+			const response = await result.json();
+			console.log('%c Error submitting template', 'color: red;', response.message);
 			return;
 		}
 
