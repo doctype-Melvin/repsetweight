@@ -30,7 +30,7 @@
     
     {#if template.workouts.length > 0}
         {#each $workoutData as workout}
-            <Workout workout={workout} showVariables={showVariables()} />
+            <Workout workout={workout} showVariables={true} />
         {/each}
     {:else}
     <p>This template has no workouts</p>

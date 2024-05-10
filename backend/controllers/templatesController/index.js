@@ -58,6 +58,7 @@ exports.get_template_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.post_template = asyncHandler(async (req, res, next) => {
+  // console.info(req.body);
   const { name, description, workouts } = req.body;
   const transaction = await sequelize.transaction();
   try {
@@ -72,6 +73,7 @@ exports.post_template = asyncHandler(async (req, res, next) => {
       },
       { transaction }
     );
+    console.log("userTemplate ok");
 
     // Create the workouts
     for (const workout of workouts) {
@@ -81,7 +83,8 @@ exports.post_template = asyncHandler(async (req, res, next) => {
           name: workout.name,
           description: workout.description,
         },
-        { transaction }
+        { transaction },
+        console.log("userWorkout ok")
       );
       // Create rows in junction table
       // to link the workout to the template
@@ -92,6 +95,7 @@ exports.post_template = asyncHandler(async (req, res, next) => {
         },
         { transaction }
       );
+      console.log("TemplateWorkout ok");
       // Create rows in junction table
       // to link the exercises to the workout
       for (const exercise of workout.exercises) {
@@ -103,6 +107,7 @@ exports.post_template = asyncHandler(async (req, res, next) => {
           { transaction }
         );
       }
+      console.log("WorkoutExercise ok");
     }
     await transaction.commit();
     res

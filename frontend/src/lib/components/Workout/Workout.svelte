@@ -1,5 +1,9 @@
 <script>
     // Workout Component
+
+    // May 9th: This component has many similar functions
+    // that can be refactored into single functions
+    
     // @ts-nocheck
     import { nanoid } from "nanoid";
     import { writable } from "svelte/store";
@@ -223,10 +227,6 @@
         localStorage.setItem('template', JSON.stringify($userTemplateData));
     }
 
-    
-
-    console.info('User Template data', $userTemplateData)    
-
 </script>
 
 <div class="header-workout">
@@ -239,8 +239,8 @@
                 {#if workout.exercises.length > 0}
                 <th>Exercise</th>
                 {#if showVariables}
-                <th>Reps</th>
                 <th>Sets</th>
+                <th>Reps</th>
                 <th>Weight</th>
                 {/if}
                 <th></th>
@@ -256,10 +256,10 @@
                 </td>
                 {#if showVariables}
                 <td>
-                    <RepSelect setter={setReps} exerciseID={exercise.uid} workoutID={workout.wid} repValue={exercise.variables.reps}/>
+                    <SetSelect setter={setSets} exerciseID={exercise.uid} workoutID={workout.wid} setsValue={exercise.variables.sets}/>
                 </td>
                 <td>
-                    <SetSelect setter={setSets} exerciseID={exercise.uid} workoutID={workout.wid} setsValue={exercise.variables.sets}/>
+                    <RepSelect setter={setReps} exerciseID={exercise.uid} workoutID={workout.wid} repValue={exercise.variables.reps}/>
                 </td>
                 <td>
                     <WeightInput setter={setWeight} exerciseID={exercise.uid} workoutID={workout.wid} weightValue={exercise.variables.weight}/>

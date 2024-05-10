@@ -1,5 +1,6 @@
 <script>
     // @ts-nocheck
+    import { nanoid } from 'nanoid';
     import { userTemplateData } from '$lib/stores';
     import Workout from '$lib/components/Workout/Workout.svelte';
     import Collapsible from '$lib/components/Collapsible/Collapsible.svelte';
@@ -11,10 +12,11 @@
 
     let workoutName = '';
     let workoutDescription = '';
-    let workoutID = 0;
+    
      
     const addWorkout = (event) => {
         event.preventDefault();
+        const workoutID = nanoid(7);
         if (!workoutName) return;
         userTemplate.workouts = [...userTemplate.workouts, {name: workoutName, description: workoutDescription, wid: `${workoutID}`, exercises: []}];
                 
@@ -22,7 +24,7 @@
         localStorage.setItem('template', JSON.stringify(userTemplate));
         workoutName = '';
         workoutDescription = '';
-        workoutID++;
+    
     }
 
     const handleInput = (event) => {

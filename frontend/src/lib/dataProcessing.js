@@ -51,6 +51,7 @@ export const deleteWorkoutExercise = async (exerciseID, workoutID) => {
 };
 
 export const submitUserTemplate = async (templateData) => {
+	console.log(templateData);
 	try {
 		const result = await fetch('http://localhost:3000/api/templates/add', {
 			method: 'POST',
