@@ -12,7 +12,7 @@ const ExerciseBaseline = require("./models/exercise_baseline");
 const ExerciseMuscle = require("./models/exercise_muscles");
 const MuscleGroup = require("./models/muscle_groups");
 const { associations } = require("./models/associations");
-
+const { migrateExerciseMuscles } = require("./migration");
 const sequelize = new Sequelize({
   database: process.env.DB_DATABASE,
   username: process.env.DB_USERNAME,
@@ -45,5 +45,6 @@ const models = {
 };
 
 associations(models);
+migrateExerciseMuscles(models);
 
 module.exports = { sequelize, models };
