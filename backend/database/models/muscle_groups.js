@@ -1,3 +1,5 @@
+const { Sequelize, DataTypes } = require("sequelize");
+
 module.exports = (sequelize) => {
   const MuscleGroup = sequelize.define(
     "muscleGroup",

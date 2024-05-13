@@ -9,6 +9,8 @@ const Template = require("./models/templates");
 const User = require("./models/users");
 const WorkoutExercise = require("./models/workout_exercises");
 const ExerciseBaseline = require("./models/exercise_baseline");
+const ExerciseMuscle = require("./models/exercise_muscles");
+const MuscleGroup = require("./models/muscle_groups");
 const { associations } = require("./models/associations");
 
 const sequelize = new Sequelize({
@@ -29,6 +31,8 @@ const sequelize = new Sequelize({
 });
 
 const models = {
+  ExerciseMuscle: ExerciseMuscle(sequelize),
+  MuscleGroup: MuscleGroup(sequelize),
   ExerciseBaseline: ExerciseBaseline(sequelize),
   WorkoutExercise: WorkoutExercise(sequelize),
   Exercise: Exercise(sequelize),

@@ -19,6 +19,14 @@ const associations = (models) => {
     foreignKey: "exercise_uid",
   });
 
+  models.ExerciseMuscle.belongsTo(models.Exercise, {
+    foreignKey: "exercise_id",
+  });
+
+  models.ExerciseMuscle.belongsTo(models.MuscleGroup, {
+    foreignKey: "muscle_id",
+  });
+
   models.Template.belongsToMany(models.Workout, {
     through: models.TemplateWorkout,
     foreignKey: "template_id",
@@ -41,6 +49,12 @@ const associations = (models) => {
     through: models.WorkoutExercise,
     foreignKey: "exercise_id",
     otherKey: "workout_id",
+  });
+
+  models.Exercise.belongsToMany(models.MuscleGroup, {
+    through: models.ExerciseMuscle,
+    foreignKey: "exercise_id",
+    otherKey: "muscle_id",
   });
 };
 
