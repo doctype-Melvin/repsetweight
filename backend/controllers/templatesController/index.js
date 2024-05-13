@@ -1,3 +1,4 @@
+// templates controller
 const asyncHandler = require("express-async-handler");
 const { models, sequelize } = require("../../database/dbConnect");
 
