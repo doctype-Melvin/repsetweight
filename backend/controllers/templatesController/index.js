@@ -151,6 +151,20 @@ exports.delete_template = asyncHandler(async (req, res, next) => {
     // Delete parts of the template sequentially
     // to avoid foreign key constraints
     for (const workout of workouts) {
+      // Find all exercises in the workout
+      // Similar approach will be needed for Workout Sessions
+      const allWorkoutExercises = await models.WorkoutExercise.findAll({
+        where: { workout_id: workout.workout_id },
+        transaction,
+      });
+      // Delete the exercise baseline for each exercise
+      for (const exercise of allWorkoutExercises) {
+        await models.ExerciseBaseline.destroy({
+          where: { exercise_uid: exercise.uid },
+          transaction,
+        });
+      }
+
       await models.WorkoutExercise.destroy({
         where: { workout_id: workout.workout_id },
         transaction,

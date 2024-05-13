@@ -16,7 +16,7 @@ const associations = (models) => {
   });
 
   models.ExerciseBaseline.belongsTo(models.WorkoutExercise, {
-    foreignKey: "uid",
+    foreignKey: "exercise_uid",
   });
 
   models.Template.belongsToMany(models.Workout, {

@@ -27,8 +27,6 @@
         }
     }
 
-    console.info("%c Summary", "color: green", $userTemplateData);
-
 </script>
 <section>
     {#if $userTemplateData}

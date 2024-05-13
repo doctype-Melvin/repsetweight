@@ -208,7 +208,12 @@
             name: workoutToCopy.name,
             description: workoutToCopy.description,
             wid: nanoid(7),
-            exercises: workoutToCopy.exercises
+            exercises: workoutToCopy.exercises.map(exercise => {
+                return {
+                    ...exercise,
+                    uid: nanoid(7)
+                }
+            })
         }
         userTemplateData.update(template => {
             return {

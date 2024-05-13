@@ -19,6 +19,7 @@
     }
 
     $: workoutData.set(template.workouts);
+    console.info("%c Detail View", "color: green", template)
 </script>
 
 <section class="navigation-buttons">
@@ -30,7 +31,7 @@
     
     {#if template.workouts.length > 0}
         {#each $workoutData as workout}
-            <Workout workout={workout} showVariables={true} />
+            <Workout workout={workout} showVariables={false} />
         {/each}
     {:else}
     <p>This template has no workouts</p>
