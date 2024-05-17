@@ -31,6 +31,7 @@
     
     {#if template.workouts.length > 0}
         {#each $workoutData as workout}
+        <!-- Wrap workout in collapsible component -->
             <Workout workout={workout} showVariables={false} />
         {/each}
     {:else}
