@@ -36,15 +36,13 @@
 
 </script>   
 
-<p>First show the session component and add a button to add workout session</p>
+
 
 {#each workoutsArray as workout, index}
     <Collapsible header={workout.name ? workout.name : `Workout ${index += 1}`}>
-        <AltWorkout />
+        <!-- <button type="button" on:click={() => removeWorkoutHandler(workout.wid)}>Delete</button> -->
+        <AltWorkout deleteWorkout={removeWorkoutHandler} id={workout.wid}/>
     </Collapsible>
-    <!-- <div>
-        <button type="button" on:click={() => removeWorkoutHandler(workout.wid)}>X</button>
-    </div> -->
 {/each}
 
 <button type="button" on:click={addWorkoutHandler}>Add Workout</button>

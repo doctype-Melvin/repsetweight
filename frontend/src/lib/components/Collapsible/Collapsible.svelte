@@ -34,7 +34,8 @@
 
     .collapsible-content {
         overflow: hidden;
-        transition: max-height 0.4s ease-in-out;   
+        transition: max-height 0.4s ease-in-out;
+        grid-column: span 2;
     }
 
     .collapsible-content.expanded {
