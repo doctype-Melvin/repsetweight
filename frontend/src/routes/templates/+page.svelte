@@ -4,6 +4,7 @@
 	import { goto } from "$app/navigation";
     import { templatesData } from "$lib/stores.js";
     import Collapsible from "$lib/components/Collapsible/Collapsible.svelte";
+    import Template from "$lib/components/Template/Template.svelte";
     
 
     let userTempaltes = $templatesData.filter(item => item.user_generated === true)
@@ -12,12 +13,22 @@
 </script>
 
 {#if userTempaltes.length > 0}
-<Collapsible templates={userTempaltes} header='Your Templates'/>
+<section>
+    <Collapsible header={'Your Templates'}>
+        {#each userTempaltes as template}
+        <Template {template}/>
+        {/each}
+    </Collapsible>
+</section>
 {/if}
-   
-<Collapsible templates={presetTemplates} header='Presets'/>
 
-
+<section>
+    <Collapsible header={'Preset Templates'}>
+        {#each presetTemplates as template}
+        <Template {template}/>
+        {/each}
+    </Collapsible>
+</section>
 
 <button type="button" on:click={() => goto('/create')}>Create Template</button>
 <button type="button" on:click={() => goto('/')}>Dashboard</button>
