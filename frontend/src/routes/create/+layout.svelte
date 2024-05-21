@@ -9,32 +9,32 @@
 
     
 
-    const previousTemplate = localStorage.getItem('template');
     
-    onMount(() => {
-        if (previousTemplate) {
-            userTemplateData.set(JSON.parse(previousTemplate))
-        } 
-    })
     
-    export let currentStep = 'info';
+    // onMount(() => {
+    //     if (previousTemplate) {
+    //         userTemplateData.set(JSON.parse(previousTemplate))
+    //     } 
+    // })
+    
+    // export let currentStep = 'info';
 
-    export let nextStep = (value) => {
-        currentStep = value;
-    }
+    // export let nextStep = (value) => {
+    //     currentStep = value;
+    // }
     
-
+       
 </script>
 
 
 <p style="text-align: center;">Compose your own template</p>
     
-    {#if currentStep === 'info'}
+    <!-- {#if currentStep === 'info'}
         <Info nextStep={nextStep}/>
     {:else if currentStep === 'workouts'}
         <Workouts nextStep={nextStep} />
     {:else }
         <Summary nextStep={nextStep} />
-    {/if}
+    {/if} -->
     
     <slot />
