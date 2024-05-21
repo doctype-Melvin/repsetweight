@@ -22,7 +22,14 @@
             wid: nanoid(7)
         }
         workoutsArray = [...workoutsArray, newWorkout]
-        
+    }
+
+    const removeWorkoutHandler = (wid) => {
+        if (workoutsArray.length === 1) {
+            workoutsArray = [{...userWorkout, wid: nanoid(7)}]
+            return
+        }
+        workoutsArray = workoutsArray.filter(workout => workout.wid !== wid)
     }
 
 </script>   
@@ -32,6 +39,7 @@
 {#each workoutsArray as workout}
     <div>
         <p>{workout.wid}</p>
+        <button type="button" on:click={() => removeWorkoutHandler(workout.wid)}>X</button>
     </div>
 {/each}
 
