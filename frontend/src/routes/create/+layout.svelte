@@ -34,21 +34,11 @@
     form {
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
-    .flyout {
-        position: absolute;
-        top: -100vh;
-        left: 50%;
-        transition: top 0.5s, left 0.5s;
-    }
-
-    .flyin {
-        position: absolute;
-        left: 50%;
-        top: 45%;
-        transition: top 0.5s, left 0.5s;
-        transform: translate(-50%, -50%);
+    .flyin, .flyout {
         background-color: #949494;
         padding: 2rem;
         height: 50vh;
@@ -56,6 +46,24 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .flyout {
+        position: absolute;
+        top: -100vh;
+        left: 50%;
+        opacity: 0;
+        transition: top 0.5s ease-in, left 0.5s, opacity 0.5s ease-in;
+        transform: translate(-50%, -50%);
+    }
+
+    .flyin {
+        position: absolute;
+        left: 50%;
+        top: 45%;
+        opacity: 1;
+        transition: top 0.5s ease-out, left 0.5s, opacity 0.5s ease-in;
+        transform: translate(-50%, -50%);
     }
 
     .close-button {
