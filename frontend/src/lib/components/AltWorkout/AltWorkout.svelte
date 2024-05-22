@@ -2,12 +2,10 @@
     // @ts-nocheck
     console.info('%c AltWorkout Component', 'color: hotpink')
 
-    import { writable } from 'svelte/store'
-
     export let deleteWorkout
     export let id
 
-    let isMuscleGroupSelected = writable(false)
+    $: isMuscleGroupSelected = false
     
 </script>
 
@@ -15,8 +13,9 @@
     <div class="buttons">
         <button type="button" on:click={() => deleteWorkout(id)}>X</button>
     </div>
+    <p>{id}</p>
     <p>Muscle Group (select dropdown)</p>
-    {#if $isMuscleGroupSelected}
+    {#if isMuscleGroupSelected}
         <p>Exercise (select dropdown)</p>
     {/if}
 </section>

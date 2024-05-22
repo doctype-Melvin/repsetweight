@@ -1,14 +1,14 @@
 <script>
     // @ts-nocheck
-    import { writable } from "svelte/store";
     import Icon from '@iconify/svelte';
 
     export let header
+    export let isOpen = undefined
 
-    const expanded = writable(false);
+    $: expanded = isOpen;
 
     function toggle() {
-        expanded.update(value => !value);
+        expanded = !expanded;
     }
 
 </script>
@@ -19,7 +19,7 @@
         <Icon icon="mdi:menu-swap" style="cursor: pointer;" />
     </button>
     
-        <div class="collapsible-content {$expanded ? 'expanded' : 'collapsed'}">
+        <div class="collapsible-content {expanded ? 'expanded' : 'collapsed'}">
             <slot />
         </div>
 </div>
