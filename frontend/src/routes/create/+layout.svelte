@@ -39,6 +39,7 @@
     }
 
     .flyin, .flyout {
+        position: absolute;
         background-color: #949494;
         padding: 2rem;
         height: 50vh;
@@ -46,24 +47,21 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        transform: translate(-50%, -50%);
     }
-
+    
     .flyout {
-        position: absolute;
         top: -100vh;
         left: 50%;
         opacity: 0;
         transition: top 0.5s ease-in, left 0.5s, opacity 0.5s ease-in;
-        transform: translate(-50%, -50%);
     }
 
     .flyin {
-        position: absolute;
         left: 50%;
         top: 45%;
         opacity: 1;
         transition: top 0.5s ease-out, left 0.5s, opacity 0.5s ease-in;
-        transform: translate(-50%, -50%);
     }
 
     .close-button {
