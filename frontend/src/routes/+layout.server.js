@@ -1,6 +1,7 @@
-export async function load({ fetch, params }) {
-	const templateURL = `http://localhost:3000/api/templates/all`;
-	const exerciseURL = `http://localhost:3000/api/exercises/all`;
+import { all_templates_url, all_exercises_url } from '$env/static/private';
+export async function load({ fetch }) {
+	const templateURL = all_templates_url;
+	const exerciseURL = all_exercises_url;
 	const userURL = `http://localhost:3000/api/users/user/2`;
 
 	try {

@@ -1,10 +1,18 @@
 <script>
     // @ts-nocheck
+    import { muscleGroupsData } from '$lib/stores.js';
+    export let data
+
+    let { muscleGroups } = data;
+    muscleGroupsData.set(muscleGroups)
+
     $: isFlyinVisible = false
 
     function toggleFlyin() {
         isFlyinVisible = !isFlyinVisible
     }
+
+    
 
 </script>
 

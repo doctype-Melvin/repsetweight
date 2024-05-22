@@ -1,6 +1,8 @@
 <script>
     // @ts-nocheck
-    console.info('%c AltWorkout Component', 'color: hotpink')
+   
+    import Dropdown from "../Dropdown/Dropdown.svelte";
+    
 
     export let deleteWorkout
     export let id
@@ -14,7 +16,7 @@
         <button type="button" on:click={() => deleteWorkout(id)}>X</button>
     </div>
     <p>{id}</p>
-    <p>Muscle Group (select dropdown)</p>
+    <Dropdown />
     {#if isMuscleGroupSelected}
         <p>Exercise (select dropdown)</p>
     {/if}
