@@ -1,10 +1,14 @@
 <script>
     // @ts-nocheck
-    import { muscleGroupsData } from '$lib/stores.js';
+    import { muscleGroupsData, exerciseMuscleData } from '$lib/stores.js';
     export let data
 
     let { muscleGroups } = data;
+    let { exerciseMuscle } = data;
+    
+
     muscleGroupsData.set(muscleGroups)
+    exerciseMuscleData.set(exerciseMuscle)
 
     $: isFlyinVisible = false
 

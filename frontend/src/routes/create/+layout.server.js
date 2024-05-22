@@ -1,12 +1,17 @@
-import { all_muscles_url } from '$env/static/private';
+import { all_muscles_url, all_exercises_and_muscles_url } from '$env/static/private';
 
 export async function load({ fetch }) {
-	const response = await fetch(all_muscles_url);
-	const muscleGroups = await response.json();
+	try {
+		const responses = await Promise.all([
+			fetch(all_muscles_url),
+			fetch(all_exercises_and_muscles_url)
+		]);
+		const [muscleGroups, exerciseMuscle] = await Promise.all(
+			responses.map(async (res) => res.json())
+		);
 
-	if (!response.ok) {
-		console.error('Error fetching muscle groups');
+		return { muscleGroups, exerciseMuscle };
+	} catch (error) {
+		console.error(error);
 	}
-
-	return { muscleGroups };
 }

@@ -1,14 +1,18 @@
 <script>
     // @ts-nocheck
-    import { muscleGroupsData } from "$lib/stores";
-    console.log('%c Dropdown Component', 'color: hotpink', $muscleGroupsData)
+    export let selectionData
+    export let selectionHandler = undefined
+    export let selectionType = ''
+    
+    selectionData = selectionData.sort((a, b) => a.name.localeCompare(b.name))
+
 </script>
 
 <section class="dropdown-container">
-    <select>
-        <option value="0">Select Muscle Group</option>
-        {#each $muscleGroupsData as muscleGroup}
-            <option value={muscleGroup.id}>{muscleGroup.name}</option>
+    <select on:change={(event) => selectionHandler(event.target.value)}>
+        <option value="0" selected>Select {selectionType}</option>
+        {#each selectionData as option}
+            <option value={option.id} >{option.name}</option>
         {/each}
     </select>
 </section>

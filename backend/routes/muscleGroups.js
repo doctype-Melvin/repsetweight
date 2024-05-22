@@ -8,4 +8,9 @@ const muscleGroupsController = require("../controllers/muscleGroupsController");
 
 router.get("/all", muscleGroupsController.get_muscleGroups);
 
+router.get(
+  "/exercise_and_muscle",
+  muscleGroupsController.get_exercise_and_muscle
+);
+
 module.exports = router;

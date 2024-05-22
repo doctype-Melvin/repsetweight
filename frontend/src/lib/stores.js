@@ -11,3 +11,4 @@ export const templatesData = writable();
 export const exercisesData = writable();
 export const workoutData = writable();
 export const muscleGroupsData = writable();
+export const exerciseMuscleData = writable();
