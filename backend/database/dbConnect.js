@@ -45,6 +45,6 @@ const models = {
 };
 
 associations(models);
-migrateExerciseMuscles(models);
+// migrateExerciseMuscles(models, sequelize);
 
 module.exports = { sequelize, models };

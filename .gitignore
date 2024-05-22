@@ -5,3 +5,5 @@ dbMod*
 node_modules
 
 .env
+
+migration.js
