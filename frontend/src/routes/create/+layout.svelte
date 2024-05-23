@@ -24,6 +24,7 @@
     <p style="text-align: center;">Compose your own template</p>
     <button type="button" on:click={toggleFlyin}>Save</button>
 </section>
+<!-- Section below will become component -->
 <section class="fly{isFlyinVisible ? 'in' : 'out'}">
     <button class="close-button" type="button" on:click={toggleFlyin}>Close</button>
     <form on:submit={toggleFlyin}>
