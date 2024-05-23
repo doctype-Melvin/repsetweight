@@ -1,23 +1,32 @@
 <script>
     // @ts-nocheck
-    import { muscleGroupsData, exerciseMuscleData, exercisesData } from '$lib/stores.js';
+    import { muscleGroupsData, exerciseMuscleData, exercisesData, selectedMuscleGroups } from '$lib/stores.js';
     import Dropdown from "../Dropdown/Dropdown.svelte";
     import Flyout from '../Flyout/Flyout.svelte';
     import { userTemplateData } from '$lib/stores.js';
-    
-    console.info('%c AltWorkout loaded', 'color: orange; font-weight: bold;', $userTemplateData)
 
     export let deleteWorkout
     export let id
 
-    $: showFlyout = false;
+    let showFlyout = false;
 
     $: exerciseOptions = null
 
-    const toggleFlyout = () => {
+    let muscleGroupChoices = ''
+
+    selectedMuscleGroups.subscribe(value => {
+        console.log('From Subscription', value)
+        muscleGroupChoices = value
+    })
+
+    const toggleFlyout = (signal) => {
+        if (signal) {
+            props.signal = signal;
+        }
         showFlyout = !showFlyout
     }
 
+    
     /*
     This workout component is the parent to
      a muscle group component and a child to
@@ -41,16 +50,11 @@
         deleteWorkout(id)
     }
 
-    const setMuscleGroup = (id) => {
-        const allExerciseIDs = $exerciseMuscleData.filter((item) => item.muscle_id === Number(id))
-        exerciseOptions = $exercisesData.filter((item) => allExerciseIDs
-        .some((exercise) => exercise.exercise_id === item.id))
-        .sort((a, b) => a.name.localeCompare(b.name))
+    const props = {
+        toggle: toggleFlyout,
+        signal: '',
+        wid: id,
     }
-
-    const setExercise = (id) => {
-        console.log(id)
-    }   
     
 </script>
 
@@ -59,12 +63,20 @@
         <button type="button" on:click={() => handleDelete(id)}>X</button>
     </div>
     <p>{id}</p>
-        <button type="button" on:click={toggleFlyout}>Add Muscle Group</button>
-        <Flyout {showFlyout}  {toggleFlyout}/>
-        <!-- <Dropdown selectionData={$muscleGroupsData} selectionType='Muscle Group' selectionHandler={setMuscleGroup}/>
-    {#if exerciseOptions}
-        <Dropdown selectionData={exerciseOptions} selectionType='Exercise' selectionHandler={setExercise} />
-    {/if} -->
+    {#if muscleGroupChoices.length > 0}
+        {#each muscleGroupChoices as workout}
+            {#if workout.wid === id}
+                {#each workout.muscles as muscle}
+                    <p>{muscle.name}</p>
+                {/each}
+            {/if}
+        {/each}
+    
+    {/if}
+        <button type="button" on:click={() => toggleFlyout('muscle')}>Add Muscle Group</button>
+            {#if showFlyout}
+            <Flyout {...props} />
+            {/if}
 </section>
 
 <style>

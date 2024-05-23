@@ -1,25 +1,85 @@
 <script>
     // @ts-nocheck
-    console.log('%c Flyout loaded', 'color: hotpink; font-weight: bold;')
 
-    export let showFlyout
-    export let toggleFlyout
+    import { muscleGroupsData, selectedMuscleGroups, userTemplateData } from "$lib/stores";
+
+    export let toggle
+    export let signal
+    export let wid
+
+    let workoutData = null
+
+    userTemplateData.subscribe(value => {
+        workoutData = value.workouts.find(workout => workout.wid === wid)
+        const isThisWorkoutRemoved = value.workouts.findIndex(workout => workout.wid === wid)
+        if (isThisWorkoutRemoved === -1) {
+            selectedMuscleGroups.update(data => {
+                const updatedData = data.filter(item => item.wid !== wid)
+                if (!updatedData.length) {
+                    return []
+                }
+                return updatedData
+            })
+        }
+    })
+
+    console.info("%c Flyout:", "color:hotpink", workoutData)
+
+    const submitHandler = (event) => {
+        event.preventDefault()
+        if (signal === 'muscle') {
+           
+            const checked = Array.from(event.target.elements).filter(el => el.checked).map(el => {
+                return {
+                        id: el.value,
+                        name: el.name                
+                    }
+            })
+
+            selectedMuscleGroups.update(data => {
+                const index = data.findIndex(item => item.wid === wid)
+                if (index === -1) {
+                    return [...data, {wid, muscles: checked}]
+                } else {
+                    data[index].muscles = [...data[index].muscles, ...checked]
+                    return data
+                }
+            })
+
+            
+            // console.log("%c Flyout:", "color:teal", $selectedMuscleGroups)
+            
+        }
+        toggle()
+    }
+    
+    console.log($selectedMuscleGroups)
+    // Sorted muscle groups data for flyout checkboxes
+    $: muscleData = $muscleGroupsData.sort((a, b) => a.name.localeCompare(b.name))
 </script>
 
-{#if showFlyout}
+
 <section class="flyout-container">
     <div class="flyout">
         <div class="flyout-header">
             <h2>Header</h2>
-            <button type="button" on:click={toggleFlyout}>X</button>
+            <button type="button" on:click={() => toggle()}>X</button>
         </div>
+        {#if signal === 'muscle'}
         <div class="flyout-content">
-            <p>Content</p>
+            <form on:submit={submitHandler}>
+                {#each muscleData as muscle}
+                    <input type="checkbox" id={muscle.id} name={muscle.name} value={muscle.id}>
+                    <label for={muscle.id}>{muscle.name}</label><br>
+                {/each}
+                <button type="submit">Submit</button>
+            </form>
         </div>
+        {/if}
     </div>
 </section>
 
-{/if}
+
 
 
 <style>

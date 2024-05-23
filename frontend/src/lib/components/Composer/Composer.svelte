@@ -5,8 +5,6 @@
     import Collapsible from '$lib/components/Collapsible/Collapsible.svelte';
     import { userTemplateData } from '$lib/stores';
 
-    console.info('%c Composer loaded', 'color: #4CAF50; font-weight: bold;')
-    
     let userWorkout = {
         name: '',
         description: '',
@@ -14,10 +12,7 @@
         exercises: []
     }
 
-    let workoutsArray = [userWorkout]
-
-    userTemplateData.set(workoutsArray)   
-
+    userTemplateData.set({workouts: [userWorkout]})   
 
     // Handler functions for adding and removing workouts
     const addWorkoutHandler = () => {
@@ -25,29 +20,31 @@
             ...userWorkout,
             wid: nanoid(7)
         }
-        workoutsArray = [...workoutsArray, newWorkout]
-        userTemplateData.set(workoutsArray)
+        
+        userTemplateData.update(data => {
+            return {workouts: [...data.workouts, newWorkout]}
+        })
     }
 
     const removeWorkoutHandler = (wid) => {
-        if (workoutsArray.length === 1) {
-            workoutsArray = [{...userWorkout, wid: nanoid(7)}]
-            return
+        if ($userTemplateData.workouts.length === 1) {
+            userTemplateData.update({workouts: [{...userWorkout, wid: nanoid(7)}]})
+            
         }
-        workoutsArray = workoutsArray.filter(workout => workout.wid !== wid)
-        userTemplateData.set(workoutsArray)
+        userTemplateData.update(data => {
+         return {workouts: data.workouts.filter(workout => workout.wid !== wid)}
+        })
     }
-
 </script>   
 
 
 
-{#each workoutsArray as workout, index}
+{#each $userTemplateData.workouts as workout, index}
     <Collapsible header={workout.name ? workout.name : `Workout ${index += 1}`} isOpen={true}>
         <AltWorkout deleteWorkout={removeWorkoutHandler} id={workout.wid}/>
     </Collapsible>
 {/each}
 
-<button type="button" on:click={addWorkoutHandler}>Add Workout</button>
+<button type="button" on:click={addWorkoutHandler}> + Add Workout</button>
     
 
