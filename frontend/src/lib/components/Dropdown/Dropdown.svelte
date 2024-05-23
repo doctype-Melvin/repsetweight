@@ -6,6 +6,10 @@
     
     selectionData = selectionData.sort((a, b) => a.name.localeCompare(b.name))
 
+    /*
+    Receive signal from Composer to add another muscle group
+    */ 
+
 </script>
 
 <section class="dropdown-container">

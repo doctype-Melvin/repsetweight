@@ -2,18 +2,27 @@
     // @ts-nocheck
     import { muscleGroupsData, exerciseMuscleData, exercisesData } from '$lib/stores.js';
     import Dropdown from "../Dropdown/Dropdown.svelte";
+    import Flyout from '../Flyout/Flyout.svelte';
+    import { userTemplateData } from '$lib/stores.js';
     
+    console.info('%c AltWorkout loaded', 'color: orange; font-weight: bold;', $userTemplateData)
 
     export let deleteWorkout
     export let id
 
+    $: showFlyout = false;
+
     $: exerciseOptions = null
+
+    const toggleFlyout = () => {
+        showFlyout = !showFlyout
+    }
 
     /*
     This workout component is the parent to
      a muscle group component and a child to
-     the create template page.
-     The create template page is where adding or deleting 
+     the Composer.
+     The Composer is where adding or deleting 
      workouts happens. 
         The workout component should allow for
         adding/changin/deleting a number of muscle group components.
@@ -38,6 +47,10 @@
         .some((exercise) => exercise.exercise_id === item.id))
         .sort((a, b) => a.name.localeCompare(b.name))
     }
+
+    const setExercise = (id) => {
+        console.log(id)
+    }   
     
 </script>
 
@@ -46,10 +59,12 @@
         <button type="button" on:click={() => handleDelete(id)}>X</button>
     </div>
     <p>{id}</p>
-        <Dropdown selectionData={$muscleGroupsData} selectionType='Muscle Group' selectionHandler={setMuscleGroup}/>
+        <button type="button" on:click={toggleFlyout}>Add Muscle Group</button>
+        <Flyout {showFlyout}  {toggleFlyout}/>
+        <!-- <Dropdown selectionData={$muscleGroupsData} selectionType='Muscle Group' selectionHandler={setMuscleGroup}/>
     {#if exerciseOptions}
-        <Dropdown selectionData={exerciseOptions} selectionType='Exercise' />
-    {/if}
+        <Dropdown selectionData={exerciseOptions} selectionType='Exercise' selectionHandler={setExercise} />
+    {/if} -->
 </section>
 
 <style>
