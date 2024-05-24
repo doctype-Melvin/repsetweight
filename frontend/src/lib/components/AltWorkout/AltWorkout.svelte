@@ -8,6 +8,9 @@
     export let deleteWorkout
     export let id
     
+    // Subscribe to the userTemplateData store to get the current workout
+    // and handle adding muscle groups.
+    // The userTemplateData store is updated with the new muscle groups
     let currentWorkout = null;
 
     const filterWorkoutStore = derived(userTemplateData, ($userTemplateData) => {
@@ -20,6 +23,8 @@
 
     let showFlyout = false;
     
+    // This is part of filtering the exercises for each selected muscle group
+    // and might be moved to the future muscle groups component
     $: exerciseOptions = null
     
     const toggleFlyout = (signal) => {

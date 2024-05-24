@@ -13,8 +13,6 @@
         muscles: []
     }
 
-    
-
     userTemplateData.set({workouts: [userWorkout]})
 
     // Handler functions for adding and removing workouts
@@ -37,7 +35,6 @@
             return {workouts: data.workouts.filter(workout => workout.wid !== wid)}
             })
         }
-        console.log($userTemplateData.workouts)
     }
 
 </script>   
