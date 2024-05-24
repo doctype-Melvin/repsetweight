@@ -9,10 +9,13 @@
         name: '',
         description: '',
         wid: nanoid(7),
-        exercises: []
+        exercises: [],
+        muscles: []
     }
 
-    userTemplateData.set({workouts: [userWorkout]})   
+    
+
+    userTemplateData.set({workouts: [userWorkout]})
 
     // Handler functions for adding and removing workouts
     const addWorkoutHandler = () => {
@@ -28,23 +31,22 @@
 
     const removeWorkoutHandler = (wid) => {
         if ($userTemplateData.workouts.length === 1) {
-            userTemplateData.update({workouts: [{...userWorkout, wid: nanoid(7)}]})
-            
+           return userTemplateData.set({workouts: [{...userWorkout, wid: nanoid(7)}]})
+        } else {
+            userTemplateData.update(data => {
+            return {workouts: data.workouts.filter(workout => workout.wid !== wid)}
+            })
         }
-        userTemplateData.update(data => {
-         return {workouts: data.workouts.filter(workout => workout.wid !== wid)}
-        })
+        console.log($userTemplateData.workouts)
     }
+
 </script>   
 
-
-
-{#each $userTemplateData.workouts as workout, index}
+{#each $userTemplateData.workouts as workout, index (workout.wid)}
     <Collapsible header={workout.name ? workout.name : `Workout ${index += 1}`} isOpen={true}>
         <AltWorkout deleteWorkout={removeWorkoutHandler} id={workout.wid}/>
     </Collapsible>
 {/each}
-
 <button type="button" on:click={addWorkoutHandler}> + Add Workout</button>
     
 

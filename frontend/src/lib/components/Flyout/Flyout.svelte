@@ -2,60 +2,43 @@
     // @ts-nocheck
 
     import { muscleGroupsData, selectedMuscleGroups, userTemplateData } from "$lib/stores";
-
+    
     export let toggle
     export let signal
     export let wid
-
-    let workoutData = null
-
-    userTemplateData.subscribe(value => {
-        workoutData = value.workouts.find(workout => workout.wid === wid)
-        const isThisWorkoutRemoved = value.workouts.findIndex(workout => workout.wid === wid)
-        if (isThisWorkoutRemoved === -1) {
-            selectedMuscleGroups.update(data => {
-                const updatedData = data.filter(item => item.wid !== wid)
-                if (!updatedData.length) {
-                    return []
-                }
-                return updatedData
-            })
-        }
-    })
-
-    console.info("%c Flyout:", "color:hotpink", workoutData)
-
+    
+    $: muscleData = $muscleGroupsData.sort((a, b) => a.name.localeCompare(b.name))
+    
+    let preselectedMuscles = null
+ 
     const submitHandler = (event) => {
         event.preventDefault()
         if (signal === 'muscle') {
-           
+            
             const checked = Array.from(event.target.elements).filter(el => el.checked).map(el => {
                 return {
-                        id: el.value,
-                        name: el.name                
-                    }
-            })
-
-            selectedMuscleGroups.update(data => {
-                const index = data.findIndex(item => item.wid === wid)
-                if (index === -1) {
-                    return [...data, {wid, muscles: checked}]
-                } else {
-                    data[index].muscles = [...data[index].muscles, ...checked]
-                    return data
+                    id: el.value,
+                    name: el.name                
                 }
             })
 
-            
-            // console.log("%c Flyout:", "color:teal", $selectedMuscleGroups)
-            
+            userTemplateData.update(data => {
+                const updatedWorkouts = data.workouts.map(workout => {
+                    if (workout.wid === wid) {
+                        return {
+                            ...workout,
+                            muscles: checked
+                        }
+                    } else {
+                        return workout
+                    }
+                })
+                return {workouts: updatedWorkouts}
+            })
+            console.log($userTemplateData.workouts)
         }
         toggle()
     }
-    
-    console.log($selectedMuscleGroups)
-    // Sorted muscle groups data for flyout checkboxes
-    $: muscleData = $muscleGroupsData.sort((a, b) => a.name.localeCompare(b.name))
 </script>
 
 
@@ -65,6 +48,7 @@
             <h2>Header</h2>
             <button type="button" on:click={() => toggle()}>X</button>
         </div>
+
         {#if signal === 'muscle'}
         <div class="flyout-content">
             <form on:submit={submitHandler}>
@@ -76,6 +60,7 @@
             </form>
         </div>
         {/if}
+
     </div>
 </section>
 
