@@ -5,7 +5,6 @@ export const userData = writable();
 
 // Store for user created template data
 export const userTemplateData = writable();
-export const selectedMuscleGroups = writable([]);
 
 // Stores for fetched data
 export const templatesData = writable();

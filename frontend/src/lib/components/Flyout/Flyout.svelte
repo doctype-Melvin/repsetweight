@@ -1,15 +1,26 @@
 <script>
     // @ts-nocheck
-
-    import { muscleGroupsData, selectedMuscleGroups, userTemplateData } from "$lib/stores";
+    import { muscleGroupsData, userTemplateData } from "$lib/stores";
+    import { derived } from "svelte/store";
     
     export let toggle
     export let signal
     export let wid
     
     $: muscleData = $muscleGroupsData.sort((a, b) => a.name.localeCompare(b.name))
-    
+
     let preselectedMuscles = null
+
+    const filterWorkoutStore = derived(userTemplateData, ($userTemplateData) => {
+        return $userTemplateData.workouts.find(workout => workout.wid === wid)
+    })
+
+    filterWorkoutStore.subscribe(value => {
+        if (value === undefined) return
+        preselectedMuscles = value.muscles
+        console.log('Flyout preselected:', preselectedMuscles)
+    })
+    
  
     const submitHandler = (event) => {
         event.preventDefault()
@@ -35,7 +46,7 @@
                 })
                 return {workouts: updatedWorkouts}
             })
-            console.log($userTemplateData.workouts)
+            
         }
         toggle()
     }
@@ -45,7 +56,7 @@
 <section class="flyout-container">
     <div class="flyout">
         <div class="flyout-header">
-            <h2>Header</h2>
+            <h2>Select {signal}s</h2>
             <button type="button" on:click={() => toggle()}>X</button>
         </div>
 
@@ -53,12 +64,23 @@
         <div class="flyout-content">
             <form on:submit={submitHandler}>
                 {#each muscleData as muscle}
-                    <input type="checkbox" id={muscle.id} name={muscle.name} value={muscle.id}>
+                {#if preselectedMuscles.length}
+                    {#if preselectedMuscles.find(m => Number(m.id) === muscle.id)}
+                        <input type="checkbox" id={muscle.id} name={muscle.name} value={muscle.id} checked>
+                        <label for={muscle.id}>{muscle.name}</label><br>
+                    {:else}
+                        <input type="checkbox" id={muscle.id} name={muscle.name} value={muscle.id} >
+                        <label for={muscle.id}>{muscle.name}</label><br>
+                    {/if}
+                {:else}
+                    <input type="checkbox" id={muscle.id} name={muscle.name} value={muscle.id} >
                     <label for={muscle.id}>{muscle.name}</label><br>
+                {/if}
                 {/each}
                 <button type="submit">Submit</button>
             </form>
         </div>
+        
         {/if}
 
     </div>
