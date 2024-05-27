@@ -1,52 +1,34 @@
 <script>
     // @ts-nocheck
-    import { writable } from 'svelte/store';
-    import { userTemplateData } from '$lib/stores';
-    
-    export let content = ''
-    export let type 
-    export let wid
-    
-    let isInput = writable(false)
-    let newContent = writable('')
+    import { isWriteMode } from "$lib/stores";
+    export let content
+    export let element
+    export let setContentHandler
 
-    const toggleInput = () => {
-        isInput.update(boolean => !boolean)
-    }
+    let isInput = false
 
-    const handleInput = (event) => {
-        newContent.set(event.target.value)
-    }
-  
+    const toggleInput = () => isInput = !isInput;
 
-    const editWorkout = (workoutID, content, type) => {
-        const index = $userTemplateData.workouts.findIndex(workout => workout.wid === workoutID);
-        if (content && type === 'description') {
-            userTemplateData.update(template => {
-                template.workouts[index].description = content;
-                return template;
-            })
-            
-        } else if (content && !type){
-            userTemplateData.update(template => {
-                template.workouts[index].name = content;
-                return template;
-            })
-            
-        }
-        
-        localStorage.setItem('template', JSON.stringify($userTemplateData));
-        toggleInput();
+    const setContent = (event) => {
+        setContentHandler(event.target.value)
+        toggleInput()
     }
 
 </script>
 
-<div>
-    {#if $isInput && !type}
-        <input type='text' value={content ? content : $newContent} autofocus on:input={handleInput} on:blur={() => editWorkout(wid, $newContent, type)} >
-    {:else if $isInput && type}
-        <textarea value={content ? content : $newContent} rows="3" cols="40" autofocus on:input={handleInput} on:blur={() => editWorkout(wid, $newContent, type)}></textarea>
+<section>
+    {#if !isInput}
+    <span class={element} on:click={toggleInput}>{content}</span>
     {:else}
-        <button type="button" on:click={toggleInput}>{content}</button>
+        <input type="text" bind:value={content} on:blur={setContent} autofocus/>
     {/if}
-</div>
+</section>
+
+<style>
+    .h3 {
+        margin: 0;
+        font-size: 1.15rem;
+        font-weight: 700;
+        padding: 0;
+    }
+</style>

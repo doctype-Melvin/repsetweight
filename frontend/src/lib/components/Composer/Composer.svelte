@@ -62,11 +62,12 @@
         }
     }
 
+
 </script>   
 
 {#if $userTemplateData}
 {#each $userTemplateData.workouts as workout, index (workout.wid)}
-    <Collapsible header={workout.name ? workout.name : `Workout ${index += 1}`} isOpen={true}>
+    <Collapsible header={workout.name ? workout.name : `Workout ${index += 1}`} isOpen={true} id={workout.wid}>
         <AltWorkout deleteWorkout={removeWorkoutHandler} copyWorkout={copyWorkoutHandler} id={workout.wid}/>
     </Collapsible>
 {/each}

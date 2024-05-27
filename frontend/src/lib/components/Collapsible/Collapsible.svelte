@@ -1,9 +1,12 @@
 <script>
     // @ts-nocheck
     import Icon from '@iconify/svelte';
+    import InputContent from '../InputContent/InputContent.svelte';
+    import { userTemplateData } from '$lib/stores';
 
     export let header
     export let isOpen = undefined
+    export let id
 
     $: expanded = isOpen;
 
@@ -11,10 +14,18 @@
         expanded = !expanded;
     }
 
+    const setWorkoutName = (name) => {
+        let targetWorkout = $userTemplateData.workouts.find(workout => workout.wid === id)
+        targetWorkout.name = name
+        userTemplateData.update(data => {
+            return {workouts: data.workouts.map(workout => workout.wid === id ? targetWorkout : workout)}
+        })
+    }
+
 </script>
 
 <div class="collapsible">
-    <h3 on:click={() => console.log(header)}>{header}</h3>
+    <InputContent content={header} element='h3' setContentHandler={setWorkoutName}/>
     <button type="button" on:click={() => toggle()}>
         <Icon icon="mdi:menu-swap" style="cursor: pointer;" />
     </button>
