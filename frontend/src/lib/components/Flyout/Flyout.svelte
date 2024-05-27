@@ -18,10 +18,13 @@
     // and to set the preselectedMuscles value
     let preselectedMuscles = null
 
+    // Create a derived store of user template data
+    // and filter the target workout by its wid
     const filterWorkoutStore = derived(userTemplateData, ($userTemplateData) => {
         return $userTemplateData.workouts.find(workout => workout.wid === wid)
     })
 
+    // Subscribe to the derived store and set the preselectedMuscles value
     filterWorkoutStore.subscribe(value => {
         if (value === undefined) return
         preselectedMuscles = value.muscles

@@ -14,6 +14,15 @@
     }
 
     userTemplateData.set({workouts: [userWorkout]})
+    
+
+    userTemplateData.subscribe(value => {
+        console.info('%c Data has changed', 'color: hotpink')
+        // Store data in local storage
+        // Update local storage on every change
+    
+    })
+    
 
     // Handler functions for adding and removing workouts
     const addWorkoutHandler = () => {
