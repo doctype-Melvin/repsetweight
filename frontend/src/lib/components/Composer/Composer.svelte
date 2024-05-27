@@ -4,19 +4,7 @@
     import AltWorkout from '$lib/components/AltWorkout/AltWorkout.svelte';
     import Collapsible from '$lib/components/Collapsible/Collapsible.svelte';
     import { userTemplateData } from '$lib/stores';
-    import { onMount } from 'svelte';
-    
-    onMount(() => {
-        const data = localStorage.getItem('userTemplate')
-        if (data) {
-            userTemplateData.set(JSON.parse(data))
-        } 
-        userTemplateData.subscribe(value => {
-            localStorage.setItem('userTemplate', JSON.stringify(value))
-            console.info('User template update')
-        })            
-    })   
-
+   
     let userWorkout = {
         name: '',
         description: '',
@@ -24,8 +12,19 @@
         exercises: [],
         muscles: []
     }
+    
+    const storage = localStorage.getItem('userTemplate')
 
-    userTemplateData.set({workouts: [userWorkout]})
+    if (storage) {
+        userTemplateData.set(JSON.parse(storage))
+    } else {
+        userTemplateData.set({workouts: [userWorkout]})
+    }
+
+    userTemplateData.subscribe(value => {
+            localStorage.setItem('userTemplate', JSON.stringify(value))
+        })
+
 
     // Handler functions for adding and removing workouts
     const addWorkoutHandler = () => {
@@ -56,7 +55,6 @@
         <AltWorkout deleteWorkout={removeWorkoutHandler} id={workout.wid}/>
     </Collapsible>
 {/each}
-
 <button type="button" on:click={addWorkoutHandler}> + Add Workout</button>
     
 
