@@ -6,6 +6,7 @@
 
 
     export let deleteWorkout
+    export let copyWorkout
     export let id
     
     // Subscribe to the userTemplateData store to get the current workout
@@ -49,6 +50,7 @@
 <section class="workout-container">
     {#if currentWorkout}
     <div class="buttons">
+        <button type="button" on:click={copyWorkout(id)}>Copy</button>
         <button type="button" on:click={handleDelete(id)}>X</button>
     </div>
     <p>{id}</p>

@@ -1,8 +1,10 @@
 <script>
     // @ts-nocheck
     import { goto } from "$app/navigation";
-    import { templatesData, userData } from "$lib/stores.js";
+    import { templatesData, userData, isWriteMode } from "$lib/stores.js";
         
+    isWriteMode.set(false)
+
     const activeTemplate = $templatesData.find(template => template.id === $userData.active_template)
         
 </script>
@@ -13,3 +15,6 @@
 <p>Choose one of the preset programs, add your own template or change preset templates to your liking</p>
 
 <button type="button" on:click={() => goto("/templates")}>All Templates</button>
+{#if !$isWriteMode}
+<p><b>Read only mode</b></p>
+{/if}

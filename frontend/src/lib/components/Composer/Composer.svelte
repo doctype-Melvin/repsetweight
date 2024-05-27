@@ -3,33 +3,47 @@
     import { nanoid } from 'nanoid';
     import AltWorkout from '$lib/components/AltWorkout/AltWorkout.svelte';
     import Collapsible from '$lib/components/Collapsible/Collapsible.svelte';
-    import { userTemplateData } from '$lib/stores';
-   
+    import { userTemplateData, isWriteMode } from '$lib/stores';
+    import { onMount } from 'svelte';  
+
     let userWorkout = {
         name: '',
         description: '',
         wid: nanoid(7),
         exercises: [],
         muscles: []
-    }
-    
-    const storage = localStorage.getItem('userTemplate')
+    }   
 
-    if (storage) {
-        userTemplateData.set(JSON.parse(storage))
-    } else {
-        userTemplateData.set({workouts: [userWorkout]})
-    }
-
-    userTemplateData.subscribe(value => {
+    onMount(() => {
+        const storage = localStorage.getItem('userTemplate')
+        
+        if (storage) {
+            userTemplateData.set(JSON.parse(storage))
+        } else {
+            userTemplateData.set({workouts: [userWorkout]})
+        }
+        
+        userTemplateData.subscribe(value => {
             localStorage.setItem('userTemplate', JSON.stringify(value))
         })
-
-
+    })
+    
     // Handler functions for adding and removing workouts
     const addWorkoutHandler = () => {
         let newWorkout = {
             ...userWorkout,
+            wid: nanoid(7)
+        }
+        
+        userTemplateData.update(data => {
+            return {workouts: [...data.workouts, newWorkout]}
+        })
+    }
+
+    const copyWorkoutHandler = (wid) => {
+        let workout = $userTemplateData.workouts.find(workout => workout.wid === wid)
+        let newWorkout = {
+            ...workout,
             wid: nanoid(7)
         }
         
@@ -50,11 +64,19 @@
 
 </script>   
 
+{#if $userTemplateData}
 {#each $userTemplateData.workouts as workout, index (workout.wid)}
     <Collapsible header={workout.name ? workout.name : `Workout ${index += 1}`} isOpen={true}>
-        <AltWorkout deleteWorkout={removeWorkoutHandler} id={workout.wid}/>
+        <AltWorkout deleteWorkout={removeWorkoutHandler} copyWorkout={copyWorkoutHandler} id={workout.wid}/>
     </Collapsible>
 {/each}
-<button type="button" on:click={addWorkoutHandler}> + Add Workout</button>
+{:else}
+<p>Loading workouts ....</p>
+{/if}
+{#if $isWriteMode}
+    <button type="button" on:click={addWorkoutHandler}> + Add Workout</button>
+{/if}
+
+    
     
 
