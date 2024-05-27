@@ -14,7 +14,7 @@
 </script>
 
 <div class="collapsible">
-    <h3>{header}</h3>
+    <h3 on:click={() => console.log(header)}>{header}</h3>
     <button type="button" on:click={() => toggle()}>
         <Icon icon="mdi:menu-swap" style="cursor: pointer;" />
     </button>
@@ -34,15 +34,17 @@
 
     .collapsible-content {
         overflow: hidden;
-        transition: max-height 0.4s ease-in-out;
+        transition: max-height 0.3s ease-in-out, opacity 0.35s ease-in-out;
         grid-column: span 2;
     }
 
     .collapsible-content.expanded {
-        max-height: 100vh;
+        max-height: 100%;
+        opacity: 1;
     }
 
     .collapsible-content.collapsed {
+        opacity: 0;
         max-height: 0;
         overflow: hidden;
     }
