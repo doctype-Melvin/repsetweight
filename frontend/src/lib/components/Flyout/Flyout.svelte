@@ -1,15 +1,22 @@
 <script>
     // @ts-nocheck
-    import { muscleGroupsData, userTemplateData } from "$lib/stores";
+    import { muscleGroupsData, userTemplateData, exerciseMuscleData, exercisesData } from "$lib/stores";
     import { derived } from "svelte/store";
-    
+    import Form from "./Form.svelte";
+
     export let toggle
     export let signal
     export let wid
+    export let muscle
     
-    // Sort muscle groups alphabetically
-    // The component renders a list of checkboxes for each muscle group
-    $: muscleData = $muscleGroupsData.sort((a, b) => a.name.localeCompare(b.name))
+    
+    // Sort muscle groups/exercises alphabetically
+    // The component renders a list of checkboxes for each muscle group/exercise
+    let muscleData = $muscleGroupsData.sort((a, b) => a.name.localeCompare(b.name))
+    let filteredExercisesData = (!muscle) ? null : $exerciseMuscleData.filter(exercise => exercise.muscle_id === Number(muscle.id))
+    .map(exercise => {
+        return $exercisesData.find(entry => entry.id === exercise.exercise_id)
+    })
 
     // Manage preselected muscles
     // If users want to change their muscle groups for a workout,
@@ -17,6 +24,7 @@
     // A derivative of the userTemplateData store is used to filter the workout
     // and to set the preselectedMuscles value
     let preselectedMuscles = null
+    let preselectedExercises = null
 
     // Create a derived store of user template data
     // and filter the target workout by its wid
@@ -26,8 +34,13 @@
 
     // Subscribe to the derived store and set the preselectedMuscles value
     filterWorkoutStore.subscribe(value => {
+        
         if (value === undefined) return
-        preselectedMuscles = value.muscles
+        if (signal === 'muscle') {
+            preselectedMuscles = value.muscles
+        } else {
+            preselectedExercises = value.exercises
+        }
     })
     
  
@@ -42,7 +55,7 @@
                     name: el.name                
                 }
             })
-
+            
             // Update the userTemplateData store with the new muscle groups
             userTemplateData.update(data => {
                 const updatedWorkouts = data.workouts.map(workout => {
@@ -58,6 +71,8 @@
                 return {workouts: updatedWorkouts}
             })
             
+        } else {
+            console.log('submitHandler for exercises')
         }
         toggle()
     }
@@ -70,31 +85,16 @@
             <h2>Select {signal}s</h2>
             <button type="button" on:click={() => toggle()}>X</button>
         </div>
-        <!-- Flyout for muscle groups -->
-        {#if signal === 'muscle'}
+        <!-- Form for muscle groups -->
         <div class="flyout-content">
-            <form on:submit={submitHandler}>
-                {#each muscleData as muscle}
-                <!-- Checks if there are already selected muscles and adds them to the list with a checkmark -->
-                {#if preselectedMuscles.length}
-                    {#if preselectedMuscles.find(m => Number(m.id) === muscle.id)}
-                        <input type="checkbox" id={muscle.id} name={muscle.name} value={muscle.id} checked>
-                        <label for={muscle.id}>{muscle.name}</label><br>
-                    {:else}
-                        <input type="checkbox" id={muscle.id} name={muscle.name} value={muscle.id} >
-                        <label for={muscle.id}>{muscle.name}</label><br>
-                    {/if}
-                {:else}
-                <!-- No preselected muscles? No problem! Just render the list -->
-                    <input type="checkbox" id={muscle.id} name={muscle.name} value={muscle.id} >
-                    <label for={muscle.id}>{muscle.name}</label><br>
-                {/if}
-                {/each}
-                <button type="submit">Submit</button>
-            </form>
+            {#if signal === 'muscle'}
+            <Form selectionData={muscleData} preselectedData={preselectedMuscles} submitHandler={submitHandler} />
+            {:else}
+            <!-- Form for exercises -->
+            <Form selectionData={filteredExercisesData} preselectedData={preselectedExercises} submitHandler={submitHandler} />
+            {/if}
         </div>
         
-        {/if}
 
     </div>
 </section>

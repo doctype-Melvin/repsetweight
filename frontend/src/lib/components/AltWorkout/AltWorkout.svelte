@@ -1,8 +1,9 @@
 <script>
     // @ts-nocheck
     import Flyout from '../Flyout/Flyout.svelte';
+    import MuscleExercise from '../MuscleExercise/MuscleExercise.svelte';
     import { userTemplateData } from '$lib/stores.js';
-    import { derived } from 'svelte/store';
+    import { derived, writable } from 'svelte/store';
 
 
     export let deleteWorkout
@@ -12,22 +13,19 @@
     // Subscribe to the userTemplateData store to get the current workout
     // and handle adding muscle groups.
     // The userTemplateData store is updated with the new muscle groups
-    let currentWorkout = null;
+    let currentWorkout =writable(null);
 
-    const filterWorkoutStore = derived(userTemplateData, ($userTemplateData) => {
+    const filterTemplateData = derived(userTemplateData, ($userTemplateData) => {
         return $userTemplateData.workouts.find(workout => workout.wid === id)
     })
-
-    filterWorkoutStore.subscribe(value => {
-        currentWorkout = value
+    
+    filterTemplateData.subscribe(value => {
+        
+        currentWorkout.set(value)
     })
 
     let showFlyout = false;
-    
-    // This is part of filtering the exercises for each selected muscle group
-    // and might be moved to the future muscle groups component
-    $: exerciseOptions = null
-    
+        
     const toggleFlyout = (signal) => {
         if (signal) {
             props.signal = signal;
@@ -36,9 +34,22 @@
         showFlyout = !showFlyout
     }
 
-    const handleDelete = (id) => {
-        exerciseOptions = null;
+    const handleDeleteWorkout = (id) => {
         deleteWorkout(id)
+    }
+
+    const handleDeleteMuscle = (muscleID) => {
+        const updatedWorkoutMuscles = $currentWorkout.muscles.filter(muscle => muscle.id !== muscleID)
+        userTemplateData.update(data => {
+            const updatedWorkouts = data.workouts.map(workout => {
+                if (workout.wid === id) {
+                    return {...workout, muscles: updatedWorkoutMuscles}
+                } else {
+                    return workout
+                }
+            })
+            return {workouts: updatedWorkouts}
+        })
     }
 
     const props = {
@@ -48,15 +59,15 @@
 </script>
 
 <section class="workout-container">
-    {#if currentWorkout}
+    {#if $currentWorkout}
     <div class="buttons">
-        <button type="button" on:click={copyWorkout(id)}>Copy</button>
-        <button type="button" on:click={handleDelete(id)}>X</button>
+        <button type="button" on:click={copyWorkout(id)}>Copy Workout</button>
+        <button type="button" on:click={handleDeleteWorkout(id)}>X</button>
     </div>
     <p>{id}</p>
 
-    {#each currentWorkout.muscles as muscle}
-        <p>{muscle.name}</p>
+    {#each $currentWorkout.muscles as muscle}
+        <MuscleExercise {muscle} deleteHandler={handleDeleteMuscle} {id}/>
     {/each}
 
         <button type="button" on:click={() => toggleFlyout('muscle')}>Add Muscle Group</button>
