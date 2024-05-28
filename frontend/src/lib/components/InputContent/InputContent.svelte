@@ -1,26 +1,42 @@
 <script>
-    // @ts-nocheck
-    import { isWriteMode } from "$lib/stores";
+	// @ts-nocheck
+
+    import { afterUpdate } from "svelte";
+    
     export let content
     export let element
     export let setContentHandler
-
+    
     let isInput = false
-
-    const toggleInput = () => isInput = !isInput;
+    let inputValue = content
+    
+    const toggleInput = () => {
+        isInput = !isInput;
+    }
 
     const setContent = (event) => {
-        setContentHandler(event.target.value)
+        if (!inputValue) {
+            inputValue = content      
+        } 
+        setContentHandler(inputValue)
         toggleInput()
+        
     }
+
+    afterUpdate(() => {
+        if (isInput) {
+            const input = document.querySelector('.input-workout-name')
+            input.focus()
+        }
+    })
 
 </script>
 
 <section>
     {#if !isInput}
-    <span class={element} on:click={toggleInput}>{content}</span>
+    <button type="button" on:click={toggleInput}><span class={element} >{content}</span></button>
     {:else}
-        <input type="text" bind:value={content} on:blur={setContent} autofocus/>
+        <input class="input-workout-name" type="text" bind:value={inputValue} on:blur={setContent} />
     {/if}
 </section>
 

@@ -2,11 +2,11 @@
     // @ts-nocheck
     import Icon from '@iconify/svelte';
     import InputContent from '../InputContent/InputContent.svelte';
-    import { userTemplateData } from '$lib/stores';
+    import { userTemplateData, isWriteMode } from '$lib/stores';
 
     export let header
     export let isOpen = undefined
-    export let id
+    export let id = undefined
 
     $: expanded = isOpen;
 
@@ -25,7 +25,11 @@
 </script>
 
 <div class="collapsible">
+    {#if $isWriteMode}
     <InputContent content={header} element='h3' setContentHandler={setWorkoutName}/>
+    {:else}
+    <h3>{header}</h3>
+    {/if}
     <button type="button" on:click={() => toggle()}>
         <Icon icon="mdi:menu-swap" style="cursor: pointer;" />
     </button>
