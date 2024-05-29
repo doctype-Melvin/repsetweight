@@ -35,8 +35,23 @@
 </script>
 
 <section class="card">
-    <div>
+    <div class="card-content">
         <span on:click={toggleFlyout('exercise')}>{name}</span>
         <button type="button" on:click={handleDeleteExercise}>X</button>
     </div>
 </section>
+
+<style>
+    .card {
+        width: 100%;
+        border: solid 3px red;
+    }
+    
+    .card-content {
+        margin: 0 auto;
+        width: 75%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+</style>

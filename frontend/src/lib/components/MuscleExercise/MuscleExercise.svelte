@@ -46,19 +46,48 @@
 </script>
 
 <section class="card">
-    <div>
-        <span>{muscle.name}</span>
+    <div class="card-header">
+        <span class="card-name">{muscle.name}</span>
         <button type="button" on:click={handleDeleteMuscle}>X</button>
     </div>
-    {#if $workoutData.exercises}
+    <div class="exercises-container">
+        {#if $workoutData.exercises}
         {#each $workoutData.exercises as exercise}
-            {#if exercise.muscle_id === muscle.id}
-                <Exercise name={exercise.name} eid={exercise.eid} wid={id} {toggleFlyout}/>
-            {/if}
+        {#if exercise.muscle_id === muscle.id}
+        <Exercise name={exercise.name} eid={exercise.eid} wid={id} {toggleFlyout}/>
+        {/if}
         {/each}
-    {/if}
+        {/if}
+    </div>
     <button type="button" on:click={() => toggleFlyout('exercise')}>Add Exercise</button>
     {#if showFlyout}
         <Flyout {...props} />
     {/if}
 </section>
+
+<style>
+    .card {
+        display: grid;
+        gap: 1rem;
+        margin-bottom: .5rem;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center
+    }
+
+    .card-name {
+        background: #fff;
+        border: 3px solid red;
+        padding: .25rem;
+    }
+
+    .exercises-container {
+        display: grid;
+        gap: .5rem;
+        width: 100%;
+        
+    }
+</style>

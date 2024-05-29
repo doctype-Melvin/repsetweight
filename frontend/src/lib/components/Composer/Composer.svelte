@@ -65,19 +65,28 @@
 
 </script>   
 
+<section class="composer-container">
 {#if $userTemplateData}
-{#each $userTemplateData.workouts as workout, index (workout.wid)}
+    {#each $userTemplateData.workouts as workout, index (workout.wid)}
     <Collapsible header={workout.name ? workout.name : `Workout ${index += 1}`} isOpen={true} id={workout.wid}>
         <AltWorkout deleteWorkout={removeWorkoutHandler} copyWorkout={copyWorkoutHandler} id={workout.wid}/>
     </Collapsible>
-{/each}
-{:else}
-<p>Loading workouts ....</p>
-{/if}
-{#if $isWriteMode}
+    {/each}
+    {:else}
+    <p>Loading workouts ....</p>
+    {/if}
+    {#if $isWriteMode}
     <button type="button" on:click={addWorkoutHandler}> + Add Workout</button>
-{/if}
-
+    {/if}
+</section>
     
+<style>
+    .composer-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1rem;
+    }
+</style>
     
 
