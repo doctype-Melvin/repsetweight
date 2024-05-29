@@ -3,6 +3,7 @@
     import { muscleGroupsData, userTemplateData, exerciseMuscleData, exercisesData } from "$lib/stores";
     import { derived } from "svelte/store";
     import Form from "./Form.svelte";
+	import { nanoid } from "nanoid";
 
     export let toggle
     export let signal
@@ -42,37 +43,43 @@
             preselectedExercises = value.exercises
         }
     })
+
+    const updateWorkoutData = (array, prop) => {
+        userTemplateData.update(data => {
+            const updatedWorkouts = data.workouts.map(workout => {
+                if (workout.wid === wid) {
+                    return {
+                        ...workout,
+                        [prop]: array
+                    }
+                } else {
+                    return workout
+                }
+            })
+            return {workouts: updatedWorkouts}
+        })
+        }
     
  
     const submitHandler = (event) => {
         event.preventDefault()
+        // Get all checked checkboxes and create an array of objects
+        const checked = Array.from(event.target.elements).filter(el => el.checked).map(el => {
+            return {
+                id: el.value,
+                name: el.name                
+            }
+        })
+
         if (signal === 'muscle') {
-            
-            // Get all checked checkboxes and create an array of objects
-            const checked = Array.from(event.target.elements).filter(el => el.checked).map(el => {
-                return {
-                    id: el.value,
-                    name: el.name                
-                }
-            })
-            
-            // Update the userTemplateData store with the new muscle groups
-            userTemplateData.update(data => {
-                const updatedWorkouts = data.workouts.map(workout => {
-                    if (workout.wid === wid) {
-                        return {
-                            ...workout,
-                            muscles: checked
-                        }
-                    } else {
-                        return workout
-                    }
-                })
-                return {workouts: updatedWorkouts}
-            })
-            
+           updateWorkoutData(checked, 'muscles')             
         } else {
-            console.log('submitHandler for exercises')
+            checked.map(exercise => {
+                exercise.eid = nanoid(5);
+                exercise.muscle_id = muscle.id;
+                return exercise;
+            })
+            updateWorkoutData(checked, 'exercises')
         }
         toggle()
     }
@@ -98,9 +105,6 @@
 
     </div>
 </section>
-
-
-
 
 <style>
     .flyout-container {

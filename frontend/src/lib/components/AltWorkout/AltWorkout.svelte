@@ -39,11 +39,12 @@
     }
 
     const handleDeleteMuscle = (muscleID) => {
+        const updatedWorkoutExercises = $currentWorkout.exercises.filter(exercise => exercise.muscle_id !== muscleID)
         const updatedWorkoutMuscles = $currentWorkout.muscles.filter(muscle => muscle.id !== muscleID)
         userTemplateData.update(data => {
             const updatedWorkouts = data.workouts.map(workout => {
                 if (workout.wid === id) {
-                    return {...workout, muscles: updatedWorkoutMuscles}
+                    return {...workout, muscles: updatedWorkoutMuscles, exercises: updatedWorkoutExercises}
                 } else {
                     return workout
                 }
