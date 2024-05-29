@@ -20,7 +20,6 @@
     })
     
     filterTemplateData.subscribe(value => {
-        
         currentWorkout.set(value)
     })
 
@@ -38,21 +37,6 @@
         deleteWorkout(id)
     }
 
-    const handleDeleteMuscle = (muscleID) => {
-        const updatedWorkoutExercises = $currentWorkout.exercises.filter(exercise => exercise.muscle_id !== muscleID)
-        const updatedWorkoutMuscles = $currentWorkout.muscles.filter(muscle => muscle.id !== muscleID)
-        userTemplateData.update(data => {
-            const updatedWorkouts = data.workouts.map(workout => {
-                if (workout.wid === id) {
-                    return {...workout, muscles: updatedWorkoutMuscles, exercises: updatedWorkoutExercises}
-                } else {
-                    return workout
-                }
-            })
-            return {workouts: updatedWorkouts}
-        })
-    }
-
     const props = {
         toggle: toggleFlyout,
     }
@@ -68,7 +52,7 @@
     <p>{id}</p>
 
     {#each $currentWorkout.muscles as muscle}
-        <MuscleExercise {muscle} deleteHandler={handleDeleteMuscle} {id}/>
+        <MuscleExercise {muscle} {id}/>
     {/each}
 
         <button type="button" on:click={() => toggleFlyout('muscle')}>Add Muscle Group</button>

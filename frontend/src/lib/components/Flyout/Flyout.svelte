@@ -22,7 +22,7 @@
     // Manage preselected muscles
     // If users want to change their muscle groups for a workout,
     // they can reopen the flyout and see the selected muscles immediately
-    // A derivative of the userTemplateData store is used to filter the workout
+    // A derivative of the userTemplateData store is used to filter the current workout
     // and to set the preselectedMuscles value
     let preselectedMuscles = null
     let preselectedExercises = null
@@ -35,12 +35,11 @@
 
     // Subscribe to the derived store and set the preselectedMuscles value
     filterWorkoutStore.subscribe(value => {
-        
         if (value === undefined) return
         if (signal === 'muscle') {
             preselectedMuscles = value.muscles
         } else {
-            preselectedExercises = value.exercises
+            preselectedExercises = value.exercises.filter(exercise => exercise.muscle_id === muscle.id)
         }
     })
 
@@ -74,13 +73,15 @@
         if (signal === 'muscle') {
            updateWorkoutData(checked, 'muscles')             
         } else {
-            checked.map(exercise => {
-                exercise.eid = nanoid(5);
-                exercise.muscle_id = muscle.id;
-                return exercise;
-            })
-            updateWorkoutData(checked, 'exercises')
+                checked.map(exercise => {
+                    exercise.eid = nanoid(5)
+                    exercise.muscle_id = muscle.id
+                })
+                            
+             const updatedExercises = [...$filterWorkoutStore.exercises.filter(exercise => exercise.muscle_id !== muscle.id), ...checked]
+             updateWorkoutData(updatedExercises, 'exercises')
         }
+    
         toggle()
     }
 </script>

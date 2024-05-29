@@ -3,13 +3,13 @@
 	import { userTemplateData } from "$lib/stores";
 
     import Flyout from "../Flyout/Flyout.svelte";
+    import Exercise from "../Exercise/Exercise.svelte";
     import { derived } from "svelte/store";
 
     export let id
     export let muscle;
-    export let deleteHandler
 
-    const templateData = derived(userTemplateData, ($userTemplateData) => {
+    const workoutData = derived(userTemplateData, ($userTemplateData) => {
         return $userTemplateData.workouts.find(workout => workout.wid === id)
     })
 
@@ -24,6 +24,21 @@
         showFlyout = !showFlyout
     }
 
+    const handleDeleteMuscle = () => {
+        const updatedWorkoutExercises = $workoutData.exercises.filter(exercise => exercise.muscle_id !== muscle.id)
+        const updatedWorkoutMuscles = $workoutData.muscles.filter(item => item.id !== muscle.id)
+        userTemplateData.update(data => {
+            const updatedWorkouts = data.workouts.map(workout => {
+                if (workout.wid === id) {
+                    return {...workout, muscles: updatedWorkoutMuscles, exercises: updatedWorkoutExercises}
+                } else {
+                    return workout
+                }
+            })
+            return {workouts: updatedWorkouts}
+        })
+    }
+
     const props = {
         toggle: toggleFlyout,
     }
@@ -33,12 +48,12 @@
 <section class="card">
     <div>
         <span>{muscle.name}</span>
-        <button type="button" on:click={deleteHandler(muscle.id)}>X</button>
+        <button type="button" on:click={handleDeleteMuscle}>X</button>
     </div>
-    {#if $templateData.exercises}
-        {#each $templateData.exercises as exercise}
+    {#if $workoutData.exercises}
+        {#each $workoutData.exercises as exercise}
             {#if exercise.muscle_id === muscle.id}
-                <span>{exercise.name}</span>
+                <Exercise name={exercise.name} eid={exercise.eid} wid={id} {toggleFlyout}/>
             {/if}
         {/each}
     {/if}
