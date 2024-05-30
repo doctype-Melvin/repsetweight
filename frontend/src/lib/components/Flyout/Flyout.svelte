@@ -6,7 +6,6 @@
 	import { nanoid } from "nanoid";
     import { onMount } from "svelte";
     
-
     export let toggle
     export let signal
     export let wid
@@ -14,15 +13,12 @@
 
     // ---- scroll handling
     let flyoutRef
-    let scrollY = $scrollPosition
-
-    
+    let scrollY = $scrollPosition    
     
     onMount(() => {
         if (flyoutRef) {
             flyoutRef.style.top = scrollY + 'px'
         }
-        
     })
     
     

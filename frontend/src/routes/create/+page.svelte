@@ -5,8 +5,6 @@
     import { isWriteMode, scrollPosition } from '$lib/stores';
     import { beforeNavigate } from '$app/navigation';
     import { onMount } from 'svelte';
-    import { writable } from 'svelte/store';
-    import { setContext } from 'svelte';
 
     isWriteMode.set(!$isWriteMode)
     beforeNavigate(() => isWriteMode.set(!$isWriteMode))
