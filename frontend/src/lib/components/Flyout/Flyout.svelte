@@ -112,7 +112,7 @@
             <button type="button" on:click={() => toggle()}>X</button>
         </div>
         <!-- Form for muscle groups -->
-        <div class="flyout-content">
+        <div class="flyout-form">
             {#if signal === 'muscle'}
             <Form selectionData={muscleData} preselectedData={preselectedMuscles} submitHandler={submitHandler} />
             {:else}
@@ -137,13 +137,15 @@
         align-items: center;
         overflow-y: auto;
         backdrop-filter: blur(2px);
+        animation-name: fadeIn;
+        animation-duration: 0.5s;
     }
 
     .flyout {
-        background-color: #fff;
-        padding: 2rem;
-        border-radius: 5px;
+        background-color: #929488;
+        padding: 1rem;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
     }
 
     .flyout-header {
@@ -152,7 +154,18 @@
         align-items: center;
     }
 
-    .flyout-content {
-        margin-top: 1rem;
+    .flyout-form {
+        margin-top: 0rem;        
     }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    
 </style>
