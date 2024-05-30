@@ -13,7 +13,14 @@
 
     // ---- scroll handling
     let flyoutRef
-    let scrollY = $scrollPosition    
+    let scrollY 
+
+    scrollPosition.subscribe(value => {
+        scrollY = value    
+        if (flyoutRef) {
+            flyoutRef.style.top = scrollY + 'px'
+        }
+    })
     
     onMount(() => {
         if (flyoutRef) {
