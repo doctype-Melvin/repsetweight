@@ -9,12 +9,7 @@ const migrateExerciseMuscles = async (models, sequelize) => {
     for (const exercise of allExercises) {
       const muscles = exercise.target.split(",");
       for (const muscle of muscles) {
-        const formatMuscleString =
-          muscle.trim()[muscle.trim().length - 1] !== "s"
-            ? muscle.trim().split("")[0].toUpperCase() +
-              muscle.trim().slice(1) +
-              "s"
-            : muscle.trim().split("")[0].toUpperCase() + muscle.trim().slice(1);
+        const formatMuscleString = muscle.trim();
         const muscleGroup = await models.MuscleGroup.findOne({
           where: { name: formatMuscleString },
         });
