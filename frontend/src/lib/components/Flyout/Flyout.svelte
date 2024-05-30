@@ -1,14 +1,29 @@
 <script>
     // @ts-nocheck
-    import { muscleGroupsData, userTemplateData, exerciseMuscleData, exercisesData } from "$lib/stores";
+    import { muscleGroupsData, userTemplateData, exerciseMuscleData, exercisesData, scrollPosition } from "$lib/stores";
     import { derived } from "svelte/store";
     import Form from "./Form.svelte";
 	import { nanoid } from "nanoid";
+    import { onMount } from "svelte";
+    
 
     export let toggle
     export let signal
     export let wid
     export let muscle
+
+    // ---- scroll handling
+    let flyoutRef
+    let scrollY = $scrollPosition
+
+    
+    
+    onMount(() => {
+        if (flyoutRef) {
+            flyoutRef.style.top = scrollY + 'px'
+        }
+        
+    })
     
     
     // Sort muscle groups/exercises alphabetically
@@ -87,7 +102,7 @@
 </script>
 
 
-<section class="flyout-container">
+<section class="flyout-container" bind:this={flyoutRef}>
     <div class="flyout">
         <div class="flyout-header">
             <h2>Select {signal}s</h2>
@@ -117,6 +132,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        overflow-y: auto;
+        backdrop-filter: blur(2px);
     }
 
     .flyout {

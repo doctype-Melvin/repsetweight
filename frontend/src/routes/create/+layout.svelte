@@ -20,22 +20,23 @@
 
 </script>
 
-<section>
-    <p style="text-align: center;">Compose your own template</p>
-    <button type="button" on:click={toggleFlyin}>Save</button>
-</section>
-<!-- Section below will become component -->
-<section class="fly{isFlyinVisible ? 'in' : 'out'}">
-    <button class="close-button" type="button" on:click={toggleFlyin}>Close</button>
-    <form on:submit={toggleFlyin}>
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" placeholder="Name your workout" />
-        <label for="description">Description</label>
-        <textarea id="description" name="description" placeholder="Describe your workout"></textarea>
-        <button type="submit">Create</button>
-    </form>
-</section>
-<slot />
+    <section>
+        <p style="text-align: center;">Compose your own template</p>
+        <button type="button" on:click={toggleFlyin}>Save</button>
+    </section>
+    <!-- Section below will become component -->
+    <section class="fly{isFlyinVisible ? 'in' : 'out'}">
+        <button class="close-button" type="button" on:click={toggleFlyin}>Close</button>
+        <form on:submit={toggleFlyin}>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Name your workout" />
+            <label for="description">Description</label>
+            <textarea id="description" name="description" placeholder="Describe your workout"></textarea>
+            <button type="submit">Create</button>
+        </form>
+    </section>
+    <slot />
+
 
 <style>
     section {
