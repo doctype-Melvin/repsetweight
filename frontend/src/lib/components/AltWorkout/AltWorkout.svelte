@@ -4,7 +4,7 @@
     import MuscleExercise from '../MuscleExercise/MuscleExercise.svelte';
     import { userTemplateData } from '$lib/stores.js';
     import { derived, writable } from 'svelte/store';
-
+    import { draggable, dropzone } from '$lib/dragAndDrop';
 
     export let deleteWorkout
     export let copyWorkout
@@ -43,17 +43,21 @@
     
 </script>
 
-<section class="workout-container">
+<section class="workout-container" >
     {#if $currentWorkout}
     <div class="buttons">
         <button type="button" on:click={copyWorkout(id)}>Copy Workout</button>
         <button type="button" on:click={handleDeleteWorkout(id)}>X</button>
     </div>
     <p>{id}</p>
-
+<!-- Drag n Drop -->
+<ul class="dropzone" use:dropzone>
     {#each $currentWorkout.muscles as muscle}
+    <li use:draggable={muscle.id}>
         <MuscleExercise {muscle} {id}/>
+    </li>
     {/each}
+</ul>
 
         <button type="button" on:click={() => toggleFlyout('muscle')}>Add Muscle Group</button>
             {#if showFlyout}
@@ -64,7 +68,7 @@
 
 <style>
     .workout-container {
-        background-color: #cacaca;
+        
         padding: .25rem;
         margin: .25rem;
         display: flex;
@@ -75,5 +79,18 @@
     .buttons {
         display: flex;
         justify-content: flex-end;
-    }   
+    } 
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+    .dropzone:global(.droppable) {
+        outline: black dashed 2px;
+    }
+    .dropzone:global(.droppable > *) {
+        pointer-events: none;
+    }
+    
 </style>

@@ -5,6 +5,7 @@
     import Collapsible from '$lib/components/Collapsible/Collapsible.svelte';
     import { userTemplateData, isWriteMode } from '$lib/stores';
     import { onMount } from 'svelte';  
+    import { dropzone } from '$lib/dragAndDrop';
 
     let userWorkout = {
         name: '',
@@ -67,11 +68,15 @@
 
 <section class="composer-container">
 {#if $userTemplateData}
+<ul>
     {#each $userTemplateData.workouts as workout, index (workout.wid)}
-    <Collapsible header={workout.name ? workout.name : `Workout ${index += 1}`} isOpen={true} id={workout.wid}>
-        <AltWorkout deleteWorkout={removeWorkoutHandler} copyWorkout={copyWorkoutHandler} id={workout.wid}/>
-    </Collapsible>
+    <li>
+        <Collapsible header={workout.name ? workout.name : `Workout ${index += 1}`} isOpen={true} id={workout.wid}>
+            <AltWorkout deleteWorkout={removeWorkoutHandler} copyWorkout={copyWorkoutHandler} id={workout.wid}/>
+        </Collapsible>
+    </li>
     {/each}
+</ul>
     {:else}
     <p>Loading workouts ....</p>
     {/if}
@@ -87,6 +92,13 @@
         justify-content: center;
         gap: 1rem;
     }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+   
 </style>
     
 

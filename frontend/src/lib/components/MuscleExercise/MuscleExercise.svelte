@@ -50,6 +50,7 @@
         <span class="card-name">{muscle.name}</span>
         <button type="button" on:click={handleDeleteMuscle}>X</button>
     </div>
+    <!-- Drag n drop -->
     <div class="exercises-container">
         {#if $workoutData.exercises}
         {#each $workoutData.exercises as exercise}
@@ -70,6 +71,7 @@
         display: grid;
         gap: 1rem;
         margin-bottom: .5rem;
+        background-color: beige;
     }
 
     .card-header {
