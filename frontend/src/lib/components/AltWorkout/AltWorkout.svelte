@@ -40,7 +40,7 @@
     const props = {
         toggle: toggleFlyout,
     }
-    
+    // console.log($currentWorkout)
 </script>
 
 <section class="workout-container" >
@@ -51,9 +51,13 @@
     </div>
     <p>{id}</p>
 <!-- Drag n Drop -->
-<ul class="dropzone" use:dropzone>
-    {#each $currentWorkout.muscles as muscle}
-    <li use:draggable={muscle.id}>
+<ul class="dropzone" use:dropzone={{
+    onDropzone(startIndex, endIndex){
+        console.log('Put', startIndex, 'where', endIndex)
+    }
+    }}>
+    {#each $currentWorkout.muscles as muscle, index}
+    <li class="draggable" data-index={index} use:draggable={{id: muscle.id, index}}>
         <MuscleExercise {muscle} {id}/>
     </li>
     {/each}

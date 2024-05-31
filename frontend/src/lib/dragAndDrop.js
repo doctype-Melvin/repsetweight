@@ -7,14 +7,11 @@ export function draggable(node, data) {
 	node.style.cursor = 'grab';
 
 	function handleDragStart(event) {
-		event.dataTransfer.setData('text/plain', state);
-		node.style.opacity = '0.6';
-		node.parentNode.classList.add('droppable');
+		event.dataTransfer.setData('text/plain', JSON.stringify(state));
+		console.log('Drag Start', event.target);
 	}
 
 	node.addEventListener('dragstart', handleDragStart);
-
-	console.log(node, state);
 
 	return {
 		update(data) {
@@ -33,14 +30,33 @@ export function dropzone(node, options) {
 		...options
 	};
 
-	function handleDragEnter(event) {
-		event.target.classList.add(state.dragoverClass);
+	function handleDragover(event) {
+		event.preventDefault();
+		event.dataTransfer.dropEffect = state.dropEffect;
 	}
 
-	function handleDragLeave(event) {
-		event.target.classList.remove(state.dragoverClass);
+	function handleDrop(event) {
+		const data = JSON.parse(event.dataTransfer.getData('text/plain'));
+		const target = event.target.closest('li');
+
+		if (target) {
+			state.onDropzone(data.index, Number(target.dataset.index));
+		}
 	}
 
-	node.addEventListener('dragenter', handleDragEnter);
-	node.addEventListener('dragleave', handleDragLeave);
+	node.addEventListener('dragover', handleDragover);
+	node.addEventListener('drop', handleDrop);
+
+	return {
+		update(options) {
+			state = {
+				...state,
+				...options
+			};
+		},
+		destroy() {
+			node.removeEventListener('dragover', handleDragover);
+			node.removeEventListener('drop', handleDrop);
+		}
+	};
 }
