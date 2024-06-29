@@ -40,7 +40,7 @@
     const props = {
         toggle: toggleFlyout,
     }
-    // console.log($currentWorkout)
+    
 </script>
 
 <section class="workout-container" >
@@ -50,6 +50,7 @@
         <button type="button" on:click={handleDeleteWorkout(id)}>X</button>
     </div>
     <p>{id}</p>
+    
 <!-- Drag n Drop -->
 <ul class="dropzone" use:dropzone={{
     onDropzone(startIndex, endIndex){
