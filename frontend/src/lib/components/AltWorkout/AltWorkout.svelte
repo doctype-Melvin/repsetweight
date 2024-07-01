@@ -54,7 +54,23 @@
 <!-- Drag n Drop -->
 <ul class="dropzone" use:dropzone={{
     onDropzone(startIndex, endIndex){
-        console.log('Put', startIndex, 'where', endIndex)
+        const newOrder = [...$currentWorkout.muscles]
+        
+        // When dragging and dropping a muscle group,
+        // swap the dragged item's index with the item that's 
+        // being dropped on
+        const temp = newOrder[startIndex]
+        newOrder[startIndex] = newOrder[endIndex]
+        newOrder[endIndex] = temp
+
+        currentWorkout.update(data => {
+            return {...data, muscles: newOrder}
+        })
+
+        userTemplateData.update(data => {
+            return {workouts: data.workouts.map(workout => workout.wid === id ? $currentWorkout : workout) }
+        })
+
     }
     }}>
     {#each $currentWorkout.muscles as muscle, index}

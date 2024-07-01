@@ -13,8 +13,8 @@
         wid: nanoid(7),
         exercises: [],
         muscles: []
-    }   
-
+    }
+   
     onMount(() => {
         const storage = localStorage.getItem('userTemplate')
         
@@ -24,6 +24,9 @@
             userTemplateData.set({workouts: [userWorkout]})
         }
         
+        // Save the userTemplateData to localStorage
+        // Reflects all changes made to the userTemplateData store
+        // in the localStorage
         userTemplateData.subscribe(value => {
             localStorage.setItem('userTemplate', JSON.stringify(value))
         })

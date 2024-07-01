@@ -8,7 +8,6 @@ export function draggable(node, data) {
 
 	function handleDragStart(event) {
 		event.dataTransfer.setData('text/plain', JSON.stringify(state));
-		console.log('Drag Start', event.target);
 	}
 
 	node.addEventListener('dragstart', handleDragStart);
