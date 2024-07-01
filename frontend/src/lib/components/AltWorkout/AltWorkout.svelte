@@ -1,7 +1,7 @@
 <script>
     // @ts-nocheck
     import Flyout from '../Flyout/Flyout.svelte';
-    import MuscleExercise from '../MuscleExercise/MuscleExercise.svelte';
+    import MuscleCard from '../MuscleCard/MuscleCard.svelte';
     import { userTemplateData } from '$lib/stores.js';
     import { derived, writable } from 'svelte/store';
     import { draggable, dropzone } from '$lib/dragAndDrop';
@@ -75,7 +75,7 @@
     }}>
     {#each $currentWorkout.muscles as muscle, index}
     <li class="draggable" data-index={index} use:draggable={{id: muscle.id, index}}>
-        <MuscleExercise {muscle} {id}/>
+        <MuscleCard {muscle} {id}/>
     </li>
     {/each}
 </ul>

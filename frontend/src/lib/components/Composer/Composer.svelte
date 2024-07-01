@@ -1,7 +1,7 @@
 <script>
     // @ts-nocheck
     import { nanoid } from 'nanoid';
-    import AltWorkout from '$lib/components/AltWorkout/AltWorkout.svelte';
+    import Workout from '$lib/components/Workout/Workout.svelte';
     import Collapsible from '$lib/components/Collapsible/Collapsible.svelte';
     import { userTemplateData, isWriteMode } from '$lib/stores';
     import { onMount } from 'svelte';  
@@ -73,7 +73,7 @@
 {#if $userTemplateData}
     {#each $userTemplateData.workouts as workout, index (workout.wid)}
         <Collapsible header={workout.name ? workout.name : `Workout ${index += 1}`} isOpen={true} id={workout.wid}>
-            <AltWorkout deleteWorkout={removeWorkoutHandler} copyWorkout={copyWorkoutHandler} id={workout.wid}/>
+            <Workout deleteWorkout={removeWorkoutHandler} copyWorkout={copyWorkoutHandler} id={workout.wid}/>
         </Collapsible>
     {/each}
     {:else}
