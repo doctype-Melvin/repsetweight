@@ -51,15 +51,13 @@
         return $userTemplateData.workouts.find(workout => workout.wid === wid)
     })
 
-    // Subscribe to the derived store and set the preselectedMuscles value
+    // Subscribe to the derived store and set the preselected data value
     filterWorkoutStore.subscribe(value => {
         if (value === undefined) return
         if (signal === 'muscle') {
             preselectedMuscles = value.muscles
         } else {
-            return
-            // console.log('Show preselected exercises', muscle.name)
-            // preselectedExercises = value.muscles.filter(entry => entry.id === muscle.id)
+            preselectedExercises = value.muscles.filter(entry => entry.id === muscle.id)[0].exercises
         }
     })
 
