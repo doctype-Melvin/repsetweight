@@ -89,6 +89,8 @@
         })
 
         if (signal === 'muscle') {
+            // Map over checked muscle groups
+            // and add an empty exercise array to each
            updateWorkoutData(checked, 'muscles')             
         } else {
                 checked.map(exercise => {

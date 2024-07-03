@@ -1,4 +1,6 @@
 <script>
+	import { goto } from '$app/navigation';
+
     // @ts-nocheck
     import { muscleGroupsData, exerciseMuscleData } from '$lib/stores.js';
     export let data
@@ -16,13 +18,21 @@
         isFlyinVisible = !isFlyinVisible
     }
 
+    function cancelCreate() {
+        localStorage.clear()
+        goto('/')
+    }
+
     
 
 </script>
 
     <section>
         <p style="text-align: center;">Compose your own template</p>
-        <button type="button" on:click={toggleFlyin}>Save</button>
+        <div class="button-controls">
+            <button type="button" on:click={toggleFlyin}>Save</button>
+            <button type="button" class="button-cancel" on:click={cancelCreate}>Cancel</button>
+        </div>
     </section>
     <!-- Section below will become component -->
     <section class="fly{isFlyinVisible ? 'in' : 'out'}">
@@ -39,6 +49,16 @@
 
 
 <style>
+    .button-controls {
+        display: flex;
+        gap: 2rem;
+    }
+
+    .button-cancel {
+        background: crimson;
+        color: #fff;
+    }
+
     section {
         display: flex;
         flex-direction: column;
