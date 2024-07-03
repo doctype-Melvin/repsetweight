@@ -5,7 +5,7 @@
     import Collapsible from '$lib/components/Collapsible/Collapsible.svelte';
     import { userTemplateData, isWriteMode } from '$lib/stores';
     import { onMount } from 'svelte';  
-    import { dropzone } from '$lib/dragAndDrop';
+    import { dropzone, draggable } from '$lib/dragAndDrop';
 
     let userWorkout = {
         name: '',
@@ -14,6 +14,10 @@
         exercises: [],
         muscles: []
     }
+
+    function numberWorkout (index){
+        return index += 1
+        }
    
     onMount(() => {
         const storage = localStorage.getItem('userTemplate')
@@ -71,11 +75,35 @@
 
 <section class="composer-container">
 {#if $userTemplateData}
+<ul class="dropzone" use:dropzone={{
+    onDropzone(startIndex, endIndex){
+        const newOrder = [...$userTemplateData.workouts]
+        
+        // When dragging and dropping a muscle group,
+        // swap the dragged item's index with the item that's 
+        // being dropped on
+        const temp = newOrder[startIndex]
+        newOrder[startIndex] = newOrder[endIndex]
+        newOrder[endIndex] = temp
+
+        console.log(newOrder)
+        console.log(startIndex, endIndex)
+
+        userTemplateData.update(data => {
+             return { workouts: newOrder }
+        })
+
+    }
+    }}>
+
     {#each $userTemplateData.workouts as workout, index (workout.wid)}
-        <Collapsible header={workout.name ? workout.name : `Workout ${index += 1}`} isOpen={true} id={workout.wid}>
+    <li class="draggable" data-index={index} use:draggable={{id: workout.id, index}}>
+        <Collapsible header={workout.name ? workout.name : `Workout ${ numberWorkout(index) }` } isOpen={true} id={workout.wid}>
             <Workout deleteWorkout={removeWorkoutHandler} copyWorkout={copyWorkoutHandler} id={workout.wid}/>
         </Collapsible>
+    </li>
     {/each}
+</ul>
     {:else}
     <p>Loading workouts ....</p>
     {/if}
@@ -90,6 +118,11 @@
         flex-direction: column;
         justify-content: center;
         gap: 1rem;
+    }
+
+    .dropzone {
+        padding: 0;
+        list-style: none;
     }
 
   
