@@ -73,11 +73,15 @@
 
     }
     }}>
+    {#if $currentWorkout.muscles.length > 0}
     {#each $currentWorkout.muscles as muscle, index}
     <li class="draggable" data-index={index} use:draggable={{id: muscle.id, index}}>
         <MuscleCard {muscle} {id}/>
     </li>
     {/each}
+    {:else}
+    <p>No muscle group selected</p>
+    {/if}
 </ul>
 
         <button type="button" on:click={() => toggleFlyout('muscle')}>Add Muscle Group</button>

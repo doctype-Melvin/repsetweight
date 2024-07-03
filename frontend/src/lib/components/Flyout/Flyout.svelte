@@ -27,7 +27,7 @@
             flyoutRef.style.top = scrollY + 'px'
         }
     })
-    
+
     
     // Sort muscle groups/exercises alphabetically
     // The component renders a list of checkboxes for each muscle group/exercise
