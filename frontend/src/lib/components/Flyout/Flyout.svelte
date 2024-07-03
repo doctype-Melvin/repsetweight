@@ -57,19 +57,38 @@
         if (signal === 'muscle') {
             preselectedMuscles = value.muscles
         } else {
-            console.log('Show preselected exercises')
-            // preselectedExercises = value.exercises.filter(exercise => exercise.muscle_id === muscle.id)
+            return
+            // console.log('Show preselected exercises', muscle.name)
+            // preselectedExercises = value.muscles.filter(entry => entry.id === muscle.id)
         }
     })
 
     const updateWorkoutData = (array, prop) => {
+        
+        // Update muscle groups for workout
+        // if user adds a new muscle group
+        // copy the previous muscle groups (if any) and add the new one
+        
+        const mergedArray = array.map(checkbox => {
+            if ($filterWorkoutStore.muscles.length > 0) {
+                const existingMuscle = $filterWorkoutStore.muscles.find(muscle => muscle.id === checkbox.id)
+                if (existingMuscle) {
+                    return existingMuscle
+                } else {
+                    return checkbox
+                }
+            } else {
+                return checkbox
+            }
+        })
+
         if (prop === 'muscles') {
             userTemplateData.update(data => {
                 const updatedWorkouts = data.workouts.map(workout => {
                     if (workout.wid === wid) {
                         return {
                             ...workout,
-                            [prop]: array
+                            [prop]: mergedArray
                         }
                     } else {
                         return workout

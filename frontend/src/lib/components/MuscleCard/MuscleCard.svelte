@@ -52,13 +52,15 @@
     </div>
     <!-- Drag n drop -->
     <div class="exercises-container">
-        {#if $workoutData.exercises}
-        {#each $workoutData.exercises as exercise}
-        {#if exercise.muscle_id === muscle.id}
+        <!-- {#if $workoutData.muscles.length > 0} -->
+        {#each $workoutData.muscles as group}
+        {#if group.id === muscle.id && group.exercises.length > 0}
+        {#each group.exercises as exercise}
         <Exercise name={exercise.name} eid={exercise.eid} wid={id} {toggleFlyout}/>
-        {/if}
         {/each}
         {/if}
+        {/each}
+        <!-- {/if} -->
     </div>
     <button type="button" on:click={() => toggleFlyout('exercise')}>Add Exercise</button>
     {#if showFlyout}
