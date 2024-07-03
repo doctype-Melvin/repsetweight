@@ -8,23 +8,32 @@
     export let wid
     export let toggleFlyout
 
-    let thisWorkoutExercises = null
-
     const thisWorkout = derived(userTemplateData, ($userTemplateData) => {
-        return $userTemplateData.workouts.find(workout => workout.wid === wid)
+    return $userTemplateData.workouts.find(workout => workout.wid === wid)
     })
 
-    thisWorkout.subscribe(value => {
-        if (value === undefined) return 
-        thisWorkoutExercises = value.exercises
-    })
+    
 
-    const handleDeleteExercise = () => {
-        const updatedWorkoutExercises = thisWorkoutExercises.filter(exercise => exercise.eid !== eid)
+    const handleDeleteExercise = (eid) => {
+        // Find the target muscle group by looking for 
+        // the exercise with the matching eid
+        const target = $thisWorkout.muscles.find(muscle => muscle.exercises.some(exercise => exercise.eid === eid))
+        
+        // Remove the exercise from the target muscle group exercises array
+        const updatedTargetExercises = target.exercises.filter(exercise => exercise.eid !== eid)
+    
         userTemplateData.update(data => {
             const updatedWorkouts = data.workouts.map(workout => {
                 if (workout.wid === wid) {
-                    return {...workout, exercises: updatedWorkoutExercises}
+                    return {
+                        ...workout,
+                        muscles: workout.muscles.map(muscle => {
+                            if (muscle.id === target.id) {
+                                return {...muscle, exercises: updatedTargetExercises}
+                            } else {
+                                return muscle
+                            }})
+                        }
                 } else {
                     return workout
                 }
@@ -37,7 +46,7 @@
 <section class="card">
     <div class="card-content">
         <span on:click={toggleFlyout('exercise')}>{name}</span>
-        <button type="button" on:click={handleDeleteExercise}>X</button>
+        <button type="button" on:click={() => handleDeleteExercise(eid)}>X</button>
     </div>
 </section>
 
