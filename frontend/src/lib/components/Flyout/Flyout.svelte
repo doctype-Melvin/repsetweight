@@ -57,7 +57,14 @@
         if (signal === 'muscle') {
             preselectedMuscles = value.muscles
         } else {
-            preselectedExercises = value.muscles.filter(entry => entry.id === muscle.id)[0].exercises ?? null
+            // preselectedExercises = value.muscles.filter(entry => entry.id === muscle.id)?.[0].exercises
+            let result = value.muscles.filter(entry => entry.id === muscle.id)
+            if (result.length > 0) {
+                preselectedExercises = result[0].exercises
+            } else {
+                preselectedExercises = null
+            }
+
         }
     })
 
