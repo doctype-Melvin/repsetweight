@@ -57,7 +57,7 @@
         if (signal === 'muscle') {
             preselectedMuscles = value.muscles
         } else {
-            preselectedExercises = value.muscles.filter(entry => entry.id === muscle.id)[0].exercises
+            preselectedExercises = value.muscles.filter(entry => entry.id === muscle.id)[0].exercises ?? null
         }
     })
 
