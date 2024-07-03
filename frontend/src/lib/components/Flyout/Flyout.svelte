@@ -57,24 +57,56 @@
         if (signal === 'muscle') {
             preselectedMuscles = value.muscles
         } else {
-            preselectedExercises = value.exercises.filter(exercise => exercise.muscle_id === muscle.id)
+            console.log('Show preselected exercises')
+            // preselectedExercises = value.exercises.filter(exercise => exercise.muscle_id === muscle.id)
         }
     })
 
     const updateWorkoutData = (array, prop) => {
-        userTemplateData.update(data => {
-            const updatedWorkouts = data.workouts.map(workout => {
-                if (workout.wid === wid) {
+        if (prop === 'muscles') {
+            userTemplateData.update(data => {
+                const updatedWorkouts = data.workouts.map(workout => {
+                    if (workout.wid === wid) {
+                        return {
+                            ...workout,
+                            [prop]: array
+                        }
+                    } else {
+                        return workout
+                    }
+                })
+                return {workouts: updatedWorkouts}
+            })
+        } else {
+            // Update exercises for muscle group
+            // returns array of muscles with
+            // updated exercises
+            let updatedMuscles = $filterWorkoutStore.muscles.map(entry => {
+                if (entry.id === muscle.id) {
                     return {
-                        ...workout,
-                        [prop]: array
+                        ...entry,
+                        exercises: array
                     }
                 } else {
-                    return workout
+                    return entry
                 }
             })
-            return {workouts: updatedWorkouts}
-        })
+
+            // Update the userTemplateData store
+            userTemplateData.update(data => {
+                const updatedWorkouts = data.workouts.map(workout => {
+                    if (workout.wid === wid){
+                        return {
+                            ...workout,
+                            muscles: [...updatedMuscles]
+                        }
+                    } else {
+                        return workout
+                    }
+                })
+                return {workouts: updatedWorkouts}
+            })
+        }
         }
     
  
@@ -91,6 +123,9 @@
         if (signal === 'muscle') {
             // Map over checked muscle groups
             // and add an empty exercise array to each
+            checked.map(muscle => {
+                muscle.exercises = []
+            })
            updateWorkoutData(checked, 'muscles')             
         } else {
                 checked.map(exercise => {
@@ -98,8 +133,7 @@
                     exercise.muscle_id = muscle.id
                 })
                             
-             const updatedExercises = [...$filterWorkoutStore.exercises.filter(exercise => exercise.muscle_id !== muscle.id), ...checked]
-             updateWorkoutData(updatedExercises, 'exercises')
+             updateWorkoutData(checked, 'exercises')
         }
     
         toggle()
