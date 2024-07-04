@@ -31,6 +31,10 @@
         // Save the userTemplateData to localStorage
         // Reflects all changes made to the userTemplateData store
         // in the localStorage
+        // userTemplateData.subscribe(value => {
+        //     localStorage.setItem('userTemplate', JSON.stringify(value))
+        // })
+        
         const unsubscribe = userTemplateData.subscribe(value => {
             localStorage.setItem('userTemplate', JSON.stringify(value))
         })

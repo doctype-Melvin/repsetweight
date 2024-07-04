@@ -61,7 +61,7 @@
         <p>No exercises added yet</p>
         {:else}
         <!-- {#each group.exercises as exercise} -->
-        <Table columns={columns} rowData={group.exercises} type={"exercise"}/>
+        <Table columns={columns} rowData={group.exercises} type={"exercise"} workoutID={$workoutData.wid}/>
         <!-- <Exercise name={exercise.name} eid={exercise.eid} wid={id} {toggleFlyout}/>  -->
         <!-- {/each} -->
         {/if}
