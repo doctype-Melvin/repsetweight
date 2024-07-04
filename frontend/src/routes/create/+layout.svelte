@@ -1,8 +1,9 @@
 <script>
-	import { goto } from '$app/navigation';
-
     // @ts-nocheck
-    import { muscleGroupsData, exerciseMuscleData } from '$lib/stores.js';
+
+	import { goto } from '$app/navigation';
+    import { muscleGroupsData, exerciseMuscleData, collapseWorkouts } from '$lib/stores.js';
+    import { getContext } from 'svelte';
     export let data
 
     let { muscleGroups } = data;
@@ -24,29 +25,34 @@
     }
 
     
+    function collapseAllWorkouts() {
+        collapseWorkouts.set(true)
+    }
+
+    
 
 </script>
 
-    <section>
-        <p style="text-align: center;">Compose your own template</p>
-        <div class="button-controls">
-            <button type="button" on:click={toggleFlyin}>Save</button>
-            <button type="button" class="button-cancel" on:click={cancelCreate}>Cancel</button>
-        </div>
-    </section>
-    <!-- Section below will become component -->
-    <section class="fly{isFlyinVisible ? 'in' : 'out'}">
-        <button class="close-button" type="button" on:click={toggleFlyin}>Close</button>
-        <form on:submit={toggleFlyin}>
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" placeholder="Name your workout" />
-            <label for="description">Description</label>
-            <textarea id="description" name="description" placeholder="Describe your workout"></textarea>
-            <button type="submit">Create</button>
-        </form>
-    </section>
-    <slot />
-
+        <section>
+            <p style="text-align: center;">Compose your own template</p>
+            <div class="button-controls">
+                <button type="button" on:click={collapseAllWorkouts}>Collapse All</button>
+                <button type="button" on:click={toggleFlyin}>Save</button>
+                <button type="button" class="button-cancel" on:click={cancelCreate}>Cancel</button>
+            </div>
+        </section>
+        <!-- Section below will become component -->
+        <section class="fly{isFlyinVisible ? 'in' : 'out'}">
+            <button class="close-button" type="button" on:click={toggleFlyin}>Close</button>
+            <form on:submit={toggleFlyin}>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Name your workout" />
+                <label for="description">Description</label>
+                <textarea id="description" name="description" placeholder="Describe your workout"></textarea>
+                <button type="submit">Create</button>
+            </form>
+        </section>
+        <slot />
 
 <style>
     .button-controls {

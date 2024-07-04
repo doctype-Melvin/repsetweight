@@ -2,12 +2,23 @@
     // @ts-nocheck
     import Icon from '@iconify/svelte';
     import InputContent from '../InputContent/InputContent.svelte';
-    import { userTemplateData, isWriteMode } from '$lib/stores';
+    import { userTemplateData, isWriteMode, collapseWorkouts } from '$lib/stores';
+    import { onMount } from 'svelte';
 
     export let header
     export let isOpen = undefined
     export let id = undefined
 
+    onMount( () => {
+        const unsubscribe = collapseWorkouts.subscribe(value => {
+            if (value) {
+                expanded = false
+                collapseWorkouts.set(false)
+            }
+        })
+        return unsubscribe
+    })
+    
     $: expanded = isOpen;
 
     function toggle() {
@@ -22,6 +33,7 @@
         })
     }
 
+
 </script>
 
 <div class="collapsible">
@@ -30,7 +42,7 @@
     {:else}
     <h3>{header}</h3>
     {/if}
-    <button type="button" on:click={() => toggle()}>
+    <button class="button-collapse" type="button" on:click={() => toggle()}>
         <Icon icon="mdi:menu-swap" style="cursor: pointer;" />
     </button>
     

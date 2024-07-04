@@ -31,9 +31,11 @@
         // Save the userTemplateData to localStorage
         // Reflects all changes made to the userTemplateData store
         // in the localStorage
-        userTemplateData.subscribe(value => {
+        const unsubscribe = userTemplateData.subscribe(value => {
             localStorage.setItem('userTemplate', JSON.stringify(value))
         })
+
+        return unsubscribe
     })
     
     // Handler functions for adding and removing workouts
@@ -77,18 +79,16 @@
 {#if $userTemplateData}
 <ul class="dropzone" use:dropzone={{
     onDropzone(startIndex, endIndex){
-        const newOrder = [...$userTemplateData.workouts]
+        let newOrder;
+        if (!newOrder) {
+            newOrder = [...$userTemplateData.workouts]
+        }
         
-        // When dragging and dropping a muscle group,
-        // swap the dragged item's index with the item that's 
-        // being dropped on
-        const temp = newOrder[startIndex]
-        newOrder[startIndex] = newOrder[endIndex]
-        newOrder[endIndex] = temp
-
-        console.log(newOrder)
-        console.log(startIndex, endIndex)
-
+        // Reorder workouts based on the start and end index
+        // startIndex = dragged item
+        // endIndex = item being dropped on
+        
+        [newOrder[startIndex], newOrder[endIndex]] = [newOrder[endIndex], newOrder[startIndex]];
         userTemplateData.update(data => {
              return { workouts: newOrder }
         })
