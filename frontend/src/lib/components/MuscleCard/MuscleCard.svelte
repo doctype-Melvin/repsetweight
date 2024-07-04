@@ -60,10 +60,10 @@
         {#if group.exercises.length === 0}
         <p>No exercises added yet</p>
         {:else}
-        {#each group.exercises as exercise}
-        <!-- <Table columns={columns} rowData={group.exercises}/> -->
-        <Exercise name={exercise.name} eid={exercise.eid} wid={id} {toggleFlyout}/> 
-        {/each}
+        <!-- {#each group.exercises as exercise} -->
+        <Table columns={columns} rowData={group.exercises} type={"exercise"}/>
+        <!-- <Exercise name={exercise.name} eid={exercise.eid} wid={id} {toggleFlyout}/>  -->
+        <!-- {/each} -->
         {/if}
         {/if}
         {/each}

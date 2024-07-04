@@ -49,9 +49,9 @@
 <section class="card">
     <div class="card-content">
         <span on:click={toggleFlyout('exercise')}>{name}</span>
+        <!-- <InputContent content={1}/>
         <InputContent content={1}/>
-        <InputContent content={1}/>
-        <InputContent content={0}/>
+        <InputContent content={0}/> -->
          <!-- <Table columns={columns} /> -->
         <button type="button" on:click={() => handleDeleteExercise(eid)}>X</button>
     </div>

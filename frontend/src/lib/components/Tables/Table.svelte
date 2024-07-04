@@ -6,6 +6,7 @@
     export let columns
     // export let handlerFunctions
     export let rowData
+    export let type
 </script>
 
 <section>
@@ -18,10 +19,11 @@
             </tr>
         </thead>
         <tbody>
+            <!-- Table to render exercises -->
+            {#if type === 'exercise'}
             {#each rowData as row}
                 <tr>
                     <td>{row.name}</td>
-                    {#if row.eid}
                     <td>
                         <Select optionsCount={20} />
                     </td>
@@ -31,10 +33,9 @@
                     <td>
                         <input type="number" min="0" max="1000" />
                     </td>
-                    {/if}
                 </tr>
             {/each}
-            
+            {/if}
         </tbody>
     </table>
 </section>
