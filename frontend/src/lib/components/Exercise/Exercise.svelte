@@ -2,11 +2,14 @@
     // @ts-nocheck
     import { userTemplateData } from "$lib/stores";
     import { derived } from "svelte/store";
+    import Table from "../Tables/Table.svelte";
+    import InputContent from "../InputContent/InputContent.svelte";
 
     export let name
     export let eid
     export let wid
     export let toggleFlyout
+
 
     const thisWorkout = derived(userTemplateData, ($userTemplateData) => {
     return $userTemplateData.workouts.find(workout => workout.wid === wid)
@@ -46,6 +49,10 @@
 <section class="card">
     <div class="card-content">
         <span on:click={toggleFlyout('exercise')}>{name}</span>
+        <InputContent content={1}/>
+        <InputContent content={1}/>
+        <InputContent content={0}/>
+         <!-- <Table columns={columns} /> -->
         <button type="button" on:click={() => handleDeleteExercise(eid)}>X</button>
     </div>
 </section>

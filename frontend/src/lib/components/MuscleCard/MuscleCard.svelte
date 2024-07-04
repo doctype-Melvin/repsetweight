@@ -4,6 +4,7 @@
 
     import Flyout from "../Flyout/Flyout.svelte";
     import Exercise from "../Exercise/Exercise.svelte";
+    import Table from "../Tables/Table.svelte";
     import { derived } from "svelte/store";
 
     export let id
@@ -41,6 +42,9 @@
     const props = {
         toggle: toggleFlyout,
     }
+
+    const columns = ['Name', 'Sets', 'Reps', 'Weight']
+
     
 </script>
 
@@ -57,7 +61,8 @@
         <p>No exercises added yet</p>
         {:else}
         {#each group.exercises as exercise}
-        <Exercise name={exercise.name} eid={exercise.eid} wid={id} {toggleFlyout}/>
+        <!-- <Table columns={columns} rowData={group.exercises}/> -->
+        <Exercise name={exercise.name} eid={exercise.eid} wid={id} {toggleFlyout}/> 
         {/each}
         {/if}
         {/if}

@@ -30,7 +30,7 @@
         
         // Save the userTemplateData to localStorage
         // Reflects all changes made to the userTemplateData store
-        // in the localStorage
+        // in localStorage
         userTemplateData.subscribe(value => {
             localStorage.setItem('userTemplate', JSON.stringify(value))
         })
@@ -80,8 +80,8 @@
         const newOrder = [...$userTemplateData.workouts]
         
         // When dragging and dropping a muscle group,
-        // swap the dragged item's index with the item that's 
-        // being dropped on
+        // swap the dragged item's index 
+        // with the drop target item's index
         const temp = newOrder[startIndex]
         newOrder[startIndex] = newOrder[endIndex]
         newOrder[endIndex] = temp
