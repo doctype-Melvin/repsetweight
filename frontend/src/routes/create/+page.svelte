@@ -20,7 +20,8 @@
     
 </script>
 
-<Composer />
+
+    <Composer />
 
     
 

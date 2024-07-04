@@ -5,9 +5,10 @@ export function draggable(node, data) {
 
 	node.draggable = true;
 	node.style.cursor = 'grab';
-
+	
 	function handleDragStart(event) {
 		event.dataTransfer.setData('text/plain', JSON.stringify(state));
+		event.stopPropagation();
 	}
 
 	node.addEventListener('dragstart', handleDragStart);
@@ -35,6 +36,7 @@ export function dropzone(node, options) {
 	}
 
 	function handleDrop(event) {
+		event.stopPropagation();
 		const data = JSON.parse(event.dataTransfer.getData('text/plain'));
 		const target = event.target.closest('li');
 
