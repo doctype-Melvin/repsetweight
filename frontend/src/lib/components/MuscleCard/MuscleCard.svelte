@@ -60,10 +60,17 @@
         {#if group.exercises.length === 0}
         <p>No exercises added yet</p>
         {:else}
-        <!-- {#each group.exercises as exercise} -->
-        <Table columns={columns} rowData={group.exercises} type={"exercise"} workoutID={$workoutData.wid}/>
-        <!-- <Exercise name={exercise.name} eid={exercise.eid} wid={id} {toggleFlyout}/>  -->
-        <!-- {/each} -->
+        
+        <span class="column-name">Lift</span>
+        <span class="column-name">Sets</span>
+        <span class="column-name">Reps</span>
+        <span class="column-name">Weight</span>
+        
+        {#each group.exercises as exercise}
+        <div class="row-exercise">
+            <Exercise name={exercise.name} eid={exercise.eid} wid={id} {toggleFlyout}/> 
+        </div>
+        {/each}
         {/if}
         {/if}
         {/each}
@@ -96,8 +103,18 @@
 
     .exercises-container {
         display: grid;
+        grid-template-columns: repeat(5, 1fr);
         gap: .5rem;
         width: 100%;
         
     }
+
+    .column-name {
+        font-weight: bold;
+    }
+
+    .row-exercise {
+        grid-column: span 5;
+    }
+
 </style>

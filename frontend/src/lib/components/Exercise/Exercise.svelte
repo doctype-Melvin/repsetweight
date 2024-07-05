@@ -2,8 +2,9 @@
     // @ts-nocheck
     import { userTemplateData } from "$lib/stores";
     import { derived } from "svelte/store";
-    import Table from "../Tables/Table.svelte";
-    import InputContent from "../InputContent/InputContent.svelte";
+    import Select from "../Inputs/Select.svelte";
+    
+
 
     export let name
     export let eid
@@ -44,16 +45,53 @@
             return {workouts: updatedWorkouts}
         })
     }
+
+    let exerciseVariables = {}
+
+    function handleExerciseVariables(value, column, id) {
+        console.log(value, column, id)
+        exerciseVariables = {
+            ...exerciseVariables,
+            [id]: {
+                ...exerciseVariables[id],
+                [column]: value
+            }
+        }
+
+        console.log(exerciseVariables)
+        
+        // userTemplateData.update(data => {
+        //     const updatedWorkouts = data.workouts.map(entry => {
+        //         if (entry.wid === wid) {
+        //             return {
+        //                 ...entry,
+        //                 exercises: [...entry.exercises, exerciseVariables]
+        //             }
+        //         } else {
+        //             return entry
+        //         }
+        //     })
+        //     return {workouts: updatedWorkouts}
+        // }
+        // )
+    }
+
+
 </script>
 
 <section class="card">
     <div class="card-content">
         <span on:click={toggleFlyout('exercise')}>{name}</span>
-        <!-- <InputContent content={1}/>
-        <InputContent content={1}/>
-        <InputContent content={0}/> -->
-         <!-- <Table columns={columns} /> -->
-        <button type="button" on:click={() => handleDeleteExercise(eid)}>X</button>
+        <Select optionsCount={21} onChange={(value) => handleExerciseVariables(value, 'sets', eid)} />
+        <Select optionsCount={21} onChange={(value) => handleExerciseVariables(value, 'reps', eid)} />
+        <input 
+        type="number"
+        name="weight"
+        min=0
+        max=1000
+        on:input={(event) => handleExerciseVariables(event.target.value, 'weight', eid)}
+        />
+        <button type="button" class="button-remove-exercise" on:click={() => handleDeleteExercise(eid)}>X</button>
     </div>
 </section>
 
@@ -65,9 +103,14 @@
     
     .card-content {
         margin: 0 auto;
-        width: 75%;
-        display: flex;
-        justify-content: space-between;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr) ;
         align-items: center;
+    }
+
+    .button-remove-exercise {
+        width: fit-content;
+        margin: 0 auto;
     }
 </style>
