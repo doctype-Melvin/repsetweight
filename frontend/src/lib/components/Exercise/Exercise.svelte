@@ -96,7 +96,6 @@
         <Select optionsCount={21} onChange={(value) => handleExerciseVariables(value, 'reps', eid)} />
         <input 
         type="tel"
-        pattern="[0-9]*"
         name="weight"
         class="input-weight"
         min=0
