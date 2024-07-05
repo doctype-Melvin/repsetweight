@@ -1,7 +1,7 @@
 <script>
     // @ts-nocheck
     import { userTemplateData } from "$lib/stores";
-    import { derived } from "svelte/store";
+    import { writable, derived } from "svelte/store";
     import Select from "../Inputs/Select.svelte";
     import { onMount } from "svelte";
     
@@ -17,7 +17,6 @@
     return $userTemplateData.workouts.find(workout => workout.wid === wid)
     })
 
-    
 
     const handleDeleteExercise = (eid) => {
         // Find the target muscle group by looking for 
@@ -37,7 +36,12 @@
                                 return {...muscle, exercises: updatedTargetExercises}
                             } else {
                                 return muscle
-                            }})
+                            }}
+                        ),
+                        exercises: workout.exercises.filter(exercise => {
+                            const key = Object.keys(exercise)[0]
+                            return key !== eid
+                        })
                         }
                 } else {
                     return workout
@@ -47,36 +51,60 @@
         })
     }
 
-    let exerciseVariables = {}
-
+    // variables object
+    // [id] : { 
+    //          [column]: value
+    //         }
+    
+    
     function handleExerciseVariables(value, column, id) {
-        console.log(value, column, id)
-        exerciseVariables = {
-            ...exerciseVariables,
-            [id]: {
-                ...exerciseVariables[id],
-                [column]: value
-            }
-        }
+             
+        userTemplateData.update( data => {
+            const updatedWorkouts = data.workouts.map(workout => {
+                // Find the target workout
+                if (workout.wid === wid) {
+                    // Check if variables exist
+                    if (workout.exercises.length > 0) {
+                        // Flag to check for existing exercise
+                        let existing = false
+                        // Go through the exercises array 
+                        // and find the exercise with the matching id
+                        const updatedExerciseVariables = workout.exercises.map(exercise => {
+                            const [key, obj] = Object.entries(exercise)[0]
+                            if (key === id) {
+                                // Update the exercise with the new value
+                                existing = true
+                                return {
+                                    [key]: {
+                                        ...obj,
+                                        [column]: value
+                                    }
+                                }
+                            } 
+                            return exercise
+                        })
+                        // If the exercise doesn't exist, add it to the array
+                        if (!existing) {
+                            updatedExerciseVariables.push({[id]: {[column]: value}})
+                        }
+                        workout.exercises = updatedExerciseVariables
+                        return workout
+                    } else {
+                        // If the exercises array is empty, add the exercise
+                        workout.exercises = [{[id]: {[column]: value}}]
+                        return workout
+                    }
+                } else {
+                    return workout
+                }
+            })
+            return {workouts: updatedWorkouts}
+        })
 
-        console.log(exerciseVariables)
-        
-        // userTemplateData.update(data => {
-        //     const updatedWorkouts = data.workouts.map(entry => {
-        //         if (entry.wid === wid) {
-        //             return {
-        //                 ...entry,
-        //                 exercises: [...entry.exercises, exerciseVariables]
-        //             }
-        //         } else {
-        //             return entry
-        //         }
-        //     })
-        //     return {workouts: updatedWorkouts}
-        // }
-        // )
+   
+      
     }
-
+        
     onMount( () => {
     function restrictedInputValues(event) {
         const regex = /^[0-9\b]+$/;
