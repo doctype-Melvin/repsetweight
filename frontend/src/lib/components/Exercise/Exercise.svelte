@@ -3,6 +3,7 @@
     import { userTemplateData } from "$lib/stores";
     import { derived } from "svelte/store";
     import Select from "../Inputs/Select.svelte";
+    import { onMount } from "svelte";
     
 
 
@@ -76,6 +77,7 @@
         // )
     }
 
+    onMount( () => {
     function restrictedInputValues(event) {
         const regex = /^[0-9\b]+$/;
         if (!regex.test(event.key)) {
@@ -85,7 +87,7 @@
 
     const weightInput = document.querySelector('.input-weight')
     weightInput.addEventListener('keypress', restrictedInputValues)
-
+    })
     
 </script>
 
