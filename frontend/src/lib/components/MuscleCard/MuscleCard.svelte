@@ -103,7 +103,7 @@
 
     .exercises-container {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: 1.5fr repeat(3, 1fr) .5fr;
         gap: .5rem;
         width: 100%;
         

@@ -76,7 +76,17 @@
         // )
     }
 
+    function restrictedInputValues(event) {
+        const regex = /^[0-9\b]+$/;
+        if (!regex.test(event.key)) {
+            event.preventDefault();
+        }
+    }
 
+    const weightInput = document.querySelector('.input-weight')
+    weightInput.addEventListener('keypress', restrictedInputValues)
+
+    
 </script>
 
 <section class="card">
@@ -85,11 +95,14 @@
         <Select optionsCount={21} onChange={(value) => handleExerciseVariables(value, 'sets', eid)} />
         <Select optionsCount={21} onChange={(value) => handleExerciseVariables(value, 'reps', eid)} />
         <input 
-        type="number"
+        type="tel"
+        pattern="[0-9]*"
         name="weight"
+        class="input-weight"
         min=0
         max=1000
         on:input={(event) => handleExerciseVariables(event.target.value, 'weight', eid)}
+                
         />
         <button type="button" class="button-remove-exercise" on:click={() => handleDeleteExercise(eid)}>X</button>
     </div>
@@ -98,15 +111,19 @@
 <style>
     .card {
         width: 100%;
-        border: solid 3px red;
     }
     
     .card-content {
         margin: 0 auto;
         width: 100%;
         display: grid;
-        grid-template-columns: repeat(5, 1fr) ;
+        gap: .75rem;
+        grid-template-columns: 1.5fr repeat(3, 1fr) .5fr ;
         align-items: center;
+    }
+
+    .input-weight {
+        width: 55px;
     }
 
     .button-remove-exercise {
