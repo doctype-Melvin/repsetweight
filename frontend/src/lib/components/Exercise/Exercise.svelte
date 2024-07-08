@@ -49,10 +49,6 @@
 		});
 	};
 
-	// variables object
-	// [id] : {
-	//          [column]: value
-	//         }
 
 	function handleExerciseVariables(value, column, id) {
 		userTemplateData.update((data) => {
@@ -113,7 +109,7 @@
 
 <section class="card">
 	<div class="card-content">
-		<span on:click={toggleFlyout('exercise')}>{name}</span>
+		<button type="button" on:click={toggleFlyout('exercise')}>{name}</button>
 		<Select
 			optionsCount={21}
 			onChange={(value) => handleExerciseVariables(value, 'sets', eid)}

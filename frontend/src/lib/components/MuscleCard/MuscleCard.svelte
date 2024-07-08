@@ -4,11 +4,13 @@
 
 	import Flyout from '../Flyout/Flyout.svelte';
 	import Exercise from '../Exercise/Exercise.svelte';
-	import Table from '../Tables/Table.svelte';
 	import { derived } from 'svelte/store';
 
 	export let id;
 	export let muscle;
+
+    // Names of the columns for table-like grid
+    const columns = ['Lift', 'Sets', 'Reps', 'Weight'];
 
 	const workoutData = derived(userTemplateData, ($userTemplateData) => {
 		return $userTemplateData.workouts.find((workout) => workout.wid === id);
@@ -24,6 +26,10 @@
 		}
 		showFlyout = !showFlyout;
 	};
+    
+    const props = {
+        toggle: toggleFlyout
+    };
 
 	const handleDeleteMuscle = () => {
 		const updatedWorkoutMuscles = $workoutData.muscles.filter((item) => item.id !== muscle.id);
@@ -39,11 +45,7 @@
 		});
 	};
 
-	const props = {
-		toggle: toggleFlyout
-	};
 
-	const columns = ['Name', 'Sets', 'Reps', 'Weight'];
 </script>
 
 <section class="card">
@@ -58,10 +60,9 @@
 				{#if group.exercises.length === 0}
 					<p>No exercises added yet</p>
 				{:else}
-					<span class="column-name">Lift</span>
-					<span class="column-name">Sets</span>
-					<span class="column-name">Reps</span>
-					<span class="column-name">Weight</span>
+                    {#each columns as column}
+                        <span class="column-name">{column}</span>
+                    {/each}
 
 					{#each group.exercises as exercise}
 						<div class="row-exercise">
