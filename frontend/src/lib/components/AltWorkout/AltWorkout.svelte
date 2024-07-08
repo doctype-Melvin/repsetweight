@@ -1,117 +1,120 @@
 <script>
-    // @ts-nocheck
-    import Flyout from '../Flyout/Flyout.svelte';
-    import MuscleCard from '../MuscleCard/MuscleCard.svelte';
-    import { userTemplateData } from '$lib/stores.js';
-    import { derived, writable } from 'svelte/store';
-    import { draggable, dropzone } from '$lib/dragAndDrop';
+	// @ts-nocheck
+	import Flyout from '../Flyout/Flyout.svelte';
+	import MuscleCard from '../MuscleCard/MuscleCard.svelte';
+	import { userTemplateData } from '$lib/stores.js';
+	import { derived, writable } from 'svelte/store';
+	import { draggable, dropzone } from '$lib/dragAndDrop';
 
-    export let deleteWorkout
-    export let copyWorkout
-    export let id
-    
-    // Subscribe to the userTemplateData store to get the current workout
-    // and handle adding muscle groups.
-    // The userTemplateData store is updated with the new muscle groups
-    let currentWorkout =writable(null);
+	export let deleteWorkout;
+	export let copyWorkout;
+	export let id;
 
-    const filterTemplateData = derived(userTemplateData, ($userTemplateData) => {
-        return $userTemplateData.workouts.find(workout => workout.wid === id)
-    })
-    
-    filterTemplateData.subscribe(value => {
-        currentWorkout.set(value)
-    })
+	// Subscribe to the userTemplateData store to get the current workout
+	// and handle adding muscle groups.
+	// The userTemplateData store is updated with the new muscle groups
+	let currentWorkout = writable(null);
 
-    let showFlyout = false;
-        
-    const toggleFlyout = (signal) => {
-        if (signal) {
-            props.signal = signal;
-            props.wid = id;
-        }
-        showFlyout = !showFlyout
-    }
+	const filterTemplateData = derived(userTemplateData, ($userTemplateData) => {
+		return $userTemplateData.workouts.find((workout) => workout.wid === id);
+	});
 
-    const handleDeleteWorkout = (id) => {
-        deleteWorkout(id)
-    }
+	filterTemplateData.subscribe((value) => {
+		currentWorkout.set(value);
+	});
 
-    const props = {
-        toggle: toggleFlyout,
-    }
-    
+	let showFlyout = false;
+
+	const toggleFlyout = (signal) => {
+		if (signal) {
+			props.signal = signal;
+			props.wid = id;
+		}
+		showFlyout = !showFlyout;
+	};
+
+	const handleDeleteWorkout = (id) => {
+		deleteWorkout(id);
+	};
+
+	const props = {
+		toggle: toggleFlyout
+	};
 </script>
 
-<section class="workout-container" >
-    {#if $currentWorkout}
-    <div class="buttons">
-        <button type="button" on:click={copyWorkout(id)}>Copy Workout</button>
-        <button type="button" on:click={handleDeleteWorkout(id)}>X</button>
-    </div>
-    <p>{id}</p>
-    
-<!-- Drag n Drop -->
-<ul class="dropzone" use:dropzone={{
-    onDropzone(startIndex, endIndex){
-        const newOrder = [...$currentWorkout.muscles]
-        
-        // When dragging and dropping a muscle group,
-        // swap the dragged item's index with the item that's 
-        // being dropped on
-        const temp = newOrder[startIndex]
-        newOrder[startIndex] = newOrder[endIndex]
-        newOrder[endIndex] = temp
+<section class="workout-container">
+	{#if $currentWorkout}
+		<div class="buttons">
+			<button type="button" on:click={copyWorkout(id)}>Copy Workout</button>
+			<button type="button" on:click={handleDeleteWorkout(id)}>X</button>
+		</div>
+		<p>{id}</p>
 
-        currentWorkout.update(data => {
-            return {...data, muscles: newOrder}
-        })
+		<!-- Drag n Drop -->
+		<ul
+			class="dropzone"
+			use:dropzone={{
+				onDropzone(startIndex, endIndex) {
+					const newOrder = [...$currentWorkout.muscles];
 
-        userTemplateData.update(data => {
-            return {workouts: data.workouts.map(workout => workout.wid === id ? $currentWorkout : workout) }
-        })
+					// When dragging and dropping a muscle group,
+					// swap the dragged item's index with the item that's
+					// being dropped on
+					const temp = newOrder[startIndex];
+					newOrder[startIndex] = newOrder[endIndex];
+					newOrder[endIndex] = temp;
 
-    }
-    }}>
-    {#each $currentWorkout.muscles as muscle, index}
-    <li class="draggable" data-index={index} use:draggable={{id: muscle.id, index}}>
-        <MuscleCard {muscle} {id}/>
-    </li>
-    {/each}
-</ul>
+					currentWorkout.update((data) => {
+						return { ...data, muscles: newOrder };
+					});
 
-        <button type="button" on:click={() => toggleFlyout('muscle')}>Add Muscle Group</button>
-            {#if showFlyout}
-            <Flyout {...props} />
-            {/if}
-    {/if}
+					userTemplateData.update((data) => {
+						return {
+							workouts: data.workouts.map((workout) =>
+								workout.wid === id ? $currentWorkout : workout
+							)
+						};
+					});
+				}
+			}}
+		>
+			{#each $currentWorkout.muscles as muscle, index}
+				<li class="draggable" data-index={index} use:draggable={{ id: muscle.id, index }}>
+					<MuscleCard {muscle} {id} />
+				</li>
+			{/each}
+		</ul>
+
+		<button type="button" on:click={() => toggleFlyout('muscle')}>Add Muscle Group</button>
+		{#if showFlyout}
+			<Flyout {...props} />
+		{/if}
+	{/if}
 </section>
 
 <style>
-    .workout-container {
-        
-        padding: .25rem;
-        margin: .25rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
+	.workout-container {
+		padding: 0.25rem;
+		margin: 0.25rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
 
-    .buttons {
-        display: flex;
-        justify-content: flex-end;
-    } 
+	.buttons {
+		display: flex;
+		justify-content: flex-end;
+	}
 
-    ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-    }
-    .dropzone:global(.droppable) {
-        outline: black dashed 2px;
-    }
-    .dropzone:global(.droppable > *) {
-        pointer-events: none;
-    }
-    
+	ul {
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+	}
+	.dropzone:global(.droppable) {
+		outline: black dashed 2px;
+	}
+	.dropzone:global(.droppable > *) {
+		pointer-events: none;
+	}
 </style>

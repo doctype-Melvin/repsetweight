@@ -1,162 +1,163 @@
 <script>
-    // @ts-nocheck
-    import { userTemplateData } from "$lib/stores";
-    import { writable, derived } from "svelte/store";
-    import Select from "../Inputs/Select.svelte";
-    import { onMount } from "svelte";
-    
+	// @ts-nocheck
+	import { userTemplateData } from '$lib/stores';
+	import { writable, derived } from 'svelte/store';
+	import Select from '../Inputs/Select.svelte';
+	import { onMount } from 'svelte';
 
+	export let name;
+	export let eid;
+	export let wid;
+	export let toggleFlyout;
 
-    export let name
-    export let eid
-    export let wid
-    export let toggleFlyout
+	const thisWorkout = derived(userTemplateData, ($userTemplateData) => {
+		return $userTemplateData.workouts.find((workout) => workout.wid === wid);
+	});
 
+	const handleDeleteExercise = (eid) => {
+		// Find the target muscle group by looking for
+		// the exercise with the matching eid
+		const target = $thisWorkout.muscles.find((muscle) =>
+			muscle.exercises.some((exercise) => exercise.eid === eid)
+		);
 
-    const thisWorkout = derived(userTemplateData, ($userTemplateData) => {
-    return $userTemplateData.workouts.find(workout => workout.wid === wid)
-    })
+		// Remove the exercise from the target muscle group exercises array
+		const updatedTargetExercises = target.exercises.filter((exercise) => exercise.eid !== eid);
 
+		userTemplateData.update((data) => {
+			const updatedWorkouts = data.workouts.map((workout) => {
+				if (workout.wid === wid) {
+					return {
+						...workout,
+						muscles: workout.muscles.map((muscle) => {
+							if (muscle.id === target.id) {
+								return { ...muscle, exercises: updatedTargetExercises };
+							} else {
+								return muscle;
+							}
+						}),
+						exercises: workout.exercises.filter((exercise) => {
+							const key = Object.keys(exercise)[0];
+							return key !== eid;
+						})
+					};
+				} else {
+					return workout;
+				}
+			});
+			return { workouts: updatedWorkouts };
+		});
+	};
 
-    const handleDeleteExercise = (eid) => {
-        // Find the target muscle group by looking for 
-        // the exercise with the matching eid
-        const target = $thisWorkout.muscles.find(muscle => muscle.exercises.some(exercise => exercise.eid === eid))
-        
-        // Remove the exercise from the target muscle group exercises array
-        const updatedTargetExercises = target.exercises.filter(exercise => exercise.eid !== eid)
-    
-        userTemplateData.update(data => {
-            const updatedWorkouts = data.workouts.map(workout => {
-                if (workout.wid === wid) {
-                    return {
-                        ...workout,
-                        muscles: workout.muscles.map(muscle => {
-                            if (muscle.id === target.id) {
-                                return {...muscle, exercises: updatedTargetExercises}
-                            } else {
-                                return muscle
-                            }}
-                        ),
-                        exercises: workout.exercises.filter(exercise => {
-                            const key = Object.keys(exercise)[0]
-                            return key !== eid
-                        })
-                        }
-                } else {
-                    return workout
-                }
-            })
-            return {workouts: updatedWorkouts}
-        })
-    }
+	// variables object
+	// [id] : {
+	//          [column]: value
+	//         }
 
-    // variables object
-    // [id] : { 
-    //          [column]: value
-    //         }
-    
-    
-    function handleExerciseVariables(value, column, id) {
-             
-        userTemplateData.update( data => {
-            const updatedWorkouts = data.workouts.map(workout => {
-                // Find the target workout
-                if (workout.wid === wid) {
-                    // Check if variables exist
-                    if (workout.exercises.length > 0) {
-                        // Flag to check for existing exercise
-                        let existing = false
-                        // Go through the exercises array 
-                        // and find the exercise with the matching id
-                        const updatedExerciseVariables = workout.exercises.map(exercise => {
-                            const [key, obj] = Object.entries(exercise)[0]
-                            if (key === id) {
-                                // Update the exercise with the new value
-                                existing = true
-                                return {
-                                    [key]: {
-                                        ...obj,
-                                        [column]: value
-                                    }
-                                }
-                            } 
-                            return exercise
-                        })
-                        // If the exercise doesn't exist, add it to the array
-                        if (!existing) {
-                            updatedExerciseVariables.push({[id]: {[column]: value}})
-                        }
-                        workout.exercises = updatedExerciseVariables
-                        return workout
-                    } else {
-                        // If the exercises array is empty, add the exercise
-                        workout.exercises = [{[id]: {[column]: value}}]
-                        return workout
-                    }
-                } else {
-                    return workout
-                }
-            })
-            return {workouts: updatedWorkouts}
-        })
+	function handleExerciseVariables(value, column, id) {
+		userTemplateData.update((data) => {
+			const updatedWorkouts = data.workouts.map((workout) => {
+				// Find the target workout
+				if (workout.wid === wid) {
+					// Check if variables exist
+					if (workout.exercises.length > 0) {
+						// Flag to check for existing exercise
+						let existing = false;
+						// Go through the exercises array
+						// and find the exercise with the matching id
+						const updatedExerciseVariables = workout.exercises.map((exercise) => {
+							const [key, obj] = Object.entries(exercise)[0];
+							if (key === id) {
+								// Update the exercise with the new value
+								existing = true;
+								return {
+									[key]: {
+										...obj,
+										[column]: value
+									}
+								};
+							}
+							return exercise;
+						});
+						// If the exercise doesn't exist, add it to the array
+						if (!existing) {
+							updatedExerciseVariables.push({ [id]: { [column]: value } });
+						}
+						workout.exercises = updatedExerciseVariables;
+						return workout;
+					} else {
+						// If the exercises array is empty, add the exercise
+						workout.exercises = [{ [id]: { [column]: value } }];
+						return workout;
+					}
+				} else {
+					return workout;
+				}
+			});
+			return { workouts: updatedWorkouts };
+		});
+	}
 
-   
-      
-    }
-        
-    onMount( () => {
-    function restrictedInputValues(event) {
-        const regex = /^[0-9\b]+$/;
-        if (!regex.test(event.key)) {
-            event.preventDefault();
-        }
-    }
+	onMount(() => {
+		function restrictedInputValues(event) {
+			const regex = /^[0-9\b]+$/;
+			if (!regex.test(event.key)) {
+				event.preventDefault();
+			}
+		}
 
-    const weightInput = document.querySelector('.input-weight')
-    weightInput.addEventListener('keypress', restrictedInputValues)
-    })
-    
+		const weightInput = document.querySelector('.input-weight');
+		weightInput.addEventListener('keypress', restrictedInputValues);
+	});
 </script>
 
 <section class="card">
-    <div class="card-content">
-        <span on:click={toggleFlyout('exercise')}>{name}</span>
-        <Select optionsCount={21} onChange={(value) => handleExerciseVariables(value, 'sets', eid)} />
-        <Select optionsCount={21} onChange={(value) => handleExerciseVariables(value, 'reps', eid)} />
-        <input 
-        type="tel"
-        name="weight"
-        class="input-weight"
-        min=0
-        max=1000
-        on:input={(event) => handleExerciseVariables(event.target.value, 'weight', eid)}
-                
-        />
-        <button type="button" class="button-remove-exercise" on:click={() => handleDeleteExercise(eid)}>X</button>
-    </div>
+	<div class="card-content">
+		<span on:click={toggleFlyout('exercise')}>{name}</span>
+		<Select
+			optionsCount={21}
+			onChange={(value) => handleExerciseVariables(value, 'sets', eid)}
+		/>
+		<Select
+			optionsCount={21}
+			onChange={(value) => handleExerciseVariables(value, 'reps', eid)}
+		/>
+		<input
+			type="tel"
+			name="weight"
+			class="input-weight"
+			min="0"
+			max="1000"
+			on:input={(event) => handleExerciseVariables(event.target.value, 'weight', eid)}
+		/>
+		<button
+			type="button"
+			class="button-remove-exercise"
+			on:click={() => handleDeleteExercise(eid)}>X</button
+		>
+	</div>
 </section>
 
 <style>
-    .card {
-        width: 100%;
-    }
-    
-    .card-content {
-        margin: 0 auto;
-        width: 100%;
-        display: grid;
-        gap: .75rem;
-        grid-template-columns: 1.5fr repeat(3, 1fr) .5fr ;
-        align-items: center;
-    }
+	.card {
+		width: 100%;
+	}
 
-    .input-weight {
-        width: 55px;
-    }
+	.card-content {
+		margin: 0 auto;
+		width: 100%;
+		display: grid;
+		gap: 0.75rem;
+		grid-template-columns: 1.5fr repeat(3, 1fr) 0.5fr;
+		align-items: center;
+	}
 
-    .button-remove-exercise {
-        width: fit-content;
-        margin: 0 auto;
-    }
+	.input-weight {
+		width: 55px;
+	}
+
+	.button-remove-exercise {
+		width: fit-content;
+		margin: 0 auto;
+	}
 </style>

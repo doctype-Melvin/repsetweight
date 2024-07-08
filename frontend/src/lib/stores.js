@@ -16,4 +16,4 @@ export const exerciseMuscleData = writable();
 // Other stores
 export const isWriteMode = writable(false);
 export const scrollPosition = writable(0);
-export const collapseWorkouts = writable(false)
+export const collapseWorkouts = writable(false);
