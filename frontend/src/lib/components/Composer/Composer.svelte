@@ -15,7 +15,7 @@
 		muscles: []
 	};
 
-	function numberWorkout(index) {
+	function countWorkout(index) {
 		return (index += 1);
 	}
 
@@ -27,13 +27,6 @@
 		} else {
 			userTemplateData.set({ workouts: [userWorkout] });
 		}
-
-		// Save the userTemplateData to localStorage
-		// Reflects all changes made to the userTemplateData store
-		// in the localStorage
-		// userTemplateData.subscribe(value => {
-		//     localStorage.setItem('userTemplate', JSON.stringify(value))
-		// })
 
 		const unsubscribe = userTemplateData.subscribe((value) => {
 			localStorage.setItem('userTemplate', JSON.stringify(value));
@@ -103,7 +96,7 @@
 			{#each $userTemplateData.workouts as workout, index (workout.wid)}
 				<li class="draggable" data-index={index} use:draggable={{ id: workout.id, index }}>
 					<Collapsible
-						header={workout.name ? workout.name : `Workout ${numberWorkout(index)}`}
+						header={workout.name ? workout.name : `Workout ${countWorkout(index)}`}
 						isOpen={true}
 						id={workout.wid}
 					>
