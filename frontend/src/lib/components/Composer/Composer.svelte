@@ -113,7 +113,7 @@
 		<p>Loading workouts ....</p>
 	{/if}
 	{#if $isWriteMode}
-		<button type="button" on:click={addWorkoutHandler}> + Add Workout</button>
+		<button type="button" on:click={addWorkoutHandler}>Add Workout</button>
 	{/if}
 </section>
 
