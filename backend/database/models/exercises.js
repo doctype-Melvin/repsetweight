@@ -13,21 +13,13 @@ module.exports = (sequelize) => {
       allowNull: false,
       unique: true,
     },
-    category: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     target: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    equipment: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
     user_added: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
     },
   });
   return Exercise;
