@@ -29,6 +29,7 @@
 	}
 
 	function handleSaveButtonClick() {
+		const errors = []
 		const storageData = JSON.parse(localStorage.getItem('userTemplate')) || '[]';
 		// In Flyout:
 		// Prevent overriding the exercises eid - should be solved
@@ -38,8 +39,23 @@
 		// Loop through workout's exercises and muscle's exercises
 		// Compare if the exercises' eid is found in both arrays
 
-		console.log(storageData);
+		// console.log(storageData);
 		function validateClientData(workoutData) {
+			
+
+			/*
+				The errors array should contain objects with the following structure:
+				{
+					section: "'workout' || 'muscle' || 'exercise",
+					message: `Please add muscle groups to ${workoutData.name}`
+					workoutId: workoutData.wid,
+					muscleId: muscle.id,
+					exerciseId: exercise.eid
+				}				
+
+				these objects will be used to display the error messages in the UI
+			*/
+
 			// This function is part of the validation process
 			// It takes a single workout and examines if:
 			// 1. The workout has muscle groups
@@ -47,52 +63,91 @@
 			// 3. The exercises have values
 			// If any of the above conditions are not met, the function returns an error message
 
-			if (workoutData.muscles.length === 0) {
-				return 'Please add muscle groups to your template.';
-			}
-
-			if (workoutData.muscles[0].exercises.length === 0) {
-				return 'Please add exercises to your template.';
-			}
-
-			if (workoutData.exercises.length === 0) {
-				return 'Please add values to your exercises.';
-			}
-
-			for (const muscle of workoutData.muscles) {
-				for (const exercise of muscle.exercises) {
-					const eid = exercise.eid;
-					const exerciseDetails = workoutData.exercises.find((exercise) => exercise[eid]);
-					if (!exerciseDetails) {
-						return 'Please set the sets, reps and weight for all exercises';
+			
+				if (workoutData.muscles.length === 0) {
+					let error = {
+						message: `Please add muscle groups to ${workoutData.name}`,
+						workoutId: workoutData.wid,
 					}
 
-					for (const details of Object.values(exerciseDetails)) {
-						if (Object.keys(details).length < 3) {
-							return 'Please set the sets, reps and weight for all exercises';
+					errors.push(error);
+				}
+
+				if (workoutData.muscles.length > 0) {
+					for (const muscle of workoutData.muscles) {
+						let error = {
+							message: `Please add exercises for ${muscle.name} in ${workoutData.name}`,
+							workoutId: workoutData.wid,
+							muscleId: muscle.id,
+						}
+
+						if (muscle.exercises.length === 0) {
+							errors.push(error);
 						}
 					}
 				}
-			}
 
-			return null;
+				for (const muscle of workoutData.muscles) {
+					for (const exercise of muscle.exercises) {
+						const eid = exercise.eid;
+						const exerciseDetails = workoutData.exercises.find((exercise) => exercise[eid]);
+						
+						let error = {
+							message: `Please add the sets, reps and weight for ${exercise.name} in ${workoutData.name}`,
+							workoutId: workoutData.wid,
+							muscleId: muscle.id,
+							exerciseId: exercise.eid,
+						}
+
+						if (!exerciseDetails) {
+							errors.push(error);
+							continue
+						}
+
+						for (const details of Object.values(exerciseDetails)) {
+							
+							const keys = ['sets', 'reps', 'weight'];
+
+							if (Object.keys(details).length < 3) {
+								const missingKeys = keys.filter((key) => !Object.keys(details).includes(key));
+
+								let error = {
+									message: `Please provide ${missingKeys.join(' and ')} for ${exercise.name} in ${workoutData.name}`,
+									workoutId: workoutData.wid,
+									muscleId: muscle.id,
+									exerciseId: exercise.eid,
+								}
+
+								errors.push(error);
+								break
+							}
+						}
+					}
+				}
+				
+			return errors
 		}
-
-		function validationResult(clientData) {
+		
+		function validationResult(userTemplateData) {
 			// This function is part of the validation process
 			// It takes the client data from local storage
 			// and iterates through the workouts
 			// calling the validation function for each workout
-
-			for (const workout of clientData.workouts) {
-				const errorMessage = validateClientData(workout);
-				if (errorMessage) {
-					alert(errorMessage);
-					return;
+			let allErrors = []
+			
+			for (const workout of userTemplateData.workouts) {
+				const errorMessages = validateClientData(workout);
+				if (errorMessages) {
+					allErrors = errorMessages;
 				}
 			}
-			console.log('Data is valid');
-			return;
+			if (allErrors.length > 0) {
+				console.log('Errors found', allErrors);
+				return
+			}
+			// If no errors are found, the function sends the data to the server
+			console.log('No errors found');
+			return
 		}
 
 		validationResult(storageData);
@@ -102,14 +157,14 @@
 	// It merges the data from local storage with the form data
 	// sends it to the server and
 	// receives the request result
-	// console.log(JSON.parse(localStorage.getItem('userTemplate')))
+	
 	async function mergeLocalStorageData(formData) {
 		const fromLocalStorage = JSON.parse(localStorage.getItem('userTemplate')) || '{}';
 
 		if (!fromLocalStorage.workouts) {
 			alert('No workouts found');
 			return;
-		} else {
+		}
 			for (const key in fromLocalStorage) {
 				const workoutsArray = [...fromLocalStorage[key]];
 				formData.append(key, JSON.stringify(workoutsArray));
@@ -124,7 +179,7 @@
 					console.log('Redirect to template detail page');
 				}
 			};
-		}
+		
 	}
 </script>
 

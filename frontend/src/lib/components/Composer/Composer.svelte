@@ -8,7 +8,7 @@
 	import { dropzone, draggable } from '$lib/dragAndDrop';
 
 	let userWorkout = {
-		name: '',
+		name: 'Workout 1',
 		description: '',
 		wid: nanoid(7),
 		exercises: [],
@@ -35,10 +35,23 @@
 		return unsubscribe;
 	});
 
+	const setWorkoutName = (name) => {
+		let targetWorkout = $userTemplateData.workouts.find((workout) => workout.wid === id);
+		targetWorkout.name = name;
+		userTemplateData.update((data) => {
+			return {
+				workouts: data.workouts.map((workout) =>
+					workout.wid === id ? targetWorkout : workout
+				)
+			};
+		});
+	};
+
 	// Handler functions for adding and removing workouts
 	const addWorkoutHandler = () => {
 		let newWorkout = {
 			...userWorkout,
+			name: `Workout ${$userTemplateData.workouts.length + 1}`,
 			wid: nanoid(7)
 		};
 
@@ -51,6 +64,7 @@
 		let workout = $userTemplateData.workouts.find((workout) => workout.wid === wid);
 		let newWorkout = {
 			...workout,
+			name: `${workout.name} Copy`,
 			wid: nanoid(7)
 		};
 

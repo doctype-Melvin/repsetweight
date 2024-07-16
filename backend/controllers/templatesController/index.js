@@ -59,8 +59,17 @@ exports.get_template_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.post_template = asyncHandler(async (req, res, next) => {
-  // console.info(req.body);
   const { name, description, workouts } = req.body;
+  
+  const parsedWorkouts = JSON.parse(workouts);  
+  
+  if (!name || !parsedWorkouts) {
+    res.status(420).json({ message: 'Something went wrong', status: 420})
+  } else {
+    res.status(200).json({ message: `Request for template ${name} successful`})
+  }
+
+  /*
   const transaction = await sequelize.transaction();
   try {
     //  First create the template
@@ -124,13 +133,14 @@ exports.post_template = asyncHandler(async (req, res, next) => {
     }
     await transaction.commit();
     res
-      .status(200)
-      .json({ message: "Your template is now ready!", id: userTemplate.id });
+    .status(200)
+    .json({ message: "Your template is now ready!", id: userTemplate.id });
   } catch (error) {
     await transaction.rollback();
     console.log(error);
     res.status(500).json({ message: error.message });
   }
+  */
 });
 
 exports.delete_template = asyncHandler(async (req, res, next) => {
