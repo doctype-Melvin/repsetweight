@@ -49,7 +49,6 @@
 		});
 	};
 
-
 	function handleExerciseVariables(value, column, id) {
 		userTemplateData.update((data) => {
 			const updatedWorkouts = data.workouts.map((workout) => {
@@ -122,6 +121,7 @@
 			type="tel"
 			name="weight"
 			class="input-weight"
+			value="0"
 			min="0"
 			max="1000"
 			on:input={(event) => handleExerciseVariables(event.target.value, 'weight', eid)}

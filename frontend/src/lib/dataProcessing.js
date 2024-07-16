@@ -91,3 +91,7 @@ export const deleteUserTemplate = async (templateID) => {
 		return;
 	});
 };
+
+/*
+	Client side data validation
+*/

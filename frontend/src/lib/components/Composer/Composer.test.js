@@ -15,67 +15,63 @@ import Composer from './Composer.svelte';
 // Mock the entire stores module
 
 vi.mock('@lib/stores.js', async () => {
-    return {
-        isWriteMode: {
-            // Mock the subscribe method
-            subscribe: vi.fn((cb) => {
-                // Set store value to false
-                // to simulate the default value
-                cb(false)
-                // Unsubscribe function
-                return () => ({})
-            })
-        },
-        userTemplateData: {
-            subscribe: vi.fn((cb) => {
-                cb([])
-                return () => ({})
-            }),
-            set: vi.fn((data) => console.log(data))
-        }
-    }
- })
+	return {
+		isWriteMode: {
+			// Mock the subscribe method
+			subscribe: vi.fn((cb) => {
+				// Set store value to false
+				// to simulate the default value
+				cb(false);
+				// Unsubscribe function
+				return () => ({});
+			})
+		},
+		userTemplateData: {
+			subscribe: vi.fn((cb) => {
+				cb([]);
+				return () => ({});
+			}),
+			set: vi.fn((data) => console.log(data))
+		}
+	};
+});
 
 beforeEach(() => {
-    // Since the create route always sets isWriteMode to true
-    // We mock the subscribe method to set the store value to true
-    vi.spyOn(stores.isWriteMode, 'subscribe').mockImplementation((cb) => {
-        cb(true)
-        return () => ({})
-    })
-
-})
-
+	// Since the create route always sets isWriteMode to true
+	// We mock the subscribe method to set the store value to true
+	vi.spyOn(stores.isWriteMode, 'subscribe').mockImplementation((cb) => {
+		cb(true);
+		return () => ({});
+	});
+});
 
 test('Composer renders and shows default message', () => {
-    render(Composer);
-    const composerElement = screen.getByText(/no muscle group selected/i)
+	render(Composer);
+	const composerElement = screen.getByText(/no muscle group selected/i);
 
-    expect(composerElement).toBeInTheDocument();
-})
-
+	expect(composerElement).toBeInTheDocument();
+});
 
 test('Composer has add workout button when isWriteMode is true', () => {
-    render(Composer)
-    const addWorkoutButton = screen.getByRole("button", {name: 'Add Workout'})
-    
-    expect(addWorkoutButton).toBeInTheDocument();
-})
+	render(Composer);
+	const addWorkoutButton = screen.getByRole('button', { name: 'Add Workout' });
+
+	expect(addWorkoutButton).toBeInTheDocument();
+});
 
 test('Composer renders a single empty workout component for a new template', () => {
-    render(Composer)
-    const workoutComponent = screen.getAllByRole('listitem')
+	render(Composer);
+	const workoutComponent = screen.getAllByRole('listitem');
 
-    expect(workoutComponent).toHaveLength(1);
-})
+	expect(workoutComponent).toHaveLength(1);
+});
 
 test('Composer adds a workout when Add Workout button is clicked', async () => {
-    render(Composer)
-    const addWorkoutButton = screen.getByRole("button", {name: 'Add Workout'})
-    await fireEvent.click(addWorkoutButton)
+	render(Composer);
+	const addWorkoutButton = screen.getByRole('button', { name: 'Add Workout' });
+	await fireEvent.click(addWorkoutButton);
 
-    const workoutComponent = screen.getAllByRole('listitem')
+	const workoutComponent = screen.getAllByRole('listitem');
 
-    expect(workoutComponent).toHaveLength(2);
-})
-
+	expect(workoutComponent).toHaveLength(2);
+});
