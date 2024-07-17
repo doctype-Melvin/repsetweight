@@ -4,20 +4,9 @@
 	import Workout from '$lib/components/Workout/Workout.svelte';
 	import Collapsible from '$lib/components/Collapsible/Collapsible.svelte';
 	import { userTemplateData, isWriteMode } from '$lib/stores';
-	import { onMount } from 'svelte';
+	import { onMount, setContext } from 'svelte';
+
 	import { dropzone, draggable } from '$lib/dragAndDrop';
-
-	let userWorkout = {
-		name: 'Workout 1',
-		description: '',
-		wid: nanoid(7),
-		exercises: [],
-		muscles: []
-	};
-
-	function countWorkout(index) {
-		return (index += 1);
-	}
 
 	onMount(() => {
 		const storage = localStorage.getItem('userTemplate');
@@ -34,8 +23,21 @@
 
 		return unsubscribe;
 	});
+	
+	
+	let userWorkout = {
+		name: 'Workout 1',
+		description: '',
+		wid: nanoid(7),
+		exercises: [],
+		muscles: []
+	};
 
-	const setWorkoutName = (name) => {
+	function countWorkout(index) {
+		return (index += 1);
+	}
+
+	function setWorkoutName(name) {
 		let targetWorkout = $userTemplateData.workouts.find((workout) => workout.wid === id);
 		targetWorkout.name = name;
 		userTemplateData.update((data) => {
@@ -48,7 +50,7 @@
 	};
 
 	// Handler functions for adding and removing workouts
-	const addWorkoutHandler = () => {
+	function addWorkoutHandler() {
 		let newWorkout = {
 			...userWorkout,
 			name: `Workout ${$userTemplateData.workouts.length + 1}`,
@@ -60,7 +62,7 @@
 		});
 	};
 
-	const copyWorkoutHandler = (wid) => {
+	function copyWorkoutHandler(wid) {
 		let workout = $userTemplateData.workouts.find((workout) => workout.wid === wid);
 		let newWorkout = {
 			...workout,
@@ -73,18 +75,23 @@
 		});
 	};
 
-	const removeWorkoutHandler = (wid) => {
+	function removeWorkoutHandler(wid) {
 		if ($userTemplateData.workouts.length === 1) {
-			return userTemplateData.set({ workouts: [{ ...userWorkout, wid: nanoid(7) }] });
+			const newArray = [{ ...userWorkout, wid: nanoid(7) }];
+			return userTemplateData.set({ workouts: newArray });
 		} else {
 			userTemplateData.update((data) => {
-				return { workouts: data.workouts.filter((workout) => workout.wid !== wid) };
+				const filterErrors = data.errors.filter((error) => error.workoutId !== wid);
+				const filterWorkouts = data.workouts.filter((workout) => workout.wid !== wid);
+				return { workouts: [...filterWorkouts], errors: [...filterErrors] };
 			});
 		}
 	};
+
+	
 </script>
 
-<section class="composer-container">
+<section class="composer-container" >
 	{#if $userTemplateData}
 		<ul
 			class="dropzone"

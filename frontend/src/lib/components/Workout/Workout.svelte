@@ -2,9 +2,10 @@
 	// @ts-nocheck
 	import Flyout from '../Flyout/Flyout.svelte';
 	import MuscleCard from '../MuscleCard/MuscleCard.svelte';
-	import { userTemplateData } from '$lib/stores.js';
+	import { userTemplateData, missingClientData } from '$lib/stores.js';
 	import { derived, writable } from 'svelte/store';
 	import { draggable, dropzone } from '$lib/dragAndDrop';
+	import { onDestroy } from 'svelte';
 
 	export let deleteWorkout;
 	export let copyWorkout;
@@ -14,18 +15,25 @@
 	// and handle adding muscle groups.
 	// The userTemplateData store is updated with the new muscle groups
 	let currentWorkout = writable(null);
-
+	
 	const filterTemplateData = derived(userTemplateData, ($userTemplateData) => {
-		return $userTemplateData.workouts.find((workout) => workout.wid === id);
+		if ($userTemplateData.workouts) {
+			
+			return $userTemplateData.workouts.find((workout) => workout.wid === id);
+		}
+		return []
 	});
-
-	filterTemplateData.subscribe((value) => {
+	
+	const unsubscribeWorkout = filterTemplateData.subscribe((value) => {
 		currentWorkout.set(value);
 	});
 
+	// Subscribe to the missingClientData store to get the missing data warnings
+	let missingData = []
+
 	let showFlyout = false;
 
-	const toggleFlyout = (signal) => {
+	function toggleFlyout(signal) {
 		if (signal) {
 			props.signal = signal;
 			props.wid = id;
@@ -33,16 +41,22 @@
 		showFlyout = !showFlyout;
 	};
 
-	const handleDeleteWorkout = (id) => {
+	function handleDeleteWorkout(id) {
 		deleteWorkout(id);
 	};
 
 	const props = {
 		toggle: toggleFlyout
 	};
+
+	onDestroy(() => {
+		unsubscribeWorkout();
+
+	})
+
 </script>
 
-<section class="workout-container">
+<section class="workout-container" >
 	{#if $currentWorkout}
 		<div class="buttons">
 			<button type="button" on:click={copyWorkout(id)}>Copy Workout</button>
@@ -124,5 +138,9 @@
 	}
 	.dropzone:global(.droppable > *) {
 		pointer-events: none;
+	}
+
+	.error {
+		background-color: rgba(251, 120, 73, 0.868);
 	}
 </style>

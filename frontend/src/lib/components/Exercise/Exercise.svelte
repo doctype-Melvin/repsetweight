@@ -109,20 +109,24 @@
 	// Function to get exercise variable values from local storage
 	function getVariableValue(exerciseID, variable) {
 		const storageData = JSON.parse(localStorage.getItem('userTemplate')) || '[]';
-		const workout = storageData.workouts.find((workout) => workout.wid === wid);
-		const exercise = workout.exercises.find((exercise) => exercise[exerciseID]);
-
-		if (exercise) {
-			const [key, obj] = Object.entries(exercise)[0];
-			return Number(obj[variable]);
+		
+		if (storageData.workouts) {
+			
+			const workout = storageData.workouts.find((workout) => workout.wid === wid);
+			const exercise = workout.exercises.find((exercise) => exercise[exerciseID]);
+			
+			if (exercise) {
+				const [key, obj] = Object.entries(exercise)[0];
+				return ((obj[variable]) === undefined) ? '' : Number(obj[variable]);
+			}
+			
+			return 0;
 		}
-
-		return 0;
 	}
-	
+
 </script>
 
-<section class="card">
+<section class="card" data-exerciseId={eid}>
 	<div class="card-content">
 		<button type="button" on:click={toggleFlyout('exercise')}>{name}</button>
 		<Select

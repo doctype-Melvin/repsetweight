@@ -168,7 +168,7 @@ export function validateComposerData(workoutData) {
 					);
 
 					let error = {
-						message: `Please provide ${missingKeys.join(' and ')} for ${exercise.name} in ${workoutData.name}`,
+						message: `Please provide ${missingKeys.length > 1 ? missingKeys.join(' and ') : missingKeys} for ${exercise.name} in ${workoutData.name}`,
 						workoutId: workoutData.wid,
 						muscleId: muscle.id,
 						exerciseId: exercise.eid

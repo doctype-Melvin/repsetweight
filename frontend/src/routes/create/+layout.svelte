@@ -2,10 +2,11 @@
 	// @ts-nocheck
 
 	import { goto } from '$app/navigation';
-	import { muscleGroupsData, exerciseMuscleData, collapseWorkouts } from '$lib/stores.js';
+	import { muscleGroupsData, exerciseMuscleData, collapseWorkouts, missingClientData, userTemplateData } from '$lib/stores.js';
 	import { validationResult } from '$lib/dataProcessing.js';
-	import { getContext } from 'svelte';
+	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
+	import Composer from '$lib/components/Composer/Composer.svelte';
 	export let data;
 
 	let { muscleGroups } = data;
@@ -15,6 +16,8 @@
 	exerciseMuscleData.set(exerciseMuscle);
 
 	$: isFlyinVisible = false;
+
+	
 
 	function toggleFlyin() {
 		isFlyinVisible = !isFlyinVisible;
@@ -32,10 +35,10 @@
 
 	function handleSaveButtonClick() {
 		const storageData = JSON.parse(localStorage.getItem('userTemplate')) || '[]';
-		const caughtErrors = validationResult(storageData);
+		const caughtWarnings = validationResult(storageData);
 		
 		if (caughtErrors.length > 0) {
-			console.log('Errors', caughtErrors);
+			missingClientData.set(caughtWarnings);
 			return
 		}
 
