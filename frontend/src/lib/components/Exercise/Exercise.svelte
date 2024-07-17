@@ -10,6 +10,19 @@
 	export let wid;
 	export let toggleFlyout;
 
+	
+	onMount(() => {
+		function restrictedInputValues(event) {
+			const regex = /^[0-9\b]+$/;
+			if (!regex.test(event.key)) {
+				event.preventDefault();
+			}
+		}
+
+		const weightInput = document.querySelector('.input-weight');
+		weightInput.addEventListener('keypress', restrictedInputValues);
+	});	
+
 	const thisWorkout = derived(userTemplateData, ($userTemplateData) => {
 		return $userTemplateData.workouts.find((workout) => workout.wid === wid);
 	});
@@ -93,17 +106,20 @@
 		});
 	}
 
-	onMount(() => {
-		function restrictedInputValues(event) {
-			const regex = /^[0-9\b]+$/;
-			if (!regex.test(event.key)) {
-				event.preventDefault();
-			}
+	// Function to get exercise variable values from local storage
+	function getVariableValue(exerciseID, variable) {
+		const storageData = JSON.parse(localStorage.getItem('userTemplate')) || '[]';
+		const workout = storageData.workouts.find((workout) => workout.wid === wid);
+		const exercise = workout.exercises.find((exercise) => exercise[exerciseID]);
+
+		if (exercise) {
+			const [key, obj] = Object.entries(exercise)[0];
+			return Number(obj[variable]);
 		}
 
-		const weightInput = document.querySelector('.input-weight');
-		weightInput.addEventListener('keypress', restrictedInputValues);
-	});
+		return 0;
+	}
+	
 </script>
 
 <section class="card">
@@ -112,19 +128,22 @@
 		<Select
 			optionsCount={21}
 			onChange={(value) => handleExerciseVariables(value, 'sets', eid)}
+			presetValue={getVariableValue(eid, 'sets')}
 		/>
 		<Select
 			optionsCount={21}
 			onChange={(value) => handleExerciseVariables(value, 'reps', eid)}
+			presetValue={getVariableValue(eid, 'reps')}
 		/>
 		<input
 			type="tel"
 			name="weight"
 			class="input-weight"
-			value="0"
+			value={getVariableValue(eid, 'weight')}
 			min="0"
 			max="1000"
 			on:input={(event) => handleExerciseVariables(event.target.value, 'weight', eid)}
+			
 		/>
 		<button
 			type="button"
