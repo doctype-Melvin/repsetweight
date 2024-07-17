@@ -3,6 +3,7 @@
 
 	import { goto } from '$app/navigation';
 	import { muscleGroupsData, exerciseMuscleData, collapseWorkouts } from '$lib/stores.js';
+	import { validationResult } from '$lib/dataProcessing.js';
 	import { getContext } from 'svelte';
 	import { enhance } from '$app/forms';
 	export let data;
@@ -21,6 +22,7 @@
 
 	function cancelCreate() {
 		localStorage.clear();
+		console.clear()
 		goto('/');
 	}
 
@@ -29,117 +31,17 @@
 	}
 
 	function handleSaveButtonClick() {
-		const errors = [];
 		const storageData = JSON.parse(localStorage.getItem('userTemplate')) || '[]';
-
-		function validateClientData(workoutData) {
-			/*
-				The errors array should contain objects with the following structure:
-				{
-					message: `Please add muscle groups to ${workoutData.name}`
-					workoutId: workoutData.wid,
-					muscleId: muscle.id,
-					exerciseId: exercise.eid
-				}				
-
-				these objects will be used to display the error messages in the UI
-			*/
-
-			// This function is part of the validation process
-			// It takes a single workout and examines if:
-			// 1. The workout has muscle groups
-			// 2. The muscle groups have exercises
-			// 3. The exercises have values
-			// If any of the above conditions are not met, the function returns an error message
-
-			if (workoutData.muscles.length === 0) {
-				let error = {
-					message: `Please add muscle groups to ${workoutData.name}`,
-					workoutId: workoutData.wid
-				};
-
-				errors.push(error);
-			}
-
-			if (workoutData.muscles.length > 0) {
-				for (const muscle of workoutData.muscles) {
-					let error = {
-						message: `Please add exercises for ${muscle.name} in ${workoutData.name}`,
-						workoutId: workoutData.wid,
-						muscleId: muscle.id
-					};
-
-					if (muscle.exercises.length === 0) {
-						errors.push(error);
-					}
-				}
-			}
-
-			for (const muscle of workoutData.muscles) {
-				for (const exercise of muscle.exercises) {
-					const eid = exercise.eid;
-					const exerciseDetails = workoutData.exercises.find((exercise) => exercise[eid]);
-
-					let error = {
-						message: `Please add the sets, reps and weight for ${exercise.name} in ${workoutData.name}`,
-						workoutId: workoutData.wid,
-						muscleId: muscle.id,
-						exerciseId: exercise.eid
-					};
-
-					if (!exerciseDetails) {
-						errors.push(error);
-						continue;
-					}
-
-					for (const details of Object.values(exerciseDetails)) {
-						const keys = ['sets', 'reps', 'weight'];
-
-						if (Object.keys(details).length < 3) {
-							const missingKeys = keys.filter(
-								(key) => !Object.keys(details).includes(key)
-							);
-
-							let error = {
-								message: `Please provide ${missingKeys.join(' and ')} for ${exercise.name} in ${workoutData.name}`,
-								workoutId: workoutData.wid,
-								muscleId: muscle.id,
-								exerciseId: exercise.eid
-							};
-
-							errors.push(error);
-							break;
-						}
-					}
-				}
-			}
-
-			return errors;
+		const caughtErrors = validationResult(storageData);
+		
+		if (caughtErrors.length > 0) {
+			console.log('Errors', caughtErrors);
+			return
 		}
 
-		function validationResult(userTemplateData) {
-			// This function is part of the validation process
-			// It takes the client data from local storage
-			// and iterates through the workouts
-			// calling the validation function for each workout
-			let allErrors = [];
-
-			for (const workout of userTemplateData.workouts) {
-				const errorMessages = validateClientData(workout);
-				if (errorMessages) {
-					allErrors = errorMessages;
-				}
-			}
-			if (allErrors.length > 0) {
-				console.log('Errors found', allErrors);
-				return;
-			}
-			// If no errors are found, the function sends the data to the server
-			console.log('No errors found');
-			return;
+		if (caughtErrors.length === 0) {
+			toggleFlyin();
 		}
-
-		validationResult(storageData);
 	}
 
 	// This function is envoked through use:enhance action in the form element
