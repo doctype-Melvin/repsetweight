@@ -2,7 +2,13 @@
 	// @ts-nocheck
 
 	import { goto } from '$app/navigation';
-	import { muscleGroupsData, exerciseMuscleData, collapseWorkouts, missingClientData, userTemplateData } from '$lib/stores.js';
+	import {
+		muscleGroupsData,
+		exerciseMuscleData,
+		collapseWorkouts,
+		missingClientData,
+		userTemplateData
+	} from '$lib/stores.js';
 	import { validationResult } from '$lib/dataProcessing.js';
 	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
@@ -17,15 +23,13 @@
 
 	$: isFlyinVisible = false;
 
-	
-
 	function toggleFlyin() {
 		isFlyinVisible = !isFlyinVisible;
 	}
 
 	function cancelCreate() {
 		localStorage.clear();
-		console.clear()
+		console.clear();
 		goto('/');
 	}
 
@@ -36,10 +40,10 @@
 	function handleSaveButtonClick() {
 		const storageData = JSON.parse(localStorage.getItem('userTemplate')) || '[]';
 		const caughtWarnings = validationResult(storageData);
-		
+
 		if (caughtWarnings.length > 0) {
 			missingClientData.set(caughtWarnings);
-			return
+			return;
 		}
 
 		if (caughtWarnings.length === 0) {

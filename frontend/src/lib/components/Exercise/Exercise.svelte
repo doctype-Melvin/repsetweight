@@ -1,10 +1,9 @@
 <script>
 	// @ts-nocheck
-	import { userTemplateData, missingClientData } from '$lib/stores';
+	import { userTemplateData } from '$lib/stores';
 	import { writable, derived } from 'svelte/store';
 	import Select from '../Inputs/Select.svelte';
 	import { onMount } from 'svelte';
-	import { removeWarnings } from '$lib/dataProcessing';
 
 	export let name;
 	export let eid;
@@ -12,7 +11,7 @@
 	export let toggleFlyout;
 
 	// console.log('Exercise Component', name, eid, wid)
-	
+
 	onMount(() => {
 		function restrictedInputValues(event) {
 			const regex = /^[0-9\b]+$/;
@@ -23,7 +22,7 @@
 
 		const weightInput = document.querySelector('.input-weight');
 		weightInput.addEventListener('keypress', restrictedInputValues);
-	});	
+	});
 
 	const thisWorkout = derived(userTemplateData, ($userTemplateData) => {
 		return $userTemplateData.workouts.find((workout) => workout.wid === wid);
@@ -35,8 +34,6 @@
 		const target = $thisWorkout.muscles.find((muscle) =>
 			muscle.exercises.some((exercise) => exercise.eid === eid)
 		);
-
-		removeWarnings(wid, target.id, eid, 'exercise', missingClientData);
 
 		// Remove the exercise from the target muscle group exercises array
 		const updatedTargetExercises = target.exercises.filter((exercise) => exercise.eid !== eid);
@@ -113,21 +110,19 @@
 	// Function to get exercise variable values from local storage
 	function getVariableValue(exerciseID, variable) {
 		const storageData = JSON.parse(localStorage.getItem('userTemplate')) || '[]';
-		
+
 		if (storageData.workouts) {
-			
 			const workout = storageData.workouts.find((workout) => workout.wid === wid);
 			const exercise = workout.exercises.find((exercise) => exercise[exerciseID]);
-			
+
 			if (exercise) {
 				const [key, obj] = Object.entries(exercise)[0];
-				return ((obj[variable]) === undefined) ? '' : Number(obj[variable]);
+				return obj[variable] === undefined ? '' : Number(obj[variable]);
 			}
-			
+
 			return 0;
 		}
 	}
-
 </script>
 
 <section class="card" data-exerciseId={eid}>
@@ -151,7 +146,6 @@
 			min="0"
 			max="1000"
 			on:input={(event) => handleExerciseVariables(event.target.value, 'weight', eid)}
-			
 		/>
 		<button
 			type="button"

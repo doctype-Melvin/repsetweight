@@ -23,8 +23,7 @@
 
 		return unsubscribe;
 	});
-	
-	
+
 	let userWorkout = {
 		name: 'Workout 1',
 		description: '',
@@ -47,7 +46,7 @@
 				)
 			};
 		});
-	};
+	}
 
 	// Handler functions for adding and removing workouts
 	function addWorkoutHandler() {
@@ -60,7 +59,7 @@
 		userTemplateData.update((data) => {
 			return { workouts: [...data.workouts, newWorkout] };
 		});
-	};
+	}
 
 	function copyWorkoutHandler(wid) {
 		let workout = $userTemplateData.workouts.find((workout) => workout.wid === wid);
@@ -70,20 +69,20 @@
 			wid: nanoid(7)
 		};
 
-		const newExerciseIds = newWorkout.muscles.map(muscle => ({
+		const newExerciseIds = newWorkout.muscles.map((muscle) => ({
 			...muscle,
-			exercises: muscle.exercises.map(exercise => ({
+			exercises: muscle.exercises.map((exercise) => ({
 				...exercise,
 				eid: nanoid(5)
-			}))	
-		}))
-		
+			}))
+		}));
+
 		newWorkout.muscles = newExerciseIds;
 
 		userTemplateData.update((data) => {
 			return { workouts: [...data.workouts, newWorkout] };
 		});
-	};
+	}
 
 	function removeWorkoutHandler(wid) {
 		if ($userTemplateData.workouts.length === 1) {
@@ -96,12 +95,10 @@
 				return { workouts: [...filterWorkouts] };
 			});
 		}
-	};
-
-	
+	}
 </script>
 
-<section class="composer-container" >
+<section class="composer-container">
 	{#if $userTemplateData}
 		<ul
 			class="dropzone"

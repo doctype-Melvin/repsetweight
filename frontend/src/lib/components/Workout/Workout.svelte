@@ -5,6 +5,7 @@
 	import { userTemplateData, missingClientData } from '$lib/stores.js';
 	import { derived, writable } from 'svelte/store';
 	import { draggable, dropzone } from '$lib/dragAndDrop';
+	import { onDestroy } from 'svelte';
 
 	export let deleteWorkout;
 	export let copyWorkout;
@@ -14,14 +15,18 @@
 	// and handle adding muscle groups.
 	// The userTemplateData store is updated with the new muscle groups
 	let currentWorkout = writable(null);
-	
+
 	const filterTemplateData = derived(userTemplateData, ($userTemplateData) => {
 		if ($userTemplateData.workouts) {
 			return $userTemplateData.workouts.find((workout) => workout.wid === id);
 		}
-		return []
+		return [];
 	});
-	
+
+	const unsubscribeWorkout = filterTemplateData.subscribe((value) => {
+		currentWorkout.set(value);
+	});
+
 	let showFlyout = false;
 
 	function toggleFlyout(signal) {
@@ -30,19 +35,22 @@
 			props.wid = id;
 		}
 		showFlyout = !showFlyout;
-	};
+	}
 
 	function handleDeleteWorkout(id) {
 		deleteWorkout(id);
-	};
+	}
 
 	const props = {
 		toggle: toggleFlyout
 	};
 
+	onDestroy(() => {
+		unsubscribeWorkout();
+	});
 </script>
 
-<section class="workout-container" >
+<section class="workout-container">
 	{#if $currentWorkout}
 		<div class="buttons">
 			<button type="button" on:click={copyWorkout(id)}>Copy Workout</button>

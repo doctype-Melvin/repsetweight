@@ -166,9 +166,7 @@ export function validateComposerData(workoutData) {
 				const keys = ['sets', 'reps', 'weight'];
 
 				if (Object.keys(details).length < 3) {
-					const missingKeys = keys.filter(
-						(key) => !Object.keys(details).includes(key)
-					);
+					const missingKeys = keys.filter((key) => !Object.keys(details).includes(key));
 
 					let error = {
 						message: `Please provide ${missingKeys.length > 1 ? missingKeys.join(' and ') : missingKeys} for ${exercise.name} in ${workoutData.name}`,
@@ -201,7 +199,7 @@ export function validationResult(userTemplateData) {
 			allErrors = [...allErrors, ...errorMessages];
 		}
 	}
-	
+
 	return allErrors;
 }
 
@@ -212,25 +210,25 @@ export function removeWarnings(wid, mid, eid, warningLevel, store) {
 	// The level reflects which component was deleted
 	// muscle, exercise or variables
 	// The id is the id of the component that was deleted
-		
+
 	// This needs to change it only checks the exercise id
 	// The whole validation process after warnings have been set
 	// needs to revalidate the data when changes occur to
 	// asses if the warnings are resolved
-		store.update((data) => {
-			const warnings = data.filter((warning) => {
-				if (warning.level !== warningLevel) {
-					if (warning.workoutId !== wid) {
-						if (warning.muscleID && warning.muscleID !== mid) {
-							if (warning.exerciseID && warning.exerciseID !== eid) {
-								return warning;
-							}
+	store.update((data) => {
+		const warnings = data.filter((warning) => {
+			if (warning.level !== warningLevel) {
+				if (warning.workoutId !== wid) {
+					if (warning.muscleID && warning.muscleID !== mid) {
+						if (warning.exerciseID && warning.exerciseID !== eid) {
+							return warning;
 						}
 					}
 				}
-			})
-			return [...warnings]
-		})
+			}
+		});
+		return [...warnings];
+	});
 
-		// console.log('Warnings updated', store);
+	// console.log('Warnings updated', store);
 }

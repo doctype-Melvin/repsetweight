@@ -9,9 +9,9 @@ export const userData = writable();
 export const userTemplateData = writable(null);
 // Set errors for user created templates
 export function userTemplateErrors(array) {
-    userTemplateData.update((data) => {
-        return { ...data, errors: [...array] };
-    });   
+	userTemplateData.update((data) => {
+		return { ...data, errors: [...array] };
+	});
 }
 export const missingClientData = writable([]);
 
