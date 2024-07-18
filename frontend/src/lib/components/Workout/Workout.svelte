@@ -5,7 +5,6 @@
 	import { userTemplateData, missingClientData } from '$lib/stores.js';
 	import { derived, writable } from 'svelte/store';
 	import { draggable, dropzone } from '$lib/dragAndDrop';
-	import { onDestroy } from 'svelte';
 
 	export let deleteWorkout;
 	export let copyWorkout;
@@ -18,19 +17,11 @@
 	
 	const filterTemplateData = derived(userTemplateData, ($userTemplateData) => {
 		if ($userTemplateData.workouts) {
-			
 			return $userTemplateData.workouts.find((workout) => workout.wid === id);
 		}
 		return []
 	});
 	
-	const unsubscribeWorkout = filterTemplateData.subscribe((value) => {
-		currentWorkout.set(value);
-	});
-
-	// Subscribe to the missingClientData store to get the missing data warnings
-	let missingData = []
-
 	let showFlyout = false;
 
 	function toggleFlyout(signal) {
@@ -48,11 +39,6 @@
 	const props = {
 		toggle: toggleFlyout
 	};
-
-	onDestroy(() => {
-		unsubscribeWorkout();
-
-	})
 
 </script>
 

@@ -1,15 +1,17 @@
 <script>
 	// @ts-nocheck
-	import { userTemplateData } from '$lib/stores';
+	import { userTemplateData, missingClientData } from '$lib/stores';
 	import { writable, derived } from 'svelte/store';
 	import Select from '../Inputs/Select.svelte';
 	import { onMount } from 'svelte';
+	import { removeWarnings } from '$lib/dataProcessing';
 
 	export let name;
 	export let eid;
 	export let wid;
 	export let toggleFlyout;
 
+	// console.log('Exercise Component', name, eid, wid)
 	
 	onMount(() => {
 		function restrictedInputValues(event) {
@@ -33,6 +35,8 @@
 		const target = $thisWorkout.muscles.find((muscle) =>
 			muscle.exercises.some((exercise) => exercise.eid === eid)
 		);
+
+		removeWarnings(wid, target.id, eid, 'exercise', missingClientData);
 
 		// Remove the exercise from the target muscle group exercises array
 		const updatedTargetExercises = target.exercises.filter((exercise) => exercise.eid !== eid);

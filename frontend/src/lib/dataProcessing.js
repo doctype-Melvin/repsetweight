@@ -122,7 +122,8 @@ export function validateComposerData(workoutData) {
 	if (workoutData.muscles.length === 0) {
 		let error = {
 			message: `Please add muscle groups to ${workoutData.name}`,
-			workoutId: workoutData.wid
+			workoutId: workoutData.wid,
+			level: 'muscle'
 		};
 
 		errors.push(error);
@@ -133,7 +134,8 @@ export function validateComposerData(workoutData) {
 			let error = {
 				message: `Please add exercises for ${muscle.name} in ${workoutData.name}`,
 				workoutId: workoutData.wid,
-				muscleId: muscle.id
+				muscleId: muscle.id,
+				level: 'exercise'
 			};
 
 			if (muscle.exercises.length === 0) {
@@ -151,7 +153,8 @@ export function validateComposerData(workoutData) {
 				message: `Please add the sets, reps and weight for ${exercise.name} in ${workoutData.name}`,
 				workoutId: workoutData.wid,
 				muscleId: muscle.id,
-				exerciseId: exercise.eid
+				exerciseId: exercise.eid,
+				level: 'variables'
 			};
 
 			if (!exerciseDetails) {
@@ -171,7 +174,8 @@ export function validateComposerData(workoutData) {
 						message: `Please provide ${missingKeys.length > 1 ? missingKeys.join(' and ') : missingKeys} for ${exercise.name} in ${workoutData.name}`,
 						workoutId: workoutData.wid,
 						muscleId: muscle.id,
-						exerciseId: exercise.eid
+						exerciseId: exercise.eid,
+						level: 'variables'
 					};
 
 					errors.push(error);
@@ -199,4 +203,34 @@ export function validationResult(userTemplateData) {
 	}
 	
 	return allErrors;
+}
+
+// This function will remove warnings from the store
+// corresponding to the deleted component
+
+export function removeWarnings(wid, mid, eid, warningLevel, store) {
+	// The level reflects which component was deleted
+	// muscle, exercise or variables
+	// The id is the id of the component that was deleted
+		
+	// This needs to change it only checks the exercise id
+	// The whole validation process after warnings have been set
+	// needs to revalidate the data when changes occur to
+	// asses if the warnings are resolved
+		store.update((data) => {
+			const warnings = data.filter((warning) => {
+				if (warning.level !== warningLevel) {
+					if (warning.workoutId !== wid) {
+						if (warning.muscleID && warning.muscleID !== mid) {
+							if (warning.exerciseID && warning.exerciseID !== eid) {
+								return warning;
+							}
+						}
+					}
+				}
+			})
+			return [...warnings]
+		})
+
+		// console.log('Warnings updated', store);
 }

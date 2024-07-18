@@ -37,12 +37,12 @@
 		const storageData = JSON.parse(localStorage.getItem('userTemplate')) || '[]';
 		const caughtWarnings = validationResult(storageData);
 		
-		if (caughtErrors.length > 0) {
+		if (caughtWarnings.length > 0) {
 			missingClientData.set(caughtWarnings);
 			return
 		}
 
-		if (caughtErrors.length === 0) {
+		if (caughtWarnings.length === 0) {
 			toggleFlyin();
 		}
 	}

@@ -70,6 +70,16 @@
 			wid: nanoid(7)
 		};
 
+		const newExerciseIds = newWorkout.muscles.map(muscle => ({
+			...muscle,
+			exercises: muscle.exercises.map(exercise => ({
+				...exercise,
+				eid: nanoid(5)
+			}))	
+		}))
+		
+		newWorkout.muscles = newExerciseIds;
+
 		userTemplateData.update((data) => {
 			return { workouts: [...data.workouts, newWorkout] };
 		});
@@ -81,9 +91,9 @@
 			return userTemplateData.set({ workouts: newArray });
 		} else {
 			userTemplateData.update((data) => {
-				const filterErrors = data.errors.filter((error) => error.workoutId !== wid);
+				// const filterErrors = data.errors.filter((error) => error.workoutId !== wid);
 				const filterWorkouts = data.workouts.filter((workout) => workout.wid !== wid);
-				return { workouts: [...filterWorkouts], errors: [...filterErrors] };
+				return { workouts: [...filterWorkouts] };
 			});
 		}
 	};
