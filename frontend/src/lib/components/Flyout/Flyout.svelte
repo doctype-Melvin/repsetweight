@@ -165,6 +165,11 @@
 				checked.map((exercise) => {
 					exercise.eid = nanoid(5);
 					exercise.muscle_id = muscle.id;
+					exercise.baseline = {
+						sets: 0,
+						reps: 0,
+						weight: 0
+					};
 				});
 			} else {
 				checked.map((exercise) => {
@@ -172,6 +177,13 @@
 						preselectedExercises.find((entry) => entry.id === exercise.id)?.eid ||
 						nanoid(5);
 					exercise.muscle_id = muscle.id;
+					exercise.baseline = preselectedExercises.find(
+						(entry) => entry.id === exercise.id
+					)?.baseline || {
+						sets: 0,
+						reps: 0,
+						weight: 0
+					};
 				});
 			}
 			updateWorkoutData(checked, 'exercises');

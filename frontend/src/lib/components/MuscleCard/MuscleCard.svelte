@@ -68,6 +68,7 @@
 								name={exercise.name}
 								eid={exercise.eid}
 								wid={id}
+								baseline={exercise.baseline}
 								{toggleFlyout}
 							/>
 						</div>

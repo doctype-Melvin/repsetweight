@@ -10,8 +10,8 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"test": "vitest --disable-console-intercept run",
-		"test:watch": "vitest --disable-console-intercept"
+		"test": "vitest run --disable-console-intercept",
+		"test:watch": "vitest --reporter=basic --disable-console-intercept"
 	},
 	"devDependencies": {
 		"@iconify-json/mdi": "^1.1.66",
