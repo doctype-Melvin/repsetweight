@@ -9,7 +9,7 @@
 	<select on:change={(event) => onChange(event.target.value)}>
 		{#if optionsCount > 0}
 			{#each Array(optionsCount) as _, i}
-				<option value={i} selected={presetValue === i}>{i}</option>
+				<option value={i} selected={Number(presetValue) === i}>{i}</option>
 			{/each}
 		{/if}
 	</select>

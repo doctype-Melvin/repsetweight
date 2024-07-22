@@ -236,7 +236,7 @@ describe('Internal function', () => {
 		expect(result.workouts[0].muscles[0].exercises).toHaveLength(2);
 	});
 
-	test('updates exercise baseline values from input values', async () => {
+	test('changing sets, reps or weight should update the template data store', async () => {
 		userTemplateData.subscribe.mockImplementation((callback) => {
 			callback(mockData);
 			return () => {};
@@ -267,6 +267,6 @@ describe('Internal function', () => {
 
 		const updateMock = userTemplateData.update.mock.calls[0][0];
 		const result = updateMock(mockData);
-		expect(result.workouts[0].muscles[0].exercises[2].baseline.sets).toBe(3);
+		expect(result.workouts[0].muscles[0].exercises[2].baseline.sets).toBe('3');
 	});
 });

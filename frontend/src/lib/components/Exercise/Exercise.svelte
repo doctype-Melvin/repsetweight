@@ -11,6 +11,9 @@
 	export let baseline;
 	export let toggleFlyout;
 
+	// Handle float numbers from 
+	// weight input field
+
 	function inputRestriction(event) {
 		const key = event.key;
 		const currentValue = event.target.value;
@@ -49,8 +52,8 @@
 	}
 
 	function getInputValue(event) {
-		console.log(event.target.value)
-		return
+		let weightValue = event.target.value
+		return weightValue
 	}
 
 	function deleteExercise(eid) {
@@ -79,7 +82,7 @@
 	function handleExerciseVariables(data) {
 		const { value, column, eid } = data;
 
-		const updatedBaseline = { ...baseline, [column]: Number(value) };
+		const updatedBaseline = { ...baseline, [column]: value === '' ? 0 : value };
 
 		userTemplateData.update((data) => {
 			const updatedWorkouts = data.workouts.map((workout) => {
@@ -106,6 +109,7 @@
 					return workout;
 				}
 			});
+			
 			return { workouts: updatedWorkouts };
 		});
 	}
@@ -139,7 +143,7 @@
 			pattern="[0-9]+([,\.][0-9]+)?"
 			bind:value={baseline.weight}
 			on:keydown={(event) => inputRestriction(event)}
-			on:blur={(event) => getInputValue(event)}
+			on:blur={(event) => handleExerciseVariables({value: event.target.value, column: 'weight', eid})}
 		/>
 		<button type="button" class="button-remove-exercise" on:click={() => deleteExercise(eid)}
 			>X</button
