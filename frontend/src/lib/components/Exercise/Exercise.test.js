@@ -49,7 +49,6 @@ describe('Exercise component', () => {
 	});
 
 	test('weight input allows only numbers', async () => {
-
 		const user = userEvent.setup();
 
 		const { getByRole } = await render(Exercise, {
@@ -67,16 +66,14 @@ describe('Exercise component', () => {
 		});
 
 		const weightInput = getByRole('textbox', { name: '' });
-		
+
 		expect(weightInput).toBeTruthy();
 		expect(weightInput.value).toBe('20');
 
 		weightInput.focus();
 		await user.keyboard('{Backspace}');
-		await user.keyboard('foo')
+		await user.keyboard('foo');
 		expect(weightInput.value).toBe('2');
-
-		
 	});
 
 	test('weight input limits decimals to two digits', async () => {
@@ -128,10 +125,10 @@ describe('Exercise component', () => {
 		const weightInput = getByRole('textbox', { name: '' });
 
 		expect(weightInput).toBeTruthy();
-		
-		await user.type(weightInput, '20.5.78')
+
+		await user.type(weightInput, '20.5.78');
 		expect(weightInput.value).toBe('20.57');
-	})
+	});
 
 	test('weight input is limited to 6 characters', async () => {
 		const user = userEvent.setup();
@@ -156,10 +153,10 @@ describe('Exercise component', () => {
 		await user.type(weightInput, '1234567');
 		expect(weightInput.value).toBe('123456');
 
-		await user.clear(weightInput)
-		await user.type(weightInput, '123,4567')
+		await user.clear(weightInput);
+		await user.type(weightInput, '123,4567');
 		expect(weightInput.value).toBe('123,45');
-	})
+	});
 });
 
 describe('Internal function', () => {

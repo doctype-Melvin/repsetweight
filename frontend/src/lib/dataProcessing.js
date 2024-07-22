@@ -98,137 +98,59 @@ export const deleteUserTemplate = async (templateID) => {
 
 // Data coming from Composer
 
-export function validateComposerData(workoutData) {
-	const errors = [];
-	/*
-		The errors array should contain objects with the following structure:
-		{
-			message: `Please add muscle groups to ${workoutData.name}`
-			workoutId: workoutData.wid,
-			muscleId: muscle.id,
-			exerciseId: exercise.eid
-		}				
+/* 
+go through data 
+if workout 
+and no muscles
+add warning with workout details and muscle name
+if muscle
+and no exercises
+add warning with muscle details and exercise name
+if exercise 
+and no baseline values
+add warning with exercise details 
+ */
 
-		these objects will be used to display the error messages in the UI
-	*/
+export function validateTemplateData(data) {
+	const warnings = [];
 
-	// This function is part of the validation process
-	// It takes a single workout and examines if:
-	// 1. The workout has muscle groups
-	// 2. The muscle groups have exercises
-	// 3. The exercises have values
-	// If any of the above conditions are not met, the function returns an error message
-
-	if (workoutData.muscles.length === 0) {
-		let error = {
-			message: `Please add muscle groups to ${workoutData.name}`,
-			workoutId: workoutData.wid,
-			level: 'muscle'
-		};
-
-		errors.push(error);
-	}
-
-	if (workoutData.muscles.length > 0) {
-		for (const muscle of workoutData.muscles) {
-			let error = {
-				message: `Please add exercises for ${muscle.name} in ${workoutData.name}`,
-				workoutId: workoutData.wid,
-				muscleId: muscle.id,
-				level: 'exercise'
-			};
-
-			if (muscle.exercises.length === 0) {
-				errors.push(error);
-			}
+	for (const workout of data) {
+		if (workout.muscles.length === 0) {
+			console.log('workout missing muscles');
+			warnings.push({
+				type: 'workout',
+				data: workout,
+				message: `${workout.name} is missing target muscle groups and exercises`
+			});
 		}
-	}
 
-	for (const muscle of workoutData.muscles) {
-		for (const exercise of muscle.exercises) {
-			const eid = exercise.eid;
-			const exerciseDetails = workoutData.exercises.find((exercise) => exercise[eid]);
-
-			let error = {
-				message: `Please add the sets, reps and weight for ${exercise.name} in ${workoutData.name}`,
-				workoutId: workoutData.wid,
-				muscleId: muscle.id,
-				exerciseId: exercise.eid,
-				level: 'variables'
-			};
-
-			if (!exerciseDetails) {
-				errors.push(error);
-				continue;
-			}
-
-			for (const details of Object.values(exerciseDetails)) {
-				const keys = ['sets', 'reps', 'weight'];
-
-				if (Object.keys(details).length < 3) {
-					const missingKeys = keys.filter((key) => !Object.keys(details).includes(key));
-
-					let error = {
-						message: `Please provide ${missingKeys.length > 1 ? missingKeys.join(' and ') : missingKeys} for ${exercise.name} in ${workoutData.name}`,
-						workoutId: workoutData.wid,
-						muscleId: muscle.id,
-						exerciseId: exercise.eid,
-						level: 'variables'
-					};
-
-					errors.push(error);
-					break;
+		if (workout.muscles.length > 0) {
+			for (const muscle of workout.muscles) {
+				if (muscle.exercises.length === 0) {
+					console.log('muscle missing exercises');
+					warnings.push({
+						type: 'muscle',
+						data: muscle,
+						message: `${muscle.name} in ${workout.name} is missing exercises`
+					});
 				}
-			}
-		}
-	}
 
-	return errors;
-}
-
-export function validationResult(userTemplateData) {
-	// This function is part of the validation process
-	// It takes the client data from local storage
-	// and iterates through the workouts
-	// calling the validation function for each workout
-	let allErrors = [];
-
-	for (const workout of userTemplateData.workouts) {
-		const errorMessages = validateComposerData(workout);
-		if (errorMessages) {
-			allErrors = [...allErrors, ...errorMessages];
-		}
-	}
-
-	return allErrors;
-}
-
-// This function will remove warnings from the store
-// corresponding to the deleted component
-
-export function removeWarnings(wid, mid, eid, warningLevel, store) {
-	// The level reflects which component was deleted
-	// muscle, exercise or variables
-	// The id is the id of the component that was deleted
-
-	// This needs to change it only checks the exercise id
-	// The whole validation process after warnings have been set
-	// needs to revalidate the data when changes occur to
-	// asses if the warnings are resolved
-	store.update((data) => {
-		const warnings = data.filter((warning) => {
-			if (warning.level !== warningLevel) {
-				if (warning.workoutId !== wid) {
-					if (warning.muscleID && warning.muscleID !== mid) {
-						if (warning.exerciseID && warning.exerciseID !== eid) {
-							return warning;
+				if (muscle.exercises.length > 0) {
+					for (const exercise of muscle.exercises) {
+						for (const variable in exercise.baseline) {
+							if (variable !== 'weight' && exercise.baseline[variable] === 0) {
+								warnings.push({
+									type: 'exercise',
+									data: exercise,
+									message: `${workout.name} is missing ${variable} for ${exercise.name}`
+								});
+							}
 						}
 					}
 				}
 			}
-		});
-		return [...warnings];
-	});
+		}
+	}
 
-	// console.log('Warnings updated', store);
+	return warnings;
 }

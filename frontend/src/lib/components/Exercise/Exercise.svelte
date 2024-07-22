@@ -11,7 +11,7 @@
 	export let baseline;
 	export let toggleFlyout;
 
-	// Handle float numbers from 
+	// Handle float numbers from
 	// weight input field
 
 	function inputRestriction(event) {
@@ -22,7 +22,6 @@
 				? currentValue.lastIndexOf('.')
 				: currentValue.lastIndexOf(',');
 
-		
 		// Allow numbers, backspace, delete, comma, and period
 		if (/^[0-9\b,.]$/.test(key)) {
 			// Prevent multiple decimal points or commas
@@ -52,8 +51,8 @@
 	}
 
 	function getInputValue(event) {
-		let weightValue = event.target.value
-		return weightValue
+		let weightValue = event.target.value;
+		return weightValue;
 	}
 
 	function deleteExercise(eid) {
@@ -109,7 +108,7 @@
 					return workout;
 				}
 			});
-			
+
 			return { workouts: updatedWorkouts };
 		});
 	}
@@ -143,7 +142,8 @@
 			pattern="[0-9]+([,\.][0-9]+)?"
 			bind:value={baseline.weight}
 			on:keydown={(event) => inputRestriction(event)}
-			on:blur={(event) => handleExerciseVariables({value: event.target.value, column: 'weight', eid})}
+			on:blur={(event) =>
+				handleExerciseVariables({ value: event.target.value, column: 'weight', eid })}
 		/>
 		<button type="button" class="button-remove-exercise" on:click={() => deleteExercise(eid)}
 			>X</button

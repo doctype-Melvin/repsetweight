@@ -9,7 +9,7 @@
 		missingClientData,
 		userTemplateData
 	} from '$lib/stores.js';
-	import { validationResult } from '$lib/dataProcessing.js';
+	import { validateTemplateData } from '$lib/dataProcessing.js';
 	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
 	import Composer from '$lib/components/Composer/Composer.svelte';
@@ -39,17 +39,15 @@
 
 	function handleSaveButtonClick() {
 		const storageData = JSON.parse(localStorage.getItem('userTemplate')) || '[]';
-		const caughtWarnings = validationResult(storageData);
+		const validationResult = validateTemplateData(storageData.workouts);
 
-		if (caughtWarnings.length > 0) {
-			missingClientData.set(caughtWarnings);
-			console.log(caughtWarnings);
+		if (validationResult.length > 0) {
+			console.log('Validation failed');
+			console.log(validationResult);
 			return;
 		}
 
-		if (caughtWarnings.length === 0) {
-			toggleFlyin();
-		}
+		console.log('Validation passed');
 	}
 
 	// This function is envoked through use:enhance action in the form element
