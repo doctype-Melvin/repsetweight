@@ -43,6 +43,7 @@
 
 		if (caughtWarnings.length > 0) {
 			missingClientData.set(caughtWarnings);
+			console.log(caughtWarnings);
 			return;
 		}
 

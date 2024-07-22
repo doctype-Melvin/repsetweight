@@ -11,38 +11,47 @@
 	export let baseline;
 	export let toggleFlyout;
 
-	onMount(() => {
-		function restrictInput(event) {
-			const input = event.target
-			if (event.key === 'Backspace') {
-				input.value = input.value.slice(0, -1)
-			}
-			const oldValue = input.value
-			const newValue = input.value.replace(/[^0-9]/g, '')
-			
-			if (oldValue !== newValue) {
-				input.value = newValue
-			}	
-			
-		}
+	function inputRestriction(event) {
+		const key = event.key;
+		const currentValue = event.target.value;
+		const decimalIndex =
+			currentValue.lastIndexOf('.') >= 0
+				? currentValue.lastIndexOf('.')
+				: currentValue.lastIndexOf(',');
 
-		const weightInputs = document.querySelectorAll('.input-weight');
-		if (weightInputs.length > 0) {
-			weightInputs.forEach((input) => {
-				input.addEventListener('keydown', restrictInput);
-				input.addEventListener('input', restrictInput);
-			});
-		}
-
-		return () => {
-			if (weightInputs) {
-				weightInputs.forEach((weightInput) => {
-					weightInput.removeEventListener('keydown', restrictInput);
-					weightInput.removeEventListener('input', restrictInput);
-				});
+		
+		// Allow numbers, backspace, delete, comma, and period
+		if (/^[0-9\b,.]$/.test(key)) {
+			// Prevent multiple decimal points or commas
+			if ((key === '.' || key === ',') && currentValue === '') {
+				event.preventDefault();
 			}
-		};
-	});
+			if ((key === '.' || key === ',') && decimalIndex !== -1) {
+				event.preventDefault();
+			}
+			// Prevent more than two decimal places
+			if (decimalIndex !== -1 && currentValue.length - decimalIndex - 1 > 1) {
+				event.preventDefault();
+			}
+		} else if (!/^[0-9\b,.]$/.test(key)) {
+			if (
+				key === 'Backspace' ||
+				key === 'Delete' ||
+				key === 'ArrowLeft' ||
+				key === 'ArrowRight' ||
+				key === 'Tab'
+			) {
+				return;
+			} else {
+				event.preventDefault();
+			}
+		}
+	}
+
+	function getInputValue(event) {
+		console.log(event.target.value)
+		return
+	}
 
 	function deleteExercise(eid) {
 		userTemplateData.update((data) => {
@@ -69,6 +78,7 @@
 
 	function handleExerciseVariables(data) {
 		const { value, column, eid } = data;
+
 		const updatedBaseline = { ...baseline, [column]: Number(value) };
 
 		userTemplateData.update((data) => {
@@ -104,9 +114,8 @@
 		return {
 			deleteExercise,
 			handleExerciseVariables
-		}
+		};
 	}
-
 </script>
 
 <section class="card" data-exerciseId={eid}>
@@ -123,14 +132,14 @@
 			presetValue={baseline.reps}
 		/>
 		<input
-			type="number"
+			type="text"
 			name="weight"
+			maxlength="6"
 			class="input-weight"
+			pattern="[0-9]+([,\.][0-9]+)?"
 			bind:value={baseline.weight}
-			min="0"
-			max="1000"
-			on:input={(event) =>
-				handleExerciseVariables({ value: event.target.value, column: 'weight', eid })}
+			on:keydown={(event) => inputRestriction(event)}
+			on:blur={(event) => getInputValue(event)}
 		/>
 		<button type="button" class="button-remove-exercise" on:click={() => deleteExercise(eid)}
 			>X</button
