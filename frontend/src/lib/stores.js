@@ -7,6 +7,12 @@ export const userData = writable();
 
 // Store for user created template data
 export const userTemplateData = writable(null);
+export const composerData = writable({
+	workouts: [],
+	muscles: [],
+	exercises: [],
+
+})
 // Set errors for user created templates
 export function userTemplateErrors(array) {
 	userTemplateData.update((data) => {

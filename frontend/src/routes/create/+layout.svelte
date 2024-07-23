@@ -6,7 +6,6 @@
 		muscleGroupsData,
 		exerciseMuscleData,
 		collapseWorkouts,
-		missingClientData,
 		userTemplateData
 	} from '$lib/stores.js';
 	import { validateTemplateData } from '$lib/dataProcessing.js';
