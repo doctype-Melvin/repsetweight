@@ -90,7 +90,7 @@
 			return userTemplateData.set({ workouts: newArray });
 		} else {
 			userTemplateData.update((data) => {
-				// const filterErrors = data.errors.filter((error) => error.workoutId !== wid);
+				
 				const filterWorkouts = data.workouts.filter((workout) => workout.wid !== wid);
 				return { workouts: [...filterWorkouts] };
 			});
