@@ -1,39 +1,69 @@
 // @ts-nocheck
 
-
-import ComposerV2 from "./ComposerV2.svelte";
-import { render } from "@testing-library/svelte";
+import { fireEvent, render } from "@testing-library/svelte";
 import { test, describe, expect, vi, beforeEach } from "vitest";
-
-const { mockComposerStore } = vi.hoisted( async () => await import("../../mockStores.js"));
-// 1. Figure out a way of using imported mocked stores
-// 2. If that's too much of a challenge, mock the 
-// store directly in the test file
+import { mockComposerDataStore } from "$lib/mockStores";
+import ComposerV2 from "./ComposerV2.svelte";
 
 describe('ComposerV2', async () => {
-    let component
-    
+
+    const mockData = {
+        workouts: [
+            {
+                wid: 'testId',
+                muscles: [],
+                exercises: []
+            }
+        ],
+        muscles: [],
+        exercises: []
+    }
+
     beforeEach( async () => {
         vi.resetAllMocks()
-        vi.mock('$lib/mockStores', () => ({ composerData: mockComposerStore }))
-        console.log(mockComposerStore)
-        component = await render(ComposerV2)
+        vi.mock('$lib/stores', async () => {
+            return {
+                composerData: mockComposerDataStore
+            }
+        })
     })
 
     test('renders correctly', async () => {
-        const { getByText } = await component;
+        const { getByText } = render(ComposerV2);
         expect(getByText('ComposerV2')).not.toBeNull();
     })
 
     test('has a button to add workouts', async () => {
-        const { getByText } = await component;
+        const { getByText } = render(ComposerV2);
         expect(getByText('Add Workout')).not.toBeNull();
     })
    
     test('clicking the button adds a workout to the store', async () => {
-        const { getByText } = await component;
-        getByText('Add Workout').click()
-        expect(mockComposerStore.update).toHaveBeenCalled()
+        const { getByText } = render(ComposerV2);
+        
+        expect(getByText('Add Workout')).toBeInTheDocument();
+        
+        await fireEvent.click(getByText('Add Workout'));
+        
+        expect(mockComposerDataStore.update).toHaveBeenCalled();
+        
+        const updateMock = mockComposerDataStore.update.mock.calls[0][0];
+        const result = updateMock(mockData)
+
+        expect(result.workouts.length).toBeGreaterThan(mockData.workouts.length);
+
+    })
+
+    test('renders as many Workout components as there are workouts in the store', async () => {
+        const { getByText } = render(ComposerV2);
+        // should render a ul with li for each workout
+
+        await fireEvent.click(getByText('Add Workout'));
+
+        const updateMock = mockComposerDataStore.update.mock.calls[0][0];
+        const result = updateMock(mockData)
+
+        expect(result.workouts[0].wid).toBe('testId');
     })
 
 })

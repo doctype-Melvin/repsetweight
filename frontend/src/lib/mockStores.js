@@ -1,12 +1,20 @@
 // @ts-nocheck
+import { writable } from "svelte/store";
 import { vi } from "vitest";
 
-export const mockComposerStore = {
+// Mock the writeable
+const mockComposerDataWriteable = writable({
     workouts: [],
     muscles: [],
-    exercises: [],
-    update: vi.fn(),
-    set: vi.fn(),
-    subscribe: vi.fn(),
-}
+    exercises: []
+})
 
+// Mock the store with 
+// all needed methods as vi.fn() to
+// test if they've been called
+export const mockComposerDataStore = {
+    subscribe: mockComposerDataWriteable.subscribe,
+    set: vi.fn(), 
+    update: vi.fn(),
+    
+}

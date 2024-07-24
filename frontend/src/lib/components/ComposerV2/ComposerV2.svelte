@@ -3,10 +3,11 @@
     import { composerData } from "$lib/stores";
 	import { nanoid } from "nanoid";
     
+    $: workoutCount = $composerData.workouts.length + 1;
 
     function addWorkout() {
         const workout = {
-            name: `Workout ${$composerData.workouts.length + 1}`,
+            name: `Workout ${workoutCount}`,
             wid: nanoid(7),
             muscles: []
         }
