@@ -18,13 +18,24 @@
 
         
     }
-
+    
 </script>
 
 <section class="composer-container">
-    <p>
-        ComposerV2
-    </p>
+    Lightweight
+    {#if $composerData.workouts.length > 0}
+        <ul>
+            {#each $composerData.workouts as workout, i}
+                <li>
+                    <h3>{workout.name}</h3>
+                    <input type="text" bind:value={workout.name} />
+                    <button type="button">Delete</button>
+                </li>
+            {/each}
+        </ul>
+            {:else}
+            <p>No workouts</p>
+    {/if}
 
     <button type="button" on:click={addWorkout}>Add Workout</button>
 </section>

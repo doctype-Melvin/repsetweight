@@ -6,15 +6,10 @@ import { mockComposerDataStore } from "$lib/mockStores";
 import ComposerV2 from "./ComposerV2.svelte";
 
 describe('ComposerV2', async () => {
+    let component
 
     const mockData = {
-        workouts: [
-            {
-                wid: 'testId',
-                muscles: [],
-                exercises: []
-            }
-        ],
+        workouts: [],
         muscles: [],
         exercises: []
     }
@@ -26,24 +21,23 @@ describe('ComposerV2', async () => {
                 composerData: mockComposerDataStore
             }
         })
+
+        component = await render(ComposerV2);
     })
 
     test('renders correctly', async () => {
-        const { getByText } = render(ComposerV2);
-        expect(getByText('ComposerV2')).not.toBeNull();
+
+        expect(component.getByText('Lightweight')).not.toBeNull();
     })
 
     test('has a button to add workouts', async () => {
-        const { getByText } = render(ComposerV2);
-        expect(getByText('Add Workout')).not.toBeNull();
+        expect(component.getByText('Add Workout')).not.toBeNull();
     })
    
     test('clicking the button adds a workout to the store', async () => {
-        const { getByText } = render(ComposerV2);
-        
-        expect(getByText('Add Workout')).toBeInTheDocument();
-        
-        await fireEvent.click(getByText('Add Workout'));
+        expect(component.getByText('Add Workout')).toBeInTheDocument();
+        const button = component.getByText('Add Workout');
+        await fireEvent.click(button);
         
         expect(mockComposerDataStore.update).toHaveBeenCalled();
         
@@ -54,16 +48,19 @@ describe('ComposerV2', async () => {
 
     })
 
-    test('renders as many Workout components as there are workouts in the store', async () => {
-        const { getByText } = render(ComposerV2);
-        // should render a ul with li for each workout
+    test('renders a list', async () => {
+        
+        
+        expect(component.getByText('No workouts')).toBeInTheDocument();
 
-        await fireEvent.click(getByText('Add Workout'));
-
-        const updateMock = mockComposerDataStore.update.mock.calls[0][0];
-        const result = updateMock(mockData)
-
-        expect(result.workouts[0].wid).toBe('testId');
+        mockComposerDataStore.set({
+            workouts: [{name: 'Workout 1'}],
+            muscles: [],
+            exercises: []
+        })
+        
+        
+        expect(component.getByText('Workout 1')).toBeInTheDocument();
     })
 
 })
