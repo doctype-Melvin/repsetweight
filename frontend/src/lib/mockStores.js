@@ -3,7 +3,7 @@ import { writable } from "svelte/store";
 import { vi } from "vitest";
 
 // Mock the writeable
-const mockComposerDataWriteable = writable({
+const mockComposerStore = writable({
     workouts: [],
     muscles: [],
     exercises: []
@@ -13,8 +13,12 @@ const mockComposerDataWriteable = writable({
 // all needed methods as vi.fn() to
 // test if they've been called
 export const mockComposerDataStore = {
-    subscribe: mockComposerDataWriteable.subscribe,
-    set: vi.fn(), 
-    update: vi.fn(),
+    subscribe: mockComposerStore.subscribe,
+    set: vi.fn((value) => mockComposerStore.set(value)), 
+    update: vi.fn((cb) => mockComposerStore.update(cb)),
     
+}
+
+export function getMockComposerStore() {
+    return mockComposerDataStore;
 }
