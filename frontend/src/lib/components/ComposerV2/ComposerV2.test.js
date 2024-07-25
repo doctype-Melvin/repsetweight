@@ -22,21 +22,30 @@ describe('ComposerV2', () => {
         mockComposerData.reset()
     })
 
-    test('Component renders...', async () => {
+    test('Component renders...', () => {
         expect(component.getByText('No workouts')).toBeInTheDocument();
     })
     
-    test('... and has a button named Add Workout', async () => {
+    test('... and has a button named Add Workout', () => {
         expect(component.getByText('Add Workout')).toBeInTheDocument();
     })
+
+    test('Initially there are no workouts listed', () => {
+        expect(component.getByText('No workouts')).toBeInTheDocument
+    })
     
-    test('Clicking Add Workout calls the store/s update method...', async () => {
+    test('Clicking Add Workout calls the store/s update method...', () => {
         component.getByText('Add Workout').click();
         expect(mockComposerData.update).toHaveBeenCalled();        
     })
 
-    test('... and adds a workout to the store', async () => {
+    test('... and adds a workout to the store', () => {
         component.getByText('Add Workout').click()
         expect(mockComposerData.get().workouts).toHaveLength(1)
+    })
+
+    test('After clicking Add Workout, a list item is rendered', async () => {
+        await component.getByText('Add Workout').click()
+        expect(component.getByText('Workout 1')).toBeInTheDocument()
     })
 })
