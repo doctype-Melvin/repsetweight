@@ -1,24 +1,42 @@
 // @ts-nocheck
 
-import { vi, describe, test, expect } from "vitest";
+import { vi, describe, test, expect, beforeEach } from "vitest";
 import { render } from "@testing-library/svelte";
 import ComposerV2 from "./ComposerV2.svelte";
-import { getMockComposerStore } from "$lib/mockStores";
+import { mockComposerData } from "$lib/mockStores";
 
-test('Composer Store', () => {
-    const mockComposerStore = getMockComposerStore();
-    
-    mockComposerStore.set({
-        workouts: [
-            {
-                name: 'Workout 1',
-                muscles: [],
-                exercises: []
-            }
-        ],
-        muscles: [],
-        exercises: []
+
+describe('ComposerV2', () => {
+
+    // Mock the stores module and 
+    // return the mockComposerData store
+    vi.mock('$lib/stores', async () => {
+        const {mockComposerData} = await import('../../mockStores')
+        return {composerData: mockComposerData}
+    })
+
+    let component
+
+    beforeEach(() => {
+        component = render(ComposerV2)
+        mockComposerData.reset()
+    })
+
+    test('Component renders...', async () => {
+        expect(component.getByText('No workouts')).toBeInTheDocument();
     })
     
-    expect(mockComposerStore.set).toHaveBeenCalled();
+    test('... and has a button named Add Workout', async () => {
+        expect(component.getByText('Add Workout')).toBeInTheDocument();
+    })
+    
+    test('Clicking Add Workout calls the store/s update method...', async () => {
+        component.getByText('Add Workout').click();
+        expect(mockComposerData.update).toHaveBeenCalled();        
+    })
+
+    test('... and adds a workout to the store', async () => {
+        component.getByText('Add Workout').click()
+        expect(mockComposerData.get().workouts).toHaveLength(1)
+    })
 })

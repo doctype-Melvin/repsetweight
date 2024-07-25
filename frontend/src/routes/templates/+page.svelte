@@ -30,7 +30,6 @@
 	</section>
 {/if}
 
-<button type="button" on:click={() => goto('/create')}>Create Template</button>
 <button type="button" on:click={() => goto('/')}>Dashboard</button>
 
 <style>
