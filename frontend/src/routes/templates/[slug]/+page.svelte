@@ -3,7 +3,7 @@
 	// @ts-nocheck
 	import { goto } from '$app/navigation';
 	import Workout from '$lib/components/Workout/Workout.svelte';
-	import { workoutData, exercisesData, userData, templatesData } from '$lib/stores.js';
+	import { workoutData, exercisesData, templatesData } from '$lib/stores.js';
 	import { page } from '$app/stores';
 
 	export let data;
@@ -13,9 +13,7 @@
 
 	// Boolean to show variables if the currently active
 	// template is being viewed
-	let showVariables = () => {
-		return templateID === $userData.active_template;
-	};
+	
 
 	$: workoutData.set(template.workouts);
 	console.info('%c Detail View', 'color: green', template);

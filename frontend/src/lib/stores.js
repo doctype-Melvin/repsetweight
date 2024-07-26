@@ -2,11 +2,13 @@
 
 import { writable } from 'svelte/store';
 
-// Store for user data
-export const userData = writable();
 
 // Store for user created template data
 export const userTemplateData = writable(null);
+// Composer Data Store
+// This store saves the user input data 
+// and provides data to all components in
+// the create process
 export const composerData = writable({
 	workouts: [],
 	muscles: [],

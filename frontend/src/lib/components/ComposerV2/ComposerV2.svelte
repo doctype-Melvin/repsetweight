@@ -1,23 +1,13 @@
 <script>
     // @ts-nocheck
     import { composerData } from "$lib/stores";
+    import { addWorkout } from "../actions";
 	import { nanoid } from "nanoid";
+	import WorkoutCard from "../WokroutCard/WorkoutCard.svelte";
     
     $: workoutCount = $composerData.workouts.length + 1;
 
-    function addWorkout() {
-        const workout = {
-            name: `Workout ${workoutCount}`,
-            wid: nanoid(7),
-            muscles: []
-        }
-
-        composerData.update((data) => {
-            return { ...data, workouts: [...data.workouts, workout] };
-        });
-
-        
-    }
+    let editMode = true
     
 </script>
 
@@ -27,9 +17,7 @@
         <ul>
             {#each $composerData.workouts as workout, i}
                 <li>
-                    <h3>{workout.name}</h3>
-                    <input type="text" bind:value={workout.name} />
-                    <button type="button">Delete</button>
+                    <WorkoutCard {workout} {editMode} />
                 </li>
             {/each}
         </ul>
@@ -37,5 +25,5 @@
             <p>No workouts</p>
     {/if}
 
-    <button type="button" on:click={addWorkout}>Add Workout</button>
+    <button type="button" on:click={() => addWorkout(composerData)}>Add Workout</button>
 </section>
