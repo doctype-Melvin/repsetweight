@@ -2,8 +2,9 @@
 import { nanoid } from "nanoid";
 // Functions to update stores
 
-// composerData Actions
-
+/*
+===== composerData Actions =====
+*/
 export function addWorkout(store) {
     const workoutCount = store.get().workouts.length + 1;
     const workout = {

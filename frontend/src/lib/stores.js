@@ -5,16 +5,21 @@ import { writable } from 'svelte/store';
 
 // Store for user created template data
 export const userTemplateData = writable(null);
-// Composer Data Store
-// This store saves the user input data 
-// and provides data to all components in
-// the create process
+
+
+//===== composerData Store =====
+// make this a custom store which 
+// exposes a CRUD API that
+// is then used in components to keep
+// them from being bloated with data processing logic
 export const composerData = writable({
 	workouts: [],
 	muscles: [],
 	exercises: [],
-
 })
+
+
+
 // Set errors for user created templates
 export function userTemplateErrors(array) {
 	userTemplateData.update((data) => {

@@ -4,8 +4,6 @@
     import { addWorkout } from "../actions";
 	import { nanoid } from "nanoid";
 	import WorkoutCard from "../WokroutCard/WorkoutCard.svelte";
-    
-    $: workoutCount = $composerData.workouts.length + 1;
 
     let editMode = true
     
