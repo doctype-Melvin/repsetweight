@@ -2,28 +2,83 @@
     // @ts-nocheck
 
     import { goto } from '$app/navigation';
-    import Logo from '../Logo/Logo.svelte';
+    import CustomLink from '../CustomLink/CustomLink.svelte';
     import Icon from '@iconify/svelte';
 
     let show = true
+
+    const toggleSidebar = () => show = !show
 
 </script>
 
 
     <section class={show ? '' : 'close'}>
-        <Logo />
-        <a href="/templates">Templates</a>
-        <a href="/random">Random Sesison</a>
-        <a href="/timer">Timers</a>
-        <a href="/analytics">Analytics</a>
+        <CustomLink
+            source="/lw-logo2.svg"
+            alt="lightweight Logo"
+            href="/"
+            size="30"
+            isLogo={true}
+            parentFunction={toggleSidebar}
+        />
+        
+        <CustomLink
+            source="system-uicons:files-multi"
+            alt="Templates"
+            href="/templates"
+            size="1.75"
+            isLogo={false}
+            parentFunction={toggleSidebar}
+        />
+        <CustomLink
+            source="game-icons:perspective-dice-six-faces-random"
+            alt="Random Session"
+            href="/random"
+            size="1.75"
+            isLogo={false}
+            parentFunction={toggleSidebar}
+        />
+
+        <CustomLink
+            source="carbon:timer"
+            alt="Timers"
+            href="/timer"
+            size="1.75"
+            isLogo={false}
+            parentFunction={toggleSidebar}
+        />
+        <CustomLink
+            source="carbon:analytics"
+            alt="Analytics"
+            href="/analytics"
+            size="1.75"
+            isLogo={false}
+            parentFunction={toggleSidebar}
+        />
+        
         <div class="spacer"></div>
-        <a href="/account">User Account</a>
-        <a href="/settings">Settings</a>
-        <button class="button-hide" type="button" on:click={() => show = false}><Icon icon="bytesize:chevron-left" /></button>
+        <CustomLink
+            source="carbon:user"
+            alt="User Account"
+            href="/account"
+            size="1.75"
+            isLogo={false}
+            parentFunction={toggleSidebar}
+        />
+        <CustomLink
+            source="carbon:settings"
+            alt="Settings"
+            href="/settings"
+            size="1.75"
+            isLogo={false}
+            parentFunction={toggleSidebar}
+        />
+        
+        <button class="button-hide" type="button" on:click={toggleSidebar}><Icon icon="bytesize:chevron-left" /></button>
     </section>
 
     {#if !show}
-    <button class="burger-icon" type="button" on:click={() => show = true}><Icon icon="iconamoon:menu-burger-horizontal-bold" /></button>
+    <button class="burger-icon" type="button" on:click={toggleSidebar}><Icon icon="iconamoon:menu-burger-horizontal-bold" /></button>
     {/if}
 
 
@@ -36,13 +91,13 @@
         width: 50%;
         min-height: 75%;
         padding: 1rem;
-        transition: 1.25s cubic-bezier(0.39, 0.575, 0.565, 1);
+        transition: .75s cubic-bezier(0.39, 0.575, 0.565, 1);
         z-index: 1;
         background-color: #fff;
     }
 
     .close {
-        margin-left: -100%;
+        margin-left: -75%;
     }
 
     .spacer {
@@ -52,18 +107,19 @@
     .button-hide,
     .burger-icon {
         position: absolute;
-        top: .75rem;
+        top: 1.25rem;
         background-color: transparent;
         border: none;
-        font-size: 1.5rem;
     }
     
     .button-hide {
         right: .25rem;
+        font-size: 1rem;
     }   
 
     .burger-icon {
         left: .25rem;
+        font-size: 1.5rem;
         z-index: 0;
     }
 
