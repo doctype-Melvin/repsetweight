@@ -30,4 +30,7 @@
 		text-decoration: none;
 	}
 
+	section {
+		height: 100vh;
+	}
 </style>
