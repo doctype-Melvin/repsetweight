@@ -1,5 +1,6 @@
 <script>
 	import { templatesData, exercisesData } from '$lib/stores.js';
+	import Sidebar from '$lib/components/Sidebar/Sidebar.svelte';
 
 	export let data;
 
@@ -9,12 +10,14 @@
 </script>
 
 <section>
-	<a href="/">
+	<!-- <a href="/">
 		<h1>Lightweight</h1>
-	</a>
+	</a> -->
+	<Sidebar />
 
 	<slot />
 </section>
+
 
 <style>
 	:global(html, body) {
@@ -27,7 +30,4 @@
 		text-decoration: none;
 	}
 
-	a {
-		text-align: center;
-	}
 </style>
