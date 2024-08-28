@@ -7,4 +7,5 @@
 </script>
 
 
+<h1>The home screen</h1>
 

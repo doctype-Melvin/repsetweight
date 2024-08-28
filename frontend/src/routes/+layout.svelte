@@ -10,11 +10,8 @@
 </script>
 
 <section>
-	<!-- <a href="/">
-		<h1>Lightweight</h1>
-	</a> -->
+	
 	<Sidebar />
-
 	<slot />
 </section>
 
@@ -33,4 +30,5 @@
 	section {
 		height: 100vh;
 	}
+
 </style>
