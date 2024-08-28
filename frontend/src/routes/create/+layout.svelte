@@ -2,8 +2,16 @@
 	// @ts-nocheck
 
 	import { goto } from '$app/navigation';
-	import { muscleGroupsData, exerciseMuscleData, collapseWorkouts } from '$lib/stores.js';
-	import { getContext } from 'svelte';
+	import {
+		muscleGroupsData,
+		exerciseMuscleData,
+		collapseWorkouts,
+		userTemplateData
+	} from '$lib/stores.js';
+	import { validateTemplateData } from '$lib/dataProcessing.js';
+	import { onMount } from 'svelte';
+	import { enhance } from '$app/forms';
+	import Composer from '$lib/components/Composer/Composer.svelte';
 	export let data;
 
 	let { muscleGroups } = data;
@@ -20,11 +28,53 @@
 
 	function cancelCreate() {
 		localStorage.clear();
+		console.clear();
 		goto('/');
 	}
 
 	function collapseAllWorkouts() {
 		collapseWorkouts.set(true);
+	}
+
+	function handleSaveButtonClick() {
+		const storageData = JSON.parse(localStorage.getItem('userTemplate')) || '[]';
+		const validationResult = validateTemplateData(storageData.workouts);
+
+		if (validationResult.length > 0) {
+			console.log('Validation failed');
+			console.log(validationResult);
+			return;
+		}
+
+		console.log('Validation passed');
+	}
+
+	// This function is envoked through use:enhance action in the form element
+	// It merges the data from local storage with the form data
+	// sends it to the server and
+	// receives the request result
+
+	async function mergeLocalStorageData(formData) {
+		const fromLocalStorage = JSON.parse(localStorage.getItem('userTemplate')) || '{}';
+
+		if (!fromLocalStorage.workouts) {
+			alert('No workouts found');
+			return;
+		}
+		for (const key in fromLocalStorage) {
+			const workoutsArray = [...fromLocalStorage[key]];
+			formData.append(key, JSON.stringify(workoutsArray));
+		}
+
+		toggleFlyin();
+
+		return ({ result }) => {
+			if (result.data.status !== 200) {
+				alert(`${result.data.message}`);
+			} else {
+				console.log('Redirect to template detail page');
+			}
+		};
 	}
 </script>
 
@@ -32,20 +82,22 @@
 	<p style="text-align: center;">Compose your own template</p>
 	<div class="button-controls">
 		<button type="button" on:click={collapseAllWorkouts}>Collapse All</button>
-		<button type="button" on:click={toggleFlyin}>Save</button>
+		<button type="button" on:click={handleSaveButtonClick}>Save</button>
 		<button type="button" class="button-cancel" on:click={cancelCreate}>Cancel</button>
 	</div>
 </section>
-<!-- Section below will become component -->
+
 <section class="fly{isFlyinVisible ? 'in' : 'out'}">
 	<button class="close-button" type="button" on:click={toggleFlyin}>Close</button>
-	<form on:submit={toggleFlyin}>
+	<!-- use:enhance gets called before the
+	  post request is  sent to the server -->
+	<form method="POST" use:enhance={({ formData }) => mergeLocalStorageData(formData)}>
 		<label for="name">Name</label>
-		<input type="text" id="name" name="name" placeholder="Name your workout" />
+		<input type="text" id="name" name="name" placeholder="Name your workout" required />
 		<label for="description">Description</label>
 		<textarea id="description" name="description" placeholder="Describe your workout"
 		></textarea>
-		<button type="submit">Create</button>
+		<button type="submit">Save Template</button>
 	</form>
 </section>
 <slot />

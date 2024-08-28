@@ -9,8 +9,8 @@
 	export let id;
 	export let muscle;
 
-    // Names of the columns for table-like grid
-    const columns = ['Lift', 'Sets', 'Reps', 'Weight'];
+	// Names of the columns for table-like grid
+	const columns = ['Lift', 'Sets', 'Reps', 'Weight'];
 
 	const workoutData = derived(userTemplateData, ($userTemplateData) => {
 		return $userTemplateData.workouts.find((workout) => workout.wid === id);
@@ -26,10 +26,10 @@
 		}
 		showFlyout = !showFlyout;
 	};
-    
-    const props = {
-        toggle: toggleFlyout
-    };
+
+	const props = {
+		toggle: toggleFlyout
+	};
 
 	const handleDeleteMuscle = () => {
 		const updatedWorkoutMuscles = $workoutData.muscles.filter((item) => item.id !== muscle.id);
@@ -44,8 +44,6 @@
 			return { workouts: updatedWorkouts };
 		});
 	};
-
-
 </script>
 
 <section class="card">
@@ -60,9 +58,9 @@
 				{#if group.exercises.length === 0}
 					<p>No exercises added yet</p>
 				{:else}
-                    {#each columns as column}
-                        <span class="column-name">{column}</span>
-                    {/each}
+					{#each columns as column}
+						<span class="column-name">{column}</span>
+					{/each}
 
 					{#each group.exercises as exercise}
 						<div class="row-exercise">
@@ -70,6 +68,7 @@
 								name={exercise.name}
 								eid={exercise.eid}
 								wid={id}
+								baseline={exercise.baseline}
 								{toggleFlyout}
 							/>
 						</div>

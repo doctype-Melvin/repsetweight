@@ -51,7 +51,7 @@
 	// A derivative of the userTemplateData store is used to filter the current workout
 	// and to set the preselectedMuscles value
 	let preselectedMuscles = null;
-	let preselectedExercises = null;
+	let preselectedExercises = [];
 
 	// Create a derived store of user template data
 	// and filter the target workout by its wid
@@ -70,7 +70,7 @@
 			if (result.length > 0) {
 				preselectedExercises = result[0].exercises;
 			} else {
-				preselectedExercises = null;
+				preselectedExercises = [];
 			}
 		}
 	});
@@ -161,11 +161,31 @@
 			});
 			updateWorkoutData(checked, 'muscles');
 		} else {
-			checked.map((exercise) => {
-				exercise.eid = nanoid(5);
-				exercise.muscle_id = muscle.id;
-			});
-
+			if (preselectedExercises.length === 0) {
+				checked.map((exercise) => {
+					exercise.eid = nanoid(5);
+					exercise.muscle_id = muscle.id;
+					exercise.baseline = {
+						sets: 0,
+						reps: 0,
+						weight: 0
+					};
+				});
+			} else {
+				checked.map((exercise) => {
+					exercise.eid =
+						preselectedExercises.find((entry) => entry.id === exercise.id)?.eid ||
+						nanoid(5);
+					exercise.muscle_id = muscle.id;
+					exercise.baseline = preselectedExercises.find(
+						(entry) => entry.id === exercise.id
+					)?.baseline || {
+						sets: 0,
+						reps: 0,
+						weight: 0
+					};
+				});
+			}
 			updateWorkoutData(checked, 'exercises');
 		}
 

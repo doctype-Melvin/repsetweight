@@ -5,10 +5,18 @@
 	import { templatesData } from '$lib/stores.js';
 	import Collapsible from '$lib/components/Collapsible/Collapsible.svelte';
 	import Template from '$lib/components/Template/Template.svelte';
+	import InfoCard from '$lib/components/InfoCard/InfoCard.svelte';
 
 	let userTempaltes = $templatesData.filter((item) => item.user_generated === true);
 	let presetTemplates = $templatesData.filter((item) => item.user_generated === false);
 </script>
+
+<InfoCard content={{
+	title: 'Create a new template',
+	text: 'Use the LightWEIGHT Composer to create a new template',
+	button: `Go create`,
+	href: '/'
+}} />
 
 {#if userTempaltes.length > 0}
 	<section>
@@ -30,8 +38,7 @@
 	</section>
 {/if}
 
-<button type="button" on:click={() => goto('/create')}>Create Template</button>
-<button type="button" on:click={() => goto('/')}>Dashboard</button>
+<button type="button" on:click={() => goto('/')}>Home</button>
 
 <style>
 </style>

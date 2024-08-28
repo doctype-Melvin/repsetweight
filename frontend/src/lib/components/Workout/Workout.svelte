@@ -2,9 +2,10 @@
 	// @ts-nocheck
 	import Flyout from '../Flyout/Flyout.svelte';
 	import MuscleCard from '../MuscleCard/MuscleCard.svelte';
-	import { userTemplateData } from '$lib/stores.js';
+	import { userTemplateData, missingClientData } from '$lib/stores.js';
 	import { derived, writable } from 'svelte/store';
 	import { draggable, dropzone } from '$lib/dragAndDrop';
+	import { onDestroy } from 'svelte';
 
 	export let deleteWorkout;
 	export let copyWorkout;
@@ -16,30 +17,37 @@
 	let currentWorkout = writable(null);
 
 	const filterTemplateData = derived(userTemplateData, ($userTemplateData) => {
-		return $userTemplateData.workouts.find((workout) => workout.wid === id);
+		if ($userTemplateData.workouts) {
+			return $userTemplateData.workouts.find((workout) => workout.wid === id);
+		}
+		return [];
 	});
 
-	filterTemplateData.subscribe((value) => {
+	const unsubscribeWorkout = filterTemplateData.subscribe((value) => {
 		currentWorkout.set(value);
 	});
 
 	let showFlyout = false;
 
-	const toggleFlyout = (signal) => {
+	function toggleFlyout(signal) {
 		if (signal) {
 			props.signal = signal;
 			props.wid = id;
 		}
 		showFlyout = !showFlyout;
-	};
+	}
 
-	const handleDeleteWorkout = (id) => {
+	function handleDeleteWorkout(id) {
 		deleteWorkout(id);
-	};
+	}
 
 	const props = {
 		toggle: toggleFlyout
 	};
+
+	onDestroy(() => {
+		unsubscribeWorkout();
+	});
 </script>
 
 <section class="workout-container">
@@ -124,5 +132,9 @@
 	}
 	.dropzone:global(.droppable > *) {
 		pointer-events: none;
+	}
+
+	.error {
+		background-color: rgba(251, 120, 73, 0.868);
 	}
 </style>

@@ -2,6 +2,7 @@
 	// @ts-nocheck
 
 	import Composer from '$lib/components/Composer/Composer.svelte';
+	import ComposerV2 from '$lib/components/ComposerV2/ComposerV2.svelte';
 	import { isWriteMode, scrollPosition } from '$lib/stores';
 	import { beforeNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
@@ -20,4 +21,5 @@
 	});
 </script>
 
-<Composer />
+<!-- <Composer /> -->
+<ComposerV2 />
