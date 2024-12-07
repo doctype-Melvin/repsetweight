@@ -6,6 +6,7 @@
 	isWriteMode.set(false);
 </script>
 
+<!-- This heading overlaps with Burger icon -->
 
-<h1>The home screen</h1>
+	<h1>Home screen</h1>
 

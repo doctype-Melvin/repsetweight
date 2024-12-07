@@ -10,9 +10,12 @@
 </script>
 
 <section>
-	
+	<!-- Sidebar respectively Burger icon overlaps page content -->
+
 	<Sidebar />
-	<slot />
+	<div class="content-slot">
+		<slot />
+	</div>
 </section>
 
 
@@ -29,6 +32,10 @@
 
 	section {
 		height: 100vh;
+	}
+
+	.content-slot {
+		padding-left: 50px;
 	}
 
 </style>

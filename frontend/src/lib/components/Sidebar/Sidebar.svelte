@@ -74,6 +74,7 @@
         
             <button class="button-hide" type="button" on:click={toggleSidebar}><Icon icon="bytesize:chevron-left" /></button>
         </div>
+        <!-- Sidebar respectively Burger icon overlaps page content -->
         {#if !show}
         <button class="burger-icon" type="button" on:click={toggleSidebar}><Icon icon="iconamoon:menu-burger-horizontal-bold" /></button>
         {/if}
